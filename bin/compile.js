@@ -11,6 +11,7 @@ compiler.run(function (err, stats) {
   const jsonStats = stats.toJson()
 
   debug('Webpack compile completed.')
+  console.log(stats.toString(config.compiler_stats))
 
   if (err) {
     debug('Webpack compiler encountered a fatal error.', err)
