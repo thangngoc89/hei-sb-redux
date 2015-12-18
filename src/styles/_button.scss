@@ -1,0 +1,24 @@
+@import "color";
+@import "breakpoints";
+
+.button-main-color {
+	border: #fbfbfb solid 0.25rem;
+	background-color: $color-main;
+	color: #fff;
+	font-size: $font-size-lg;
+	padding: 1.375rem 0;
+	transition: all 0.3s;
+	border-radius: 0;
+	font-weight: 700;
+
+	@include media-breakpoint-down(xs) {
+		padding: 0.7rem 0;
+	}
+
+	// TODO: Make swipe to right effect
+
+	&:hover {
+		background-color: #fbfbfb;
+		color: $color-main;
+	}
+}

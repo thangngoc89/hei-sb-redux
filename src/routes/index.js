@@ -4,7 +4,7 @@ import CoreLayout from 'layouts/CoreLayout'
 import HomeView from 'views/HomeView'
 import AboutView from 'views/AboutView'
 import LoginView from 'views/LoginView'
-import QuizView from 'views/QuizView'
+import RuleView from 'views/RuleView'
 
 // TODO: Protect QuizView
 export default (
@@ -12,6 +12,6 @@ export default (
     <IndexRoute component={HomeView} />
     <Route component={AboutView} path='/about' />
     <Route component={LoginView} path='/login' />
-    <Route component={QuizView} path='/quiz' />
+    <Route component={RuleView} path='/rules' />
   </Route>
 )

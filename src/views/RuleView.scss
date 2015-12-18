@@ -1,0 +1,6 @@
+@import "button";
+
+.readyButton {
+  @extend .button-main-color;
+  margin-top: 2rem;
+}
