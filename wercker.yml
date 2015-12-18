@@ -1,0 +1,42 @@
+box: nodesource/trusty:5.1.1
+
+dev:
+  steps:
+    - script:
+      # Env vars go here
+      name: Set environment variables
+      code: |
+          export NODE_ENV=development
+          mkdir -p _cache/babel
+    - npm-install
+    - internal/shell:
+      code: |
+        node -v
+        npm -v
+        npm start
+
+build:
+  steps:
+    - script:
+      # Env vars go here
+      name: Set environment variables
+      code: |
+          export NODE_ENV=development
+          mkdir -p _cache/babel
+    - npm-install
+    - script:
+        name: Run build
+        code: |
+          npm run compile
+    - script:
+        name: Copy dist into deploy folder
+        code: |
+          cp -r dist/ $WERCKER_OUTPUT_DIR
+
+deploy:
+  steps:
+    - script:
+        name: Deploy to surge
+        code: |
+          npm install -g surge
+          surge dist hei.surge.sh
