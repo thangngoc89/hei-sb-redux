@@ -1,17 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router'
-import { actions as counterActions } from '../redux/modules/counter'
+import { actions as counterActions } from '../redux/modules/quiz'
 import LoadingScreen from 'components/LoadingScreen'
 
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  isLoading: state.quiz.isLoading
 })
 
 class QuizView extends React.Component {
+  static propTypes = {
+    isLoading: React.PropTypes.bool.isRequired,
+    fetchQuizData: React.PropTypes.func.isRequired
+  }
+
+  componentDidMount () {
+    this.props.fetchQuizData()
+  }
+
   render () {
+    let component
+
+    if (this.props.isLoading) {
+      component = <LoadingScreen />
+    }
     return (
-      <LoadingScreen />
+      <div>
+        { component }
+      </div>
     )
   }
 }
