@@ -1,8 +1,9 @@
 import React from 'react'
-import letter from './letter.md'
+import letter from './letter'
+import marked from 'marked'
 
 const QuizInstruction = () => {
-  let html = {__html: letter}
+  let html = {__html: marked(letter)}
   return (
     <div dangerouslySetInnerHTML={html}></div>
   )
