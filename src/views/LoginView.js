@@ -10,7 +10,7 @@ export class LoginView extends React.Component {
     return (
       <Grid fluid>
         <Row>
-          <Col xs={11} md={5} className='center-block'>
+          <Col xs={12} md={5} className='center-block'>
             <div styleName='main-container'>
               <LoginForm />
             </div>

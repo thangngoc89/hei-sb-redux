@@ -1,17 +1,20 @@
 @import "color";
 @import "font";
+@import "breakpoints";
 
 .submit-button {
-	border: #fbfbfb solid 4px;
+	border: #fbfbfb solid 0.25rem;
 	background-color: $color-main;
 	color: #fff;
-	font-size:24px;
-	padding-top:22px;
-	padding-bottom:22px;
+	font-size: $font-size-lg;
+	padding: 1.375rem 0;
 	transition: all 0.3s;
-  margin-top:-4px;
 	border-radius: 0;
 	font-weight: 700;
+
+	@include media-breakpoint-down(xs) {
+		padding: 0.7rem 0;
+	}
 
 	&:hover {
 		background-color: $color-transparent;
@@ -21,34 +24,34 @@
 
 .input {
 	color: #3c3c3c;
-	font-family: $font-main;
-  font-weight:500;
-	font-size: 18px;
+  font-weight: 500;
+	font-size: $font-size-md;
 	border-radius: 0;
-	line-height: 22px;
+	line-height: 1.5rem;
 	background: #fbfbfb;
-	padding: 13px 13px 13px 54px;
-	margin-bottom: 25px;
+	padding: 0.825rem 0.825rem 0.825rem 3.375rem;
+	margin-bottom: 1.5rem;
 	width:100%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
 	box-sizing: border-box;
   border: 3px solid $color-transparent;
 
  &:focus {
 		box-shadow: 0;
-		border: 3px solid $color-main;
+		border: 0.25rem solid $color-main;
 		color: $color-main;
 		outline: none;
-	  padding: 13px 13px 13px 54px;
+	}
+
+	@include media-breakpoint-down(xs) {
+		padding: 0.625rem 0.625rem 0.625rem 3.375rem;
+		margin-bottom: 0.5rem;
 	}
 }
 
 /* Icon */
 .icon {
-	background-size: 30px 30px;
-	background-position: 11px 8px;
+	background-size: 1.875rem;
+	background-position: 0.6875rem 0.5rem;
 	background-repeat: no-repeat;
 }
 .icon-name {

@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import cssnano from 'cssnano'
+import pxtorem from 'postcss-pxtorem'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import config from '../../config'
 import _debug from 'debug'
@@ -91,7 +92,7 @@ const webpackConfig = {
         ]
       },
       {
-        // TODO: Fix this (Monkey patching to not apply localIden to vendor css)
+        // TODO: Fix this (Monkey patching to not apply localIdent to vendor css)
         test: /bootstrap\.loader$/,
         loaders: [
           'style-loader',
@@ -135,7 +136,8 @@ const webpackConfig = {
       discardComments: {
         removeAll: true
       }
-    })
+    }),
+    pxtorem()
   ],
   eslint: {
     configFile: `${paths.base()}/.eslintrc`

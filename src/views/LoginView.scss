@@ -1,14 +1,14 @@
+@import "breakpoints";
+
 .main-container {
-	background-color:rgba(72,72,72,0.4);
-	padding-left:35px;
-	padding-right:35px;
-	padding-top:35px;
-	padding-bottom:50px;
+	background-color: rgba(72,72,72,0.4);
+	padding: 2rem;
 	min-width: 100%;
-  margin-top:30px;
-	border-radius: 7px;
-	// left: 50%;
-	// float: left;
-	// width: 450px;
-	// margin-left: -260px;
+  margin: 2rem 0;
+	border-radius: 0.5rem;
+
+	@include media-breakpoint-down(xs) {
+		padding: 1.5rem;
+		margin-top: 1.5rem;
+	}
 }
