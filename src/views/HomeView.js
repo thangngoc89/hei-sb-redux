@@ -44,6 +44,8 @@ export class HomeView extends React.Component {
         <Link to='/about'>Go To About View</Link>
         <br />
         <Link to='/login'>Go To Login View</Link>
+        <br />
+        <Link to='/quiz'>Go To Quiz View</Link>
       </div>
     )
   }

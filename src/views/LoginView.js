@@ -1,21 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router'
 import LoginForm from 'components/LoginForm'
-import { Col, Row, Grid } from 'react-bootstrap'
+import Container from 'layouts/TransparentContainerLayout'
 
 export class LoginView extends React.Component {
   render () {
+    let outsideContainer = (<Link to='/'>&#8592; return home</Link>)
+
     return (
-      <Grid fluid>
-        <Row>
-          <Col xs={12} sm={8} md={4} className='center-block'>
-            <div className='container-transparent'>
-              <LoginForm />
-            </div>
-            <Link to='/'>&#8592; return home</Link>
-          </Col>
-        </Row>
-      </Grid>
+      <Container xs={12} sm={10} md={4} outside={outsideContainer}>
+        <LoginForm />
+      </Container>
     )
   }
 }

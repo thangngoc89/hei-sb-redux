@@ -1,25 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router'
 import CSSModules from 'react-css-modules'
-import LoginForm from 'components/LoginForm'
-import styles from './LoginView.scss'
-import { Col, Row, Grid } from 'react-bootstrap'
+import styles from './QuizView.scss'
+import Container from 'layouts/TransparentContainerLayout'
+import { Button } from 'react-bootstrap'
 
-export class Quiz extends React.Component {
+export class QuizView extends React.Component {
   render () {
+    let outsideContainer = (<Link to='/'>&#8592; return home</Link>)
+
     return (
-      <Grid fluid>
-        <Row>
-          <Col xs={12} md={5} className='center-block'>
-            <div styleName='main-container'>
-              <LoginForm />
-            </div>
-            <Link to='/'>&#8592; return home</Link>
-          </Col>
-        </Row>
-      </Grid>
+      <Container xs={12} sm={10} md={8} outside={outsideContainer}>
+        <div className='col-xs-12 content'>
+          content goes here
+        </div>
+        <div className='col-xs-2 col-xs-offset-10 footer'>
+          <Button bsStyle='danger'>Next</Button>
+        </div>
+      </Container>
     )
   }
 }
 
-export default CSSModules(LoginView, styles)
+export default CSSModules(QuizView, styles)
