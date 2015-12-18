@@ -1,11 +1,12 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "0.18.0",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "hei-sb-redux",
+  "version": "0.1.0",
+  "description": "HEI Spelling Bees 2016 App!",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "NODE_ENV=production node -r dotenv/config --harmony bin/compile",
+    "complie:serve": "npm run compile && cd dist && python -m SimpleHTTPServer 3000",
     "lint": "eslint **/* --quiet",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm run dev",
@@ -18,10 +19,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/thangngoc89/hei-sb-redux"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
-  "license": "MIT",
+  "author": "Khoa Nguyen <hi@khoanguyen.me> (http://khoanguyen.me)",
+  "license": "none",
+  "private": true,
   "dependencies": {
     "bootstrap": "git+https://github.com/twbs/bootstrap.git#v4-dev",
     "cssnano": "^3.3.2",
@@ -37,7 +39,6 @@
     "redux": "^3.0.0",
     "redux-actions": "^0.9.0",
     "redux-form": "^4.0.3",
-    "redux-form-validation": "0.0.5",
     "redux-simple-router": "^1.0.0",
     "redux-thunk": "^1.0.0",
     "yargs": "^3.18.0"
