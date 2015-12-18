@@ -1,0 +1,2 @@
+/* Import core CSS globally - DO NOT EDIT */
+@import "core";

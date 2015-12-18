@@ -1,15 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router'
+import CSSModules from 'react-css-modules'
 import LoginForm from 'components/LoginForm'
+import styles from './LoginView.scss'
 import { Col, Row, Grid } from 'react-bootstrap'
 
-export class LoginView extends React.Component {
+export class Quiz extends React.Component {
   render () {
     return (
       <Grid fluid>
         <Row>
-          <Col xs={12} sm={8} md={4} className='center-block'>
-            <div className='container-transparent'>
+          <Col xs={12} md={5} className='center-block'>
+            <div styleName='main-container'>
               <LoginForm />
             </div>
             <Link to='/'>&#8592; return home</Link>
@@ -20,4 +22,4 @@ export class LoginView extends React.Component {
   }
 }
 
-export default LoginView
+export default CSSModules(LoginView, styles)

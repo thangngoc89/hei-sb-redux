@@ -93,7 +93,7 @@ const webpackConfig = {
       },
       {
         // TODO: Fix this (Monkey patching to not apply localIdent to vendor css)
-        test: /bootstrap\.loader$/,
+        test: /global\.loader$/,
         loaders: [
           'style-loader',
           'css-loader',
@@ -122,7 +122,8 @@ const webpackConfig = {
   sassLoader: {
     includePaths: [
       paths.client('styles'),
-      paths.base('node_modules')
+      paths.base('node_modules'),
+      paths.base('src')
     ]
   },
   postcss: [
