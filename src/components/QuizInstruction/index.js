@@ -4,7 +4,7 @@ import letter from './letter.md'
 const QuizInstruction = () => {
   let html = {__html: letter}
   return (
-    <div dangerouslySetInnerHTML={html} />
+    <div dangerouslySetInnerHTML={html}></div>
   )
 }
 
