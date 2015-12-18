@@ -8,7 +8,7 @@ export class LoginView extends React.Component {
     let outsideContainer = (<Link to='/'>&#8592; return home</Link>)
 
     return (
-      <Container xs={12} sm={10} md={4} outside={outsideContainer}>
+      <Container xs={12} sm={10} md={8} lg={6} outside={outsideContainer}>
         <LoginForm />
       </Container>
     )

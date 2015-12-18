@@ -29,7 +29,7 @@ const TransparentContainerLayout = (props) => {
 
 TransparentContainerLayout.propTypes = {
   children: PropTypes.element.isRequired,
-  outside: PropTypes.element.isRequired,
+  outside: PropTypes.element,
   xs: PropTypes.number,
   sm: PropTypes.number,
   md: PropTypes.number,

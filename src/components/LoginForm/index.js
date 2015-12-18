@@ -4,7 +4,6 @@ import CSSModules from 'react-css-modules'
 import { Button } from 'react-bootstrap'
 import styles from './style.scss'
 import LoginFormInput from './LoginFormInput'
-import { Link } from 'react-router'
 
 const fields = ['fullName', 'DOB', 'university', 'email', 'code']
 
@@ -28,7 +27,6 @@ export class LoginForm extends React.Component {
         <LoginFormInput displayName='University' icon='university' {...university} />
         <LoginFormInput displayName='Email' icon='email' type='email' {...email} />
         <LoginFormInput displayName='Code' icon='code' {...code} />
-        <Link to='/quiz'>Go to quiz</Link>
         <Button
           block
           disabled={submitting}
