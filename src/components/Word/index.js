@@ -2,14 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { Button } from 'react-bootstrap'
 
 class Word extends Component {
-  static PropTypes = {
+  static propTypes = {
     word: PropTypes.object.isRequired,
     // handleTyping: PropTypes.func.isRequired,
     // handleSubmit: PropTypes.func.isRequired,
     handleNextWord: PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
     let w = this.props.word
 
     return (

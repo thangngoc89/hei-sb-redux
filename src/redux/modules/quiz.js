@@ -7,6 +7,7 @@ import { createAction,
 export const QUIZ_REQUEST_DATA = 'QUIZ_REQUEST_DATA'
 export const QUIZ_RECEIVE_DATA = 'QUIZ_RECEIVE_DATA'
 export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
+export const QUIZ_RESET = 'QUIZ_RESET'
 
 // ------------------------------------
 // Actions
@@ -14,6 +15,7 @@ export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
 export const requestData = createAction(QUIZ_REQUEST_DATA)
 export const receiveData = createAction(QUIZ_RECEIVE_DATA, (data) => data)
 export const nextWord = createAction(QUIZ_NEXT_WORD)
+export const resetQuiz = createAction(QUIZ_RESET)
 
 export const fetchQuizData = () => {
   // Fake a api request here
@@ -30,7 +32,8 @@ export const fetchQuizData = () => {
 
 export const actions = {
   fetchQuizData,
-  nextWord
+  nextWord,
+  resetQuiz
 }
 
 // ------------------------------------
@@ -52,12 +55,12 @@ export default handleActions({
     wordList: payload.data.wordList
   }),
   QUIZ_NEXT_WORD: (state) => {
-    let nextWord = state.currentWord + 1;
-    let isComplete = false;
+    let nextWord = state.currentWord + 1
+    let isComplete = false
 
-    if(nextWord >= state.wordList.length){
-      isComplete = true;
-      nextWord = 0;
+    if (nextWord >= state.wordList.length) {
+      isComplete = true
+      nextWord = 0
     }
 
     return {
@@ -65,5 +68,11 @@ export default handleActions({
       isComplete,
       currentWord: nextWord
     }
-  }
+  },
+  QUIZ_RESET: (state) => ({
+    ...state,
+    currentWord: 0,
+    userAnswers: [],
+    isComplete: false
+  })
 }, defaultState)

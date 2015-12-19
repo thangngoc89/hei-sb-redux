@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../redux/modules/quiz'
 import Container from 'layouts/TransparentContainerLayout'
+import { Button } from 'react-bootstrap'
 import LoadingScreen from 'components/LoadingScreen'
 import ErrorScreen from 'components/ErrorScreen'
+import EndScreen from 'components/EndScreen'
 import Word from 'components/Word'
 
 const mapStateToProps = (state) => ({
@@ -21,7 +23,8 @@ class QuizView extends Component {
     currentWord: PropTypes.number.isRequired,
     // Below props are actions
     fetchQuizData: PropTypes.func.isRequired,
-    nextWord: PropTypes.func.isRequired
+    nextWord: PropTypes.func.isRequired,
+    resetQuiz: PropTypes.func
   }
 
   componentDidMount () {
@@ -32,7 +35,8 @@ class QuizView extends Component {
   currentWord () {
     let word = this.props.wordList[this.props.currentWord]
     if (undefined === word) {
-      throw 'Word is not defined'
+      // TODO: Handle this properly
+      // throw 'Word is not defined'
     }
     return word
   }
@@ -45,7 +49,7 @@ class QuizView extends Component {
     } else if (this.props.wordList.length < 1) {
       component = <ErrorScreen message='No words are available' />
     } else if (this.props.isComplete) {
-      component = <p>Completed</p>
+      component = <EndScreen />
     } else {
       component =
       <Word
@@ -53,10 +57,10 @@ class QuizView extends Component {
         handleNextWord={this.props.nextWord}
       />
     }
-
+    let resetButton = <Button bsStyle='danger' onClick={this.props.resetQuiz}>Reset Quiz</Button>
     return (
       <div>
-        <Container xs={12} sm={10} md={8} lg={6}>
+        <Container xs={12} sm={10} md={8} lg={6} outside={resetButton}>
           { component }
         </Container>
       </div>
