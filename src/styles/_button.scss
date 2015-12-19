@@ -25,4 +25,10 @@
 		background-color: #fbfbfb;
 		color: $color-main;
 	}
+
+	&:focus {
+		background-color: #fbfbfb;
+		border-color: $color-main;
+		color: $color-main;
+	}
 }
