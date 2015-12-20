@@ -33,7 +33,7 @@ export class LoginForm extends React.Component {
           onClick={handleSubmit}
           styleName='submit-button'
         >
-          {submitting ? 'LOADING...' : 'SUBMIT'}
+          {submitting ? 'Loading...' : 'Submit'}
         </Button>
       </form>
     )
