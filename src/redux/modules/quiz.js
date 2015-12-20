@@ -46,7 +46,8 @@ let defaultState = {
   currentAnswer: '',
   currentWord: 0,
   isLoading: true,
-  isComplete: false
+  isComplete: false,
+  shouldComponentUpdate: true
 }
 
 export default handleActions({
@@ -73,7 +74,8 @@ export default handleActions({
         [state.currentWord]: state.currentAnswer
       },
       currentAnswer: '',
-      currentWord: nextWord
+      currentWord: nextWord,
+      shouldComponentUpdate: true
     }
   },
   QUIZ_RESET: (state) => ({
@@ -81,7 +83,12 @@ export default handleActions({
     userAnswers: {},
     currentAnswer: '',
     currentWord: 0,
-    isComplete: false
+    isComplete: false,
+    shouldComponentUpdate: true
   }),
-  QUIZ_ANSWER_ONCHANGE: (state, { payload }) => ({...state, currentAnswer: payload})
+  QUIZ_ANSWER_ONCHANGE: (state, { payload }) => ({
+    ...state,
+    currentAnswer: payload,
+    shouldComponentUpdate: false
+  })
 }, defaultState)

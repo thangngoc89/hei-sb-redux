@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Input } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
+import CountdownClock from 'components/WordCountdownClockContainer'
 
 class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired,
     wordTotal: PropTypes.number.isRequired,
     wordCurrent: PropTypes.number.isRequired,
+    shouldComponentUpdate: PropTypes.bool.isRequired,
     currentAnswer: PropTypes.string.isRequired,
     handleOnChange: PropTypes.func.isRequired,
     handleNextWord: PropTypes.func.isRequired
@@ -37,6 +39,14 @@ class Word extends Component {
         />
         <p>word <em>{w.word}</em></p>
         <p>Filename {w.fileName}</p>
+
+        <CountdownClock
+          seconds={10}
+          color='#8904B1'
+          alpha={0.5}
+          size={50}
+          shouldComponentUpdate={this.props.shouldComponentUpdate}
+        />
 
         <Input
           type='text'

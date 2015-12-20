@@ -19,6 +19,7 @@ class QuizView extends Component {
     wordList: PropTypes.array.isRequired,
     currentWord: PropTypes.number.isRequired,
     currentAnswer: PropTypes.string.isRequired,
+    shouldComponentUpdate: PropTypes.bool.isRequired,
     // Below props are actions
     fetchQuizData: PropTypes.func.isRequired,
     nextWord: PropTypes.func.isRequired,
@@ -58,6 +59,7 @@ class QuizView extends Component {
         handleNextWord={this.props.nextWord}
         handleOnChange={this.props.answerOnChange}
         currentAnswer={this.props.currentAnswer}
+        shouldComponentUpdate={this.props.shouldComponentUpdate}
       />
     }
     let resetButton = <Button bsStyle='danger' onClick={this.props.resetQuiz}>Reset Quiz</Button>
