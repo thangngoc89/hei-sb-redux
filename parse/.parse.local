@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "hei-sb"
+    },
+    "hei-sb": {
+      "applicationId": "wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX"
+    }
+  }
+}
