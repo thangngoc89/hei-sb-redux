@@ -42,8 +42,6 @@ const config = {
     'react',
     'react-redux',
     'react-router',
-    'react-css-modules',
-    'react-bootstrap',
     'redux',
     'redux-actions',
     'redux-simple-router',

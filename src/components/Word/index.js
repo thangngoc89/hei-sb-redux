@@ -3,6 +3,7 @@ import { Button, Input } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
 import CountdownClock from 'components/WordCountdownClockContainer'
 import WordModal from 'components/WordModal'
+import AudioPlayer from 'components/AudioPlayer'
 
 class Word extends Component {
   static propTypes = {
@@ -31,8 +32,21 @@ class Word extends Component {
     this.input.getInputDOMNode().focus()
   }
 
+  getCurrentWordUrl () {
+    // TODO: Fix me. Read me from received data
+    let url = 'http://localhost:8000/' + this.props.word.fileName
+    return url
+  }
+
   render () {
-    let w = this.props.word
+    // <CountdownClock
+    //   seconds={10}
+    //   color='#8904B1'
+    //   alpha={0.5}
+    //   size={50}
+    //   onComplete={this.props.handleTimeOut}
+    //   shouldComponentUpdate={this.props.shouldComponentUpdate}
+    // />
 
     return (
       <div>
@@ -40,17 +54,7 @@ class Word extends Component {
           current={this.props.wordCurrent}
           total={this.props.wordTotal}
         />
-        <p>word <em>{w.word}</em></p>
-        <p>Filename {w.fileName}</p>
-
-        <CountdownClock
-          seconds={10}
-          color='#8904B1'
-          alpha={0.5}
-          size={50}
-          onComplete={this.props.handleTimeOut}
-          shouldComponentUpdate={this.props.shouldComponentUpdate}
-        />
+        <p>Word: <em>{this.props.word.word}</em></p>
 
         <Input
           type='text'
@@ -63,6 +67,11 @@ class Word extends Component {
         <Button onClick={this.nextWord.bind(this)}>
           Next Word
         </Button>
+
+        <AudioPlayer
+          song={this.getCurrentWordUrl()}
+          autoplay
+        />
 
         <WordModal
           show={this.props.isTimeOut}
