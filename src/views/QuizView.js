@@ -9,10 +9,7 @@ import EndScreen from 'components/EndScreen'
 import Word from 'components/Word'
 
 const mapStateToProps = (state) => ({
-  isLoading: state.quiz.isLoading,
-  wordList: state.quiz.wordList,
-  currentWord: state.quiz.currentWord,
-  isComplete: state.quiz.isComplete
+  ...state.quiz
 })
 
 class QuizView extends Component {
@@ -21,10 +18,12 @@ class QuizView extends Component {
     isComplete: PropTypes.bool.isRequired,
     wordList: PropTypes.array.isRequired,
     currentWord: PropTypes.number.isRequired,
+    currentAnswer: PropTypes.string.isRequired,
     // Below props are actions
     fetchQuizData: PropTypes.func.isRequired,
     nextWord: PropTypes.func.isRequired,
-    resetQuiz: PropTypes.func
+    resetQuiz: PropTypes.func,
+    answerOnChange: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -55,6 +54,8 @@ class QuizView extends Component {
       <Word
         word={this.currentWord()}
         handleNextWord={this.props.nextWord}
+        handleOnChange={this.props.answerOnChange}
+        currentAnswer={this.props.currentAnswer}
       />
     }
     let resetButton = <Button bsStyle='danger' onClick={this.props.resetQuiz}>Reset Quiz</Button>

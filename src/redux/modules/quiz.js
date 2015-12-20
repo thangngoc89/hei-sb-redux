@@ -1,6 +1,4 @@
-import { createAction,
-         handleActions } from 'redux-actions'
-
+import { createAction, handleActions } from 'redux-actions'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -8,6 +6,7 @@ export const QUIZ_REQUEST_DATA = 'QUIZ_REQUEST_DATA'
 export const QUIZ_RECEIVE_DATA = 'QUIZ_RECEIVE_DATA'
 export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
 export const QUIZ_RESET = 'QUIZ_RESET'
+export const QUIZ_ANSWER_ONCHANGE = 'QUIZ_ANSWER_ONCHANGE'
 
 // ------------------------------------
 // Actions
@@ -16,6 +15,7 @@ export const requestData = createAction(QUIZ_REQUEST_DATA)
 export const receiveData = createAction(QUIZ_RECEIVE_DATA, (data) => data)
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const resetQuiz = createAction(QUIZ_RESET)
+export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
 
 export const fetchQuizData = () => {
   // Fake a api request here
@@ -26,13 +26,14 @@ export const fetchQuizData = () => {
 
     setTimeout(() => {
       dispatch(receiveData(data))
-    }, 2000)
+    }, 500)
   }
 }
 
 export const actions = {
   fetchQuizData,
   nextWord,
+  answerOnChange,
   resetQuiz
 }
 
@@ -41,7 +42,8 @@ export const actions = {
 // ------------------------------------
 let defaultState = {
   wordList: [],
-  userAnswers: [],
+  userAnswers: {},
+  currentAnswer: '',
   currentWord: 0,
   isLoading: true,
   isComplete: false
@@ -66,13 +68,20 @@ export default handleActions({
     return {
       ...state,
       isComplete,
+      userAnswers: {
+        ...state.userAnswers,
+        [state.currentWord]: state.currentAnswer
+      },
+      currentAnswer: '',
       currentWord: nextWord
     }
   },
   QUIZ_RESET: (state) => ({
     ...state,
+    userAnswers: {},
+    currentAnswer: '',
     currentWord: 0,
-    userAnswers: [],
     isComplete: false
-  })
+  }),
+  QUIZ_ANSWER_ONCHANGE: (state, { payload }) => ({...state, currentAnswer: payload})
 }, defaultState)
