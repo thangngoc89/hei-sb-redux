@@ -22,6 +22,10 @@ class Word extends Component {
     this.input.getInputDOMNode().focus()
   }
 
+  componentWillReceiveProps () {
+    this.input.getInputDOMNode().focus()
+  }
+
   onChange (e) {
     let input = e.target.value
     this.props.handleOnChange(input)
@@ -42,19 +46,19 @@ class Word extends Component {
     return (
       <div>
         <Row>
-          <Col xs={10}>
+          <Col xs={8} sm={9} md={10}>
             <WordNavigator
               current={this.props.wordCurrent}
               total={this.props.wordTotal}
             />
             <hr />
           </Col>
-          <Col xs={2}>
+          <Col xs={4} sm={3} md={2}>
             <CountdownClock
               seconds={10}
               color='#8904B1'
               alpha={0.8}
-              size={60}
+              size={200}
               onComplete={this.props.handleTimeOut}
               shouldComponentUpdate={this.props.shouldComponentUpdate}
             />
@@ -90,7 +94,7 @@ class Word extends Component {
 
         <WordModal
           show={this.props.isTimeOut}
-          close={this.props.handleNextWord}
+          close={this.nextWord.bind(this)}
         />
       </div>
     )
