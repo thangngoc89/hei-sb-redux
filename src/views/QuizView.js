@@ -52,7 +52,7 @@ class QuizView extends Component {
     } else {
       component =
       <Word
-        word={this.currentWord}
+        word={this.currentWord()}
         wordCurrent={this.props.currentWord}
         wordTotal={this.props.wordList.length}
         handleNextWord={this.props.nextWord}
