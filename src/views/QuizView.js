@@ -21,6 +21,7 @@ class QuizView extends Component {
     currentAnswer: PropTypes.string.isRequired,
     shouldComponentUpdate: PropTypes.bool.isRequired,
     timeOut: PropTypes.bool.isRequired,
+    error: PropTypes.any.isRequired,
     // Below props are actions
     onTimeOut: PropTypes.func.isRequired,
     fetchQuizData: PropTypes.func.isRequired,
@@ -48,8 +49,10 @@ class QuizView extends Component {
 
     if (this.props.isLoading) {
       component = <LoadingScreen />
+    } else if (this.props.error) {
+      component = <ErrorScreen message={this.props.error} title='Error while getting word list' />
     } else if (this.props.wordList.length < 1) {
-      component = <ErrorScreen message='No words are available' />
+      component = <ErrorScreen message='No words are available' title='Logic Error'/>
     } else if (this.props.isComplete) {
       component = <EndScreen />
     } else {

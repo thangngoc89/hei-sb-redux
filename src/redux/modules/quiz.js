@@ -6,6 +6,7 @@ import shuffle from 'lodash.shuffle'
 // ------------------------------------
 export const QUIZ_REQUEST_DATA = 'QUIZ_REQUEST_DATA'
 export const QUIZ_RECEIVE_DATA = 'QUIZ_RECEIVE_DATA'
+export const QUIZ_RECEIVE_DATA_ERROR = 'QUIZ_RECEIVE_DATA_ERROR'
 export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
 export const QUIZ_RESET = 'QUIZ_RESET'
 export const QUIZ_ANSWER_ONCHANGE = 'QUIZ_ANSWER_ONCHANGE'
@@ -15,6 +16,7 @@ export const QUIZ_TIMEOUT = 'QUIZ_TIMEOUT'
 // ------------------------------------
 export const requestData = createAction(QUIZ_REQUEST_DATA)
 export const receiveData = createAction(QUIZ_RECEIVE_DATA, (data) => data)
+export const receiveDataError = createAction(QUIZ_RECEIVE_DATA_ERROR, (error) => (error))
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const resetQuiz = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
@@ -32,8 +34,13 @@ export const fetchQuizData = () => {
       .set('X-Parse-Application-Id', 'wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX')
       .set('X-Parse-REST-API-Key', 'sViFSueciljQ1aTmNwAJ9vTHbE9zcIEwMCSXzx20')
       .send()
-      .end(function(err, res){
-        dispatch(receiveData(res.body))
+      .end(function (err, res) {
+        if (err) {
+          dispatch(receiveDataError(err))
+          // TODO: Send request to reset user's code
+        } else {
+          dispatch(receiveData(res.body))
+        }
       })
   }
 }
@@ -53,6 +60,7 @@ let defaultState = {
   wordList: [],
   userAnswers: {},
   currentAnswer: '',
+  error: false,
   currentWord: 0,
   // Show loading indicator
   isLoading: true,
@@ -75,6 +83,10 @@ export default handleActions({
       wordList: result
     }
   },
+  QUIZ_RECEIVE_DATA_ERROR: (state, { payload }) => ({
+    ...state,
+    error: payload
+  }),
   QUIZ_NEXT_WORD: (state) => {
     let nextWord = state.currentWord + 1
     let isComplete = false

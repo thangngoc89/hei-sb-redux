@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react'
 
-const ErrorScreen = ({ message }) => {
+const ErrorScreen = ({ message, title }) => {
   return (
-    <em>{message}</em>
+    <div>
+      <h1>Error: {title}</h1>
+      {message}
+    </div>
   )
 }
 
 ErrorScreen.propTypes = {
-  message: PropTypes.string.isRequired
+  message: PropTypes.any.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default ErrorScreen
