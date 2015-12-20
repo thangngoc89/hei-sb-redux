@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router'
-
+import styles from './style.scss'
 const EndScreen = () => {
   return (
     <div>
-      <em>Completed</em>
-      <br />
-      <Link to='/'>return home</Link>
+      <h1 className={styles.center}>Congratulations!</h1>
+      <hr />
+      <p>You have finished the test.</p>
+      <p>We really appreciate your partipation</p>
+      <h4>Thank you so much</h4>
     </div>
   )
 }

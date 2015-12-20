@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Input } from 'react-bootstrap'
+import WordNavigator from 'components/WordNavigator'
 
 class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired,
+    wordTotal: PropTypes.number.isRequired,
+    wordCurrent: PropTypes.number.isRequired,
     currentAnswer: PropTypes.string.isRequired,
     handleOnChange: PropTypes.func.isRequired,
-    // handleSubmit: PropTypes.func.isRequired,
     handleNextWord: PropTypes.func.isRequired
   }
 
@@ -29,13 +31,16 @@ class Word extends Component {
 
     return (
       <div>
-        <p>Word render goes here</p>
-        <p>word {w.word}</p>
+        <WordNavigator
+          current={this.props.wordCurrent}
+          total={this.props.wordTotal}
+        />
+        <p>word <em>{w.word}</em></p>
         <p>Filename {w.fileName}</p>
 
         <Input
           type='text'
-          label='Your answer'
+          label='Type your answer into the field below'
           ref={(ref) => this.input = ref}
           onChange={this.onChange.bind(this)}
           value={this.props.currentAnswer}
