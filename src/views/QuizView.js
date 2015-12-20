@@ -20,7 +20,9 @@ class QuizView extends Component {
     currentWord: PropTypes.number.isRequired,
     currentAnswer: PropTypes.string.isRequired,
     shouldComponentUpdate: PropTypes.bool.isRequired,
+    timeOut: PropTypes.bool.isRequired,
     // Below props are actions
+    onTimeOut: PropTypes.func.isRequired,
     fetchQuizData: PropTypes.func.isRequired,
     nextWord: PropTypes.func.isRequired,
     resetQuiz: PropTypes.func,
@@ -60,6 +62,8 @@ class QuizView extends Component {
         handleOnChange={this.props.answerOnChange}
         currentAnswer={this.props.currentAnswer}
         shouldComponentUpdate={this.props.shouldComponentUpdate}
+        isTimeOut={this.props.timeOut}
+        handleTimeOut={this.props.onTimeOut}
       />
     }
     let resetButton = <Button bsStyle='danger' onClick={this.props.resetQuiz}>Reset Quiz</Button>

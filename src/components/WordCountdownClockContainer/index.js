@@ -7,11 +7,11 @@ class WordCountdownClockContainer extends Component {
     size: PropTypes.number,
     color: PropTypes.string,
     alpha: PropTypes.number,
-    onComplete: PropTypes.func,
+    onComplete: PropTypes.func.isRequired,
     shouldComponentUpdate: PropTypes.bool.isRequired
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     return nextProps.shouldComponentUpdate
   }
 

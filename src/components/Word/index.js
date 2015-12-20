@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Button, Input } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
 import CountdownClock from 'components/WordCountdownClockContainer'
+import WordModal from 'components/WordModal'
 
 class Word extends Component {
   static propTypes = {
@@ -9,7 +10,9 @@ class Word extends Component {
     wordTotal: PropTypes.number.isRequired,
     wordCurrent: PropTypes.number.isRequired,
     shouldComponentUpdate: PropTypes.bool.isRequired,
+    isTimeOut: PropTypes.bool.isRequired,
     currentAnswer: PropTypes.string.isRequired,
+    handleTimeOut: PropTypes.func.isRequired,
     handleOnChange: PropTypes.func.isRequired,
     handleNextWord: PropTypes.func.isRequired
   }
@@ -45,6 +48,7 @@ class Word extends Component {
           color='#8904B1'
           alpha={0.5}
           size={50}
+          onComplete={this.props.handleTimeOut}
           shouldComponentUpdate={this.props.shouldComponentUpdate}
         />
 
@@ -59,6 +63,11 @@ class Word extends Component {
         <Button onClick={this.nextWord.bind(this)}>
           Next Word
         </Button>
+
+        <WordModal
+          show={this.props.isTimeOut}
+          close={this.props.handleNextWord}
+        />
       </div>
     )
   }
