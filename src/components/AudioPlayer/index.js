@@ -11,9 +11,24 @@ class AudioPlayer extends React.Component {
       mute: false
     }
   }
+
   static propTypes = {
     song: React.PropTypes.string.isRequired,
     autoplay: React.PropTypes.bool
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.song === this.props.song) {
+      return
+    }
+    this.audio.src = nextProps.song
+    // Prevent accidentally mute
+    this.audio.volume = 1
+    this.setState({
+      propgress: 0,
+      playing: !!nextProps.autoplay,
+      mute: false
+    })
   }
 
   componentDidMount () {
@@ -23,13 +38,14 @@ class AudioPlayer extends React.Component {
     self.audio.autoplay = !!this.props.autoplay
 
     this.audio.addEventListener('timeupdate', self.updateProgress)
-    this.audio.addEventListener('ended', self.toggle)
-    // TODO: handle me
+    this.audio.addEventListener('ended', self.playEnd)
     this.audio.addEventListener('error', self.handleError)
   }
 
   handleError = () => {
+    // TODO: handle me properly
     console.log('audio player error')
+    console.log(this.audio)
   }
 
   updateProgress = () => {
@@ -76,6 +92,13 @@ class AudioPlayer extends React.Component {
     this.audio.pause()
   }
 
+  playEnd = () => {
+    this.setState({
+      playing: false,
+      progress: 0
+    })
+  }
+
   toggle = () => {
     (this.state.playing) ? this.pause() : this.play()
   }
@@ -105,11 +128,7 @@ class AudioPlayer extends React.Component {
 
     return (
       <div className='player-container'>
-        <div className='player-progress-container' onClick={this.setProgress}>
-          <span className='player-progress-value' style={{width: this.state.progress + '%'}}></span>
-        </div>
-
-        <div className='player-options'>
+        <div className='player-control-wrapper'>
           <div className='player-buttons'>
             <button
               onClick={this.toggle}
@@ -125,6 +144,11 @@ class AudioPlayer extends React.Component {
             >
               <i className={volumeClass}></i>
             </button>
+          </div>
+        </div>
+        <div className='player-progress-wrapper'>
+          <div className='player-progress-container' onClick={this.setProgress}>
+            <span className='player-progress-value' style={{width: this.state.progress + '%'}}></span>
           </div>
         </div>
       </div>

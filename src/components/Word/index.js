@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
-import { Button, Input } from 'react-bootstrap'
+import { Button, Input, Row, Col } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
 import CountdownClock from 'components/WordCountdownClockContainer'
 import WordModal from 'components/WordModal'
-import AudioPlayer from 'components/AudioPlayer'
-
+import AudioPlayer from 'components/WordAudioPlayerContainer'
+import styles from './style.scss'
 class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired,
@@ -39,39 +39,54 @@ class Word extends Component {
   }
 
   render () {
-    // <CountdownClock
-    //   seconds={10}
-    //   color='#8904B1'
-    //   alpha={0.5}
-    //   size={50}
-    //   onComplete={this.props.handleTimeOut}
-    //   shouldComponentUpdate={this.props.shouldComponentUpdate}
-    // />
-
     return (
       <div>
-        <WordNavigator
-          current={this.props.wordCurrent}
-          total={this.props.wordTotal}
-        />
-        <p>Word: <em>{this.props.word.word}</em></p>
-
-        <Input
-          type='text'
-          label='Type your answer into the field below'
-          ref={(ref) => this.input = ref}
-          onChange={this.onChange.bind(this)}
-          value={this.props.currentAnswer}
-        />
-
-        <Button onClick={this.nextWord.bind(this)}>
-          Next Word
-        </Button>
+        <Row>
+          <Col xs={10}>
+            <WordNavigator
+              current={this.props.wordCurrent}
+              total={this.props.wordTotal}
+            />
+            <hr />
+          </Col>
+          <Col xs={2}>
+            <CountdownClock
+              seconds={10}
+              color='#8904B1'
+              alpha={0.8}
+              size={60}
+              onComplete={this.props.handleTimeOut}
+              shouldComponentUpdate={this.props.shouldComponentUpdate}
+            />
+          </Col>
+        </Row>
 
         <AudioPlayer
           song={this.getCurrentWordUrl()}
           autoplay
+          shouldComponentUpdate={this.props.shouldComponentUpdate}
         />
+
+        <Input
+          type='text'
+          label='Type your answer into the field below:'
+          ref={(ref) => this.input = ref}
+          onChange={this.onChange.bind(this)}
+          value={this.props.currentAnswer}
+          groupClassName={styles['input-wrapper']}
+        />
+
+        <Row>
+          <Col xs={12}>
+            <Button
+              onClick={this.nextWord.bind(this)}
+              className='pull-right'
+              bsStyle='primary'
+            >
+              Submit
+            </Button>
+          </Col>
+        </Row>
 
         <WordModal
           show={this.props.isTimeOut}
