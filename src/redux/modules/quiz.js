@@ -1,4 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
+import request from 'superagent'
+import shuffle from 'lodash.shuffle'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -19,15 +21,20 @@ export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => ans
 export const onTimeOut = createAction(QUIZ_TIMEOUT, (word) => word)
 
 export const fetchQuizData = () => {
-  // Fake a api request here
-  let data = require('../data/quiz')
-
+  // curl -X POST \
+  //   -H "X-Parse-Application-Id: wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX" \
+  //   -H "X-Parse-REST-API-Key: sViFSueciljQ1aTmNwAJ9vTHbE9zcIEwMCSXzx20" \
+  //   https://api.parse.com/1/functions/wordList
   return (dispatch, getState) => {
     dispatch(requestData())
 
-    setTimeout(() => {
-      dispatch(receiveData(data))
-    }, 500)
+    request.post('https://api.parse.com/1/functions/wordList')
+      .set('X-Parse-Application-Id', 'wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX')
+      .set('X-Parse-REST-API-Key', 'sViFSueciljQ1aTmNwAJ9vTHbE9zcIEwMCSXzx20')
+      .send()
+      .end(function(err, res){
+        dispatch(receiveData(res.body))
+      })
   }
 }
 
@@ -59,11 +66,15 @@ let defaultState = {
 
 export default handleActions({
   QUIZ_REQUEST_DATA: (state, { payload }) => ({...state, isLoading: true}),
-  QUIZ_RECEIVE_DATA: (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    wordList: payload.data.wordList
-  }),
+  QUIZ_RECEIVE_DATA: (state, { payload }) => {
+    let result = shuffle(payload.result)
+
+    return {
+      ...state,
+      isLoading: false,
+      wordList: result
+    }
+  },
   QUIZ_NEXT_WORD: (state) => {
     let nextWord = state.currentWord + 1
     let isComplete = false

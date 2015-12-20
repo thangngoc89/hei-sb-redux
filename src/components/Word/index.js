@@ -37,9 +37,7 @@ class Word extends Component {
   }
 
   getCurrentWordUrl () {
-    // TODO: Fix me. Read me from received data
-    let url = 'http://localhost:8000/' + this.props.word.fileName
-    return url
+    return this.props.word.soundFile
   }
 
   render () {
