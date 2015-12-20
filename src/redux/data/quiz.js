@@ -1,11 +1,7 @@
 // Fake an api request
 export default {
   status: 200,
-  meta: {
-    baseUrl: 'http://localhost:8005'
-  },
   data: {
-    testNo: 4,
     wordList: [
       {
         word: 'accuse',
