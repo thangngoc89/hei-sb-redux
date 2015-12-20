@@ -96,12 +96,14 @@ export default handleActions({
       nextWord = 0
     }
 
+    let currentWordId = state.wordList[state.currentWord].id
+
     return {
       ...state,
       isComplete,
       userAnswers: {
         ...state.userAnswers,
-        [state.currentWord]: state.currentAnswer
+        [currentWordId]: state.currentAnswer
       },
       currentAnswer: '',
       currentWord: nextWord,
