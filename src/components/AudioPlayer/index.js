@@ -79,7 +79,7 @@ class AudioPlayer extends React.Component {
     this.stop()
     this._interval = setInterval(() => {
       this.updateSeek()
-    }, 1000 / 60)
+    }, 1000 / 30)
   }
 
   stop () {
@@ -141,11 +141,11 @@ class AudioPlayer extends React.Component {
       'fa-pause': this.props.isPlaying
     })
 
-    let volumeClass = classnames({
-      'fa': true,
-      'fa-volume-up': !this.props.mute,
-      'fa-volume-off': this.props.mute
-    })
+    // let volumeClass = classnames({
+    //   'fa': true,
+    //   'fa-volume-up': !this.props.mute,
+    //   'fa-volume-off': this.props.mute
+    // })
 
     let loopClass = classnames({
       'player-btn': true,
@@ -170,13 +170,6 @@ class AudioPlayer extends React.Component {
               title='Repeat'
             >
               <i className='fa fa-repeat'></i>
-            </button>
-            <button
-              className='player-btn volume'
-              onClick={this.actionToggleMute}
-              title='Mute/Unmute'
-            >
-              <i className={volumeClass}></i>
             </button>
           </div>
         </div>
