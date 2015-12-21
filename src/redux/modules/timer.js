@@ -26,14 +26,14 @@ let defaultState = {
 }
 
 export default handleActions({
-  TIMER_START: (state, { payload }) => ({
+  [TIMER_START]: (state, { payload }) => ({
     ...state,
     startTime: Date.now(),
     seconds: payload,
     remain: payload,
     finished: false
   }),
-  TIMER_TICK: (state, { payload }) => {
+  [TIMER_TICK]: (state, { payload }) => {
     let remain = state.seconds - (state.startTime - Date.now())
     let finished = (remain < 0)
 

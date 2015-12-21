@@ -54,22 +54,22 @@ let defaultState = {
 }
 
 export default handleActions({
-  PLAYER_ACTION_CHANGE_SOURCE: (state, { payload }) => {
+  [PLAYER_ACTION_CHANGE_SOURCE]: (state, { payload }) => {
     // TODO: Handle url validation here
     return {
       ...state,
       song: payload
     }
   },
-  PLAYER_ACTION_PLAY: (state) => ({
+  [PLAYER_ACTION_PLAY]: (state) => ({
     ...state,
     isPlaying: true
   }),
-  PLAYER_ACTION_TOGGLE: (state) => ({
+  [PLAYER_ACTION_TOGGLE]: (state) => ({
     ...state,
     isPlaying: !state.isPlaying
   }),
-  PLAYER_ACTION_VOLUME: (state, { payload }) => {
+  [PLAYER_ACTION_VOLUME]: (state, { payload }) => {
     if (typeof payload !== 'number') {
       throw new TypeError('Volume has to be a float between 0 and 1')
     }
@@ -79,24 +79,24 @@ export default handleActions({
       volume: payload
     }
   },
-  PLAYER_ACTION_TOGGLE_MUTE: (state) => ({
+  [PLAYER_ACTION_TOGGLE_MUTE]: (state) => ({
     ...state,
     mute: !state.mute
   }),
-  PLAYER_ON_PLAY: (state) => ({
+  [PLAYER_ON_PLAY]: (state) => ({
     ...state,
     isPlaying: true
   }),
-  PLAYER_ON_END: (state) => ({
+  [PLAYER_ON_END]: (state) => ({
     ...state,
     isPlaying: false,
     seek: 0
   }),
-  PLAYER_ACTION_UPDATE_SEEK: (state, { payload }) => ({
+  [PLAYER_ACTION_UPDATE_SEEK]: (state, { payload }) => ({
     ...state,
     seek: payload
   }),
-  PLAYER_ACTION_TOGGLE_LOOP: (state) => ({
+  [PLAYER_ACTION_TOGGLE_LOOP]: (state) => ({
     ...state,
     loop: !state.loop
   })

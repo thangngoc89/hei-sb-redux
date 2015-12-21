@@ -76,8 +76,8 @@ let defaultState = {
 }
 
 export default handleActions({
-  QUIZ_REQUEST_DATA: (state, { payload }) => ({...state, isLoading: true}),
-  QUIZ_RECEIVE_DATA: (state, { payload }) => {
+  [QUIZ_REQUEST_DATA]: (state, { payload }) => ({...state, isLoading: true}),
+  [QUIZ_RECEIVE_DATA]: (state, { payload }) => {
     let result = shuffle(payload.result)
 
     return {
@@ -86,11 +86,11 @@ export default handleActions({
       wordList: result
     }
   },
-  QUIZ_RECEIVE_DATA_ERROR: (state, { payload }) => ({
+  [QUIZ_RECEIVE_DATA_ERROR]: (state, { payload }) => ({
     ...state,
     error: payload
   }),
-  QUIZ_NEXT_WORD: (state) => {
+  [QUIZ_NEXT_WORD]: (state) => {
     let nextWord = state.currentWord + 1
     let isComplete = false
 
@@ -114,17 +114,17 @@ export default handleActions({
       timeOut: false
     }
   },
-  QUIZ_RESET: (state) => ({
+  [QUIZ_RESET]: (state) => ({
     ...defaultState,
     isLoading: false,
     wordList: state.wordList
   }),
-  QUIZ_ANSWER_ONCHANGE: (state, { payload }) => ({
+  [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => ({
     ...state,
     currentAnswer: payload,
     shouldComponentUpdate: false
   }),
-  QUIZ_TIMEOUT: (state) => ({
+  [QUIZ_TIMEOUT]: (state) => ({
     ...state,
     timeOut: true,
     // Prevent clock being update and re-render twice
