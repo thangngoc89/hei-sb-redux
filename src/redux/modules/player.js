@@ -50,7 +50,7 @@ let defaultState = {
   mute: false,
   volume: 1,
   seek: 0,
-  loop: true
+  loop: false
 }
 
 export default handleActions({
