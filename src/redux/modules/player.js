@@ -46,7 +46,7 @@ export const actions = {
 let defaultState = {
   isPlaying: false,
   isLoading: false,
-  autoplay: false,
+  autoplay: true,
   mute: false,
   volume: 1,
   seek: 0,
