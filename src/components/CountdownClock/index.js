@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import styles from './style.scss'
 
 class ReactCountdownClock extends Component {
   constructor (props) {
@@ -120,7 +121,7 @@ class ReactCountdownClock extends Component {
 
   render () {
     return (
-      <canvas className='react-countdown-clock' width={this.props.size} height={this.props.size}></canvas>
+      <canvas className={styles.canvas} width={this.props.size} height={this.props.size}></canvas>
     )
   }
 }
