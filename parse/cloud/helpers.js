@@ -1,10 +1,10 @@
 var _ = require('underscore')
 
-var getRandomNumbers = function(total, start, end) {
+var getRandomNumbers = function (total, start, end) {
   // Generate an array
   var a = []
-  for(var i = start; i <= end; i++)
-  a.push(i)
+  for (var i = start; i <= end; i++)
+    a.push(i)
 
   a = _.shuffle(a)
 

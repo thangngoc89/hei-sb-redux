@@ -8,14 +8,14 @@ var rl = require('readline').createInterface({
 })
 
 // Index for random word generate
-var index = 0;
+var index = 0
 
-var processLine = function(line) {
+var processLine = function (line) {
   var parts = line.split(',')
 
   var word = parts[0]
 
-  index++;
+  index++
 
   return {
     word: word,
@@ -32,14 +32,14 @@ rl.on('line', function (line) {
   var object = new WordObject(word)
 
   console.log('Processed ' + word.word)
-  
+
   wordList.push(object)
-}).on('close', function() {
+}).on('close', function () {
   Parse.Object.saveAll(wordList, {
-    success: function(objs) {
+    success: function (objs) {
       console.log('done')
     },
-    error: function(error) {
+    error: function (error) {
       console.log(error)
     }
   })

@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Input, Row, Col } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
-import CountdownClock from 'components/WordCountdownClockContainer'
+// import CountdownClock from 'components/WordCountdownClockContainer'
 import WordModal from 'components/WordModal'
 import AudioPlayer from 'components/WordAudioPlayerContainer'
 import styles from './style.scss'
+
 class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired,
@@ -33,6 +34,7 @@ class Word extends Component {
 
   nextWord (e) {
     this.props.handleNextWord()
+    // TODO: Handle change music source here
     this.input.getInputDOMNode().focus()
   }
 
@@ -41,6 +43,17 @@ class Word extends Component {
   }
 
   render () {
+    // <Col xs={4} sm={3} md={2}>
+    //   <CountdownClock
+    //     seconds={10}
+    //     color='#8904B1'
+    //     alpha={0.8}
+    //     size={200}
+    //     onComplete={this.props.handleTimeOut}
+    //     shouldComponentUpdate={this.props.shouldComponentUpdate}
+    //   />
+    // </Col>
+
     return (
       <div>
         <Row>
@@ -49,23 +62,14 @@ class Word extends Component {
               current={this.props.wordCurrent}
               total={this.props.wordTotal}
             />
+            <p>Current word: {this.props.word.word}</p>
             <hr />
           </Col>
-          <Col xs={4} sm={3} md={2}>
-            <CountdownClock
-              seconds={10}
-              color='#8904B1'
-              alpha={0.8}
-              size={200}
-              onComplete={this.props.handleTimeOut}
-              shouldComponentUpdate={this.props.shouldComponentUpdate}
-            />
-          </Col>
+
         </Row>
 
         <AudioPlayer
           song={this.getCurrentWordUrl()}
-          autoplay
           shouldComponentUpdate={this.props.shouldComponentUpdate}
         />
 

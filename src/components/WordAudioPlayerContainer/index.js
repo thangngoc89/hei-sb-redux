@@ -1,22 +1,25 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { actions as playerActions } from 'redux/modules/player'
 import AudioPlayer from 'components/AudioPlayer'
 
-class WordAudioPlayerContainer extends Component {
-  static propTypes = {
-    song: PropTypes.string.isRequired,
-    autoplay: PropTypes.bool.isRequired,
-    shouldComponentUpdate: PropTypes.bool.isRequired
-  }
+const mapStateToProps = (state) => ({
+  ...state.player
+})
 
-  shouldComponentUpdate (nextProps) {
-    return nextProps.shouldComponentUpdate
-  }
+class WordAudioPlayerContainer extends Component {
+
+  // shouldComponentUpdate (nextProps) {
+  //   return nextProps.shouldComponentUpdate
+  // }
 
   render () {
     return (
-      <AudioPlayer ref={(node) => this.audio = node} {...this.props} />
+      <AudioPlayer
+        {...this.props}
+      />
     )
   }
 }
 
-export default WordAudioPlayerContainer
+export default connect(mapStateToProps, playerActions)(WordAudioPlayerContainer)

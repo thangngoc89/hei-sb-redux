@@ -9,20 +9,20 @@ var query = new Parse.Query(WordObject)
 query.equalTo('soundFile', undefined)
 // query.limit(1)
 query.find().then(
-  function(res){
+  function (res) {
     if (res.length > 0) {
-      uploadFile (res)
+      uploadFile(res)
     }
   },
-  function(err){
-    console.log("Error while fetching word records")
+  function (err) {
+    console.log('Error while fetching word records')
     console.log(err)
   }
 )
 
 var uploadFile = function (res) {
   for (var i = 0; i < res.length; i++) {
-    doUploadFile (res[i])
+    doUploadFile(res[i])
   }
 }
 
@@ -35,15 +35,15 @@ var doUploadFile = function (object) {
 
   parseFile.save().then(function () {
     return parseFile
-  }, function(err) {
+  }, function (err) {
     console.log('Error while save file' + word + 'to Parse')
     console.log(err)
   }).then(function (parseFile) {
-    object.set("soundFile", parseFile)
+    object.set('soundFile', parseFile)
     return object.save()
-  }).then(function(res) {
+  }).then(function (res) {
     console.log('Object saved:' + word)
-  }, function(error) {
+  }, function (error) {
     console.log('Error while saving object')
-  });
+  })
 }

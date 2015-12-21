@@ -58,6 +58,10 @@
     background-color: $color-main;
     box-shadow: rgba(0,0,0,.2) 0 0 5px 2px;
   }
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .player-control-wrapper {
@@ -86,12 +90,9 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
   color: #D2D7DB;
-
   background-color: transparent;
   border: 0;
-  border-radius: 50%;
   outline: 0;
   transition: all .4s;
 
@@ -102,6 +103,10 @@
 
   &.active {
     color: #838C92;
+  }
+
+  &:hover {
+    color: #fff;
   }
 
   &.big {

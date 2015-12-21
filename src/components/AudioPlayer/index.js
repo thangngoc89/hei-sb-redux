@@ -1,129 +1,156 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import { Howl } from 'howler'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      progress: 0,
-      playing: !!this.props.autoplay,
-      mute: false
-    }
+    this._audio = null
+    this._interval = null
   }
 
   static propTypes = {
-    song: React.PropTypes.string.isRequired,
-    autoplay: React.PropTypes.bool
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.song === this.props.song) {
-      return
-    }
-    this.audio.src = nextProps.song
-    // Prevent accidentally mute
-    this.audio.volume = 1
-    this.setState({
-      propgress: 0,
-      playing: !!nextProps.autoplay,
-      mute: false
-    })
+    // props
+    song: PropTypes.string.isRequired,
+    autoplay: PropTypes.bool.isRequired,
+    mute: PropTypes.bool.isRequired,
+    loop: PropTypes.bool.isRequired,
+    seek: PropTypes.number.isRequired,
+    // state
+    isPlaying: PropTypes.bool.isRequired,
+    // action
+    actionToggle: PropTypes.func.isRequired,
+    actionToggleMute: PropTypes.func.isRequired,
+    actionToggleLoop: PropTypes.func.isRequired,
+    actionUpdateSeek: PropTypes.func.isRequired,
+    onPlay: PropTypes.func.isRequired,
+    onEnd: PropTypes.func.isRequired,
+    onLoad: PropTypes.func.isRequired
   }
 
   componentDidMount () {
-    let self = this
-    self.audio = document.createElement('audio')
-    self.audio.src = self.props.song
-    self.audio.autoplay = !!this.props.autoplay
-
-    this.audio.addEventListener('timeupdate', self.updateProgress)
-    this.audio.addEventListener('ended', self.playEnd)
-    this.audio.addEventListener('error', self.handleError)
+    this.initSoundObject()
   }
 
-  handleError = () => {
-    // TODO: handle me properly
-    console.log('audio player error')
-    console.log(this.audio)
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.song !== this.props.song) {
+      this.initSoundObject(nextProps)
+    }
   }
 
-  updateProgress = () => {
-    let duration = this.audio.duration
-    let currentTime = this.audio.currentTime
+  initSoundObject (props = this.props) {
+    this.clearSoundObject()
+    this._audio = new Howl({
+      src: props.song,
+      autoplay: props.autoplay,
+      mute: props.mute,
+      loop: props.loop,
+      onend: this.onEnd,
+      onplay: this.onPlay,
+      onload: props.onLoad,
+      onloaderror: this.onLoadError
+    })
+  }
+
+  clearSoundObject () {
+    if (this._audio) {
+      this._audio.unload()
+      this._audio = null
+    }
+    this.stop()
+  }
+
+  onPlay = (id) => {
+    this.props.onPlay(id)
+    this.tick()
+  }
+
+  onEnd = (id) => {
+    this.props.onEnd(id)
+    this.stop()
+  }
+
+  onLoadError = (id, message) => {
+    throw new Error(message)
+  }
+
+  tick () {
+    this.stop()
+    this._interval = setInterval(() => {
+      this.updateSeek()
+    }, 1000 / 60)
+  }
+
+  stop () {
+    if (this._interval) {
+      clearInterval(this._interval)
+    }
+  }
+
+  updateSeek () {
+    let duration = this._audio.duration()
+    let currentTime = this._audio.seek()
     let progress = (currentTime * 100) / duration
 
-    this.setState({
-      progress: progress
-    })
+    this.props.actionUpdateSeek(progress)
   }
 
-  setProgress = (e) => {
-    let target = e.target.nodeName === 'SPAN' ? e.target.parentNode : e.target
-    let width = target.clientWidth
-    let rect = target.getBoundingClientRect()
-    let offsetX = e.clientX - rect.left
-    let duration = this.audio.duration
-    let currentTime = (duration * offsetX) / width
-    let progress = (currentTime * 100) / duration
+  // setProgress = (e) => {
+  //   let target = e.target.nodeName === 'SPAN' ? e.target.parentNode : e.target
+  //   let width = target.clientWidth
+  //   let rect = target.getBoundingClientRect()
+  //   let offsetX = e.clientX - rect.left
+  //   let duration = this.audio.duration
+  //   let currentTime = (duration * offsetX) / width
+  //   let progress = (currentTime * 100) / duration
+  //
+  //   this.audio.currentTime = currentTime
+  //
+  //   this.setState({
+  //     progress: progress
+  //   })
+  //
+  //   this.play()
+  // }
 
-    this.audio.currentTime = currentTime
+  actionToggle = () => {
+    if (this._audio.playing) {
+      this._audio.play()
+    } else {
+      this._audio.pause()
+    }
 
-    this.setState({
-      progress: progress
-    })
-
-    this.play()
+    this.props.actionToggle()
   }
 
-  play = () => {
-    this.setState({
-      playing: true
-    })
-
-    this.audio.play()
+  actionToggleMute = () => {
+    this.props.actionToggleMute()
+    this._audio.mute(!this.props.mute)
   }
 
-  pause = () => {
-    this.setState({
-      playing: false
-    })
-
-    this.audio.pause()
-  }
-
-  playEnd = () => {
-    this.setState({
-      playing: false,
-      progress: 0
-    })
-  }
-
-  toggle = () => {
-    (this.state.playing) ? this.pause() : this.play()
-  }
-
-  toggleMute = () => {
-    let mute = this.state.mute
-
-    this.setState({
-      mute: !mute
-    })
-
-    this.audio.volume = (mute) ? 1 : 0
+  actionToggleLoop = () => {
+    this.props.actionToggleLoop()
+    this._audio.loop(!this.props.loop)
   }
 
   render () {
     let playPauseClass = classnames({
       'fa': true,
-      'fa-play': !this.state.playing,
-      'fa-pause': this.state.playing
+      'fa-play': !this.props.isPlaying,
+      'fa-pause': this.props.isPlaying
     })
 
     let volumeClass = classnames({
       'fa': true,
-      'fa-volume-up': !this.state.mute,
-      'fa-volume-off': this.state.mute
+      'fa-volume-up': !this.props.mute,
+      'fa-volume-off': this.props.mute
+    })
+
+    let loopClass = classnames({
+      'player-btn': true,
+      'loop': true,
+      'active': this.props.loop
     })
 
     return (
@@ -131,15 +158,22 @@ class AudioPlayer extends React.Component {
         <div className='player-control-wrapper'>
           <div className='player-buttons'>
             <button
-              onClick={this.toggle}
+              onClick={this.actionToggle}
               className='player-btn'
               title='Play/Pause'
             >
               <i className={playPauseClass}></i>
             </button>
             <button
+              className={loopClass}
+              onClick={this.actionToggleLoop}
+              title='Repeat'
+            >
+              <i className='fa fa-repeat'></i>
+            </button>
+            <button
               className='player-btn volume'
-              onClick={this.toggleMute}
+              onClick={this.actionToggleMute}
               title='Mute/Unmute'
             >
               <i className={volumeClass}></i>
@@ -148,7 +182,7 @@ class AudioPlayer extends React.Component {
         </div>
         <div className='player-progress-wrapper'>
           <div className='player-progress-container' onClick={this.setProgress}>
-            <span className='player-progress-value' style={{width: this.state.progress + '%'}}></span>
+            <span className='player-progress-value' style={{width: this.props.seek + '%'}}></span>
           </div>
         </div>
       </div>

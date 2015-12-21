@@ -1,10 +1,10 @@
 var helpers = require('cloud/helpers')
 
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!")
+Parse.Cloud.define('hello', function (request, response) {
+  response.success('Hello world!')
 })
 
-Parse.Cloud.define("wordList", function(req, res) {
+Parse.Cloud.define('wordList', function (req, res) {
   var indexes = helpers.getRandomNumbers(30, 1, 120)
 
   var query = new Parse.Query('Word')
@@ -26,13 +26,13 @@ Parse.Cloud.define("wordList", function(req, res) {
 })
 
 // Set Code isValid and isDone value
-Parse.Cloud.beforeSave("Code", function(request, response) {
-  if (!request.object.get("isValid")) {
-    request.object.set("isValid", true)
+Parse.Cloud.beforeSave('Code', function (request, response) {
+  if (!request.object.get('isValid')) {
+    request.object.set('isValid', true)
   }
 
-  if (!request.object.get("isDone")) {
-    request.object.set("isDone", false)
+  if (!request.object.get('isDone')) {
+    request.object.set('isDone', false)
   }
 
   response.success()

@@ -23,11 +23,14 @@ export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => ans
 export const onTimeOut = createAction(QUIZ_TIMEOUT, (word) => word)
 
 export const fetchQuizData = () => {
-  // curl -X POST \
-  //   -H "X-Parse-Application-Id: wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX" \
-  //   -H "X-Parse-REST-API-Key: sViFSueciljQ1aTmNwAJ9vTHbE9zcIEwMCSXzx20" \
-  //   https://api.parse.com/1/functions/wordList
   return (dispatch, getState) => {
+    // Fake an API request in development mode
+    if (__DEV__) {
+      let data = require('redux/data/quiz')
+      dispatch(receiveData(data))
+      return
+    }
+
     dispatch(requestData())
 
     request.post('https://api.parse.com/1/functions/wordList')
