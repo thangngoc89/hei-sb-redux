@@ -115,10 +115,11 @@ class AudioPlayer extends React.Component {
   // }
 
   actionToggle = () => {
-    if (this._audio.playing) {
+    if (!this._audio.playing()) {
       this._audio.play()
     } else {
       this._audio.pause()
+      this.stop()
     }
 
     this.props.actionToggle()
