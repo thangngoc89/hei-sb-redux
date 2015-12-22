@@ -1,5 +1,3 @@
-var fs = require('fs')
-var path = require('path')
 var getSoundFileData = require('./getSoundFileData')
 var Parse = require('parse/node')
 Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
@@ -44,6 +42,6 @@ var doUploadFile = function (object) {
   }).then(function (res) {
     console.log('Object saved:' + word)
   }, function (error) {
-    console.log('Error while saving object')
+    console.error('Error while saving object' + error)
   })
 }

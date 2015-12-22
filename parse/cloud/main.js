@@ -21,7 +21,10 @@ Parse.Cloud.define('wordList', function (req, res) {
 
         res.success(wordList)
       }, function (error) {
-        res.error('Get random word list failed')
+        res.error({
+          message: 'Get random word list failed',
+          error: error
+        })
       })
 })
 

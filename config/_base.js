@@ -45,7 +45,7 @@ const config = {
     'redux',
     'redux-actions',
     'redux-simple-router',
-    'redux-form',
+    'redux-form'
   ],
 
   // ----------------------------------

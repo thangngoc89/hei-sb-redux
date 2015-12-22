@@ -11,8 +11,8 @@ var getSoundFilePath = function (word) {
 
   for (var i = 0; i < files.length; i++) {
     if (regex.test(files[i])) {
-      var path = _path.join(__dirname, 'data/sound', files[i])
-      return path
+      var returnPath = _path.join(__dirname, 'data/sound', files[i])
+      return returnPath
     }
   }
 
@@ -23,9 +23,8 @@ var getSoundFilePath = function (word) {
 var getSoundFileData = function (word) {
   var path = getSoundFilePath(word)
 
-  if ( !path ) {
-    throw 'Can not find sound file for :' + word
-    return
+  if (!path) {
+    throw new Error('Can not find sound file for :' + word)
   }
 
   var fileData = fs.readFileSync(path)

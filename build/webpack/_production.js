@@ -17,7 +17,6 @@ export default (webpackConfig) => {
 
   debug('Apply ExtractTextPlugin to CSS loaders.')
   webpackConfig.module.loaders = webpackConfig.module.loaders.map(loader => {
-
     if (/css/.test(loader.test) || /loader/.test(loader.test)) {
       const [first, ...rest] = loader.loaders
       loader.loader = ExtractTextPlugin.extract(first, rest.join('!'))
