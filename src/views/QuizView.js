@@ -29,15 +29,26 @@ class QuizView extends Component {
   }
 
   componentDidMount () {
-    // TODO: Handle data fetching error
     this.props.fetchQuizData()
+    window.onbeforeunload = this.onBeforeUnload
+  }
+
+  onBeforeUnload = (e) => {
+    if (this.props.isComplete) {
+      return
+    }
+    let message = 'You are doing the exam. You CAN NOT do it again once you leave.'
+    e = e || window.event
+    if (e) {
+      e.returnValue = message
+    }
+    return message
   }
 
   currentWord () {
     let word = this.props.wordList[this.props.currentWord]
     if (undefined === word) {
-      // TODO: Handle this properly
-      // throw 'Word is not defined'
+      throw new Error('Word is not defined')
     }
     return word
   }
