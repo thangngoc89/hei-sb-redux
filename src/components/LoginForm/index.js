@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
-import CSSModules from 'react-css-modules'
 import { Button } from 'react-bootstrap'
-import styles from './style.scss'
 import LoginFormInput from './LoginFormInput'
+import validator from './LoginFormValidator'
+import styles from './style.scss'
 
 const fields = ['fullName', 'DOB', 'university', 'email', 'code']
 
@@ -11,27 +11,31 @@ export class LoginForm extends React.Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired
+    submitting: PropTypes.bool.isRequired,
+    pristine: PropTypes.bool.isRequired,
+    invalid: PropTypes.bool.isRequired
   }
 
   render () {
     const {
       fields: {fullName, DOB, university, email, code},
       handleSubmit,
-      submitting
+      submitting,
+      pristine,
+      invalid
     } = this.props
     return (
       <form onSubmit={handleSubmit}>
-        <LoginFormInput displayName='Full name' icon='name' {...fullName} />
-        <LoginFormInput displayName='Day of Birth' icon='dob' {...DOB} />
-        <LoginFormInput displayName='University' icon='university' {...university} />
-        <LoginFormInput displayName='Email' icon='email' type='email' {...email} />
-        <LoginFormInput displayName='Code' icon='code' {...code} />
+        <LoginFormInput displayName='Full name' icon='name' object={fullName} />
+        <LoginFormInput displayName='Day of Birth' icon='dob' object={DOB} />
+        <LoginFormInput displayName='University' icon='university' object={university} />
+        <LoginFormInput displayName='Email' icon='email' type='email' object={email} />
+        <LoginFormInput displayName='Code' icon='code' object={code} />
         <Button
           block
-          disabled={submitting}
           onClick={handleSubmit}
-          styleName='submit-button'
+          className={styles['submit-button']}
+          disabled={pristine || invalid || submitting}
         >
           {submitting ? 'Loading...' : 'Submit'}
         </Button>
@@ -40,11 +44,10 @@ export class LoginForm extends React.Component {
   }
 }
 
-LoginForm = CSSModules(LoginForm, styles)
-
 LoginForm = reduxForm({
   form: 'login',
-  fields
+  fields,
+  validate: validator
 })(LoginForm)
 
 export default LoginForm

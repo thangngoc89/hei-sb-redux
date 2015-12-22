@@ -2,7 +2,7 @@
 @import "breakpoints";
 
 .button-main-color {
-	border: #fbfbfb solid 0.25rem;
+	border: $color-light solid 0.25rem;
 	background-color: $color-main;
 	color: #fff;
 	font-size: $font-size-lg;
@@ -21,13 +21,22 @@
 
 	// TODO: Make swipe to right effect
 	&:hover {
-		background-color: #fbfbfb;
+		background-color: $color-light;
 		color: $color-main;
 	}
 
 	&:focus {
-		background-color: #fbfbfb;
+		background-color: $color-light;
 		border-color: $color-main;
 		color: $color-main;
+	}
+
+	&:disabled {
+		background-color: $color-grey;
+		color: $color-light;
+	}
+
+	&:hover:disabled {
+		background-color: lighten($color-grey, 10%);
 	}
 }

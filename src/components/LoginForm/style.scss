@@ -7,6 +7,14 @@
 	@extend .button-main-color;
 }
 
+.inputDiv {
+	margin-bottom: 1.5rem;
+}
+
+.group {
+	margin-bottom: 0.2rem;
+}
+
 .input {
 	color: #3c3c3c;
   font-weight: 500;
@@ -15,13 +23,11 @@
 	line-height: 1.5rem;
 	background: #fbfbfb;
 	padding: 0.825rem 0.825rem 0.825rem 3.375rem;
-	margin-bottom: 1.5rem;
 	width:100%;
 	box-sizing: border-box;
-  border: 3px solid $color-transparent;
+  border: 0.25rem solid $color-transparent;
 
  &:focus {
-		box-shadow: 0;
 		border: 0.25rem solid $color-main;
 		color: $color-main;
 		outline: none;
