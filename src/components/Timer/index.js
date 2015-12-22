@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import styles from './style.scss'
 
 class Timer extends React.Component {
   constructor (props) {
     super(props)
     this._canvas = null
-    this._interval = null
+    this._timeout = null
   }
 
   static defaultProps = {
@@ -16,43 +17,42 @@ class Timer extends React.Component {
     size: PropTypes.number,
     seconds: PropTypes.number.isRequired,
     remain: PropTypes.number.isRequired,
-    tick: PropTypes.func.isRequired,
-    onComplete: PropTypes.func,
-    startTick: PropTypes.bool.isRequired
+    ticking: PropTypes.bool.isRequired,
+    // Actions
+    timerTick: PropTypes.func.isRequired
   }
 
   componentDidMount () {
     this.scaleSetup()
     this.canvasSetup()
     this.canvasDraw(this.props)
-    if (this.props.startTick) {
+    if (this.props.ticking) {
       this.tick()
     }
   }
 
   componentWillReceiveProps (props) {
     this.canvasDraw(props)
-    if (props.startTick) {
+    if (props.ticking) {
       this.tick()
+    }
+    if (props.seconds === 0) {
+      this.stopTick()
     }
   }
 
   componentWillUnmount () {
-    clearInterval(this._interval)
+    this.stopTick()
   }
 
   tick () {
-    this.stop()
-    this._interval = setInterval(() => {
-      if (this.props.remain <= 0) {
-        return this.stop()
-      }
-      this.props.tick()
+    this._timeout = setTimeout(() => {
+      this.props.timerTick()
     }, 1000)
   }
 
-  stop () {
-    clearInterval(this._interval)
+  stopTick () {
+    clearTimeout(this._timeout)
   }
 
   scaleSetup () {
@@ -81,10 +81,8 @@ class Timer extends React.Component {
     this.canvasClear()
     this.canvasDrawTrack()
     if (!seconds || !remain) return
-    if (remain <= 0) return
     if (remain > seconds) {
-      console.error('LOGIC_ERROR: Remaining seconds can not be larger than total seconds')
-      return
+      throw new Error('Remaining seconds can not be larger than total seconds')
     }
 
     this.canvasDrawRemain(remain, seconds)
@@ -116,7 +114,11 @@ class Timer extends React.Component {
 
   render () {
     return (
-      <canvas width={this.props.size} height={this.props.size}></canvas>
+      <canvas
+        width={this.props.size}
+        height={this.props.size}
+        className={styles.canvas}
+      ></canvas>
     )
   }
 }

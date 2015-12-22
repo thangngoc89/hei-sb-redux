@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import { timerReset } from './timer'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
 // ------------------------------------
@@ -20,7 +21,7 @@ export const receiveDataError = createAction(QUIZ_RECEIVE_DATA_ERROR, (error) =>
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const resetQuiz = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
-export const onTimeOut = createAction(QUIZ_TIMEOUT, (word) => word)
+export const onTimeout = createAction(QUIZ_TIMEOUT)
 
 export const fetchQuizData = () => {
   return (dispatch, getState) => {
@@ -48,18 +49,26 @@ export const fetchQuizData = () => {
   }
 }
 
+export const actionNextWordWithTimer = () => {
+  return (dispatch, getState) => {
+    dispatch(nextWord())
+    dispatch(timerReset())
+  }
+}
+
 export const actions = {
   fetchQuizData,
-  nextWord,
+  nextWord: actionNextWordWithTimer,
   answerOnChange,
-  onTimeOut,
-  resetQuiz
+  resetQuiz,
+  onTimeout
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 let defaultState = {
+  secondsPerWord: 10,
   wordList: [],
   userAnswers: {},
   currentAnswer: '',
@@ -69,8 +78,6 @@ let defaultState = {
   isLoading: true,
   // Show EndScreen when set to true
   isComplete: false,
-  // Should clock and audio player re-render?
-  shouldComponentUpdate: true,
   // Show time out modal
   timeOut: false
 }
@@ -110,7 +117,6 @@ export default handleActions({
       },
       currentAnswer: '',
       currentWord: nextWord,
-      shouldComponentUpdate: true,
       timeOut: false
     }
   },
@@ -121,13 +127,10 @@ export default handleActions({
   }),
   [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => ({
     ...state,
-    currentAnswer: payload,
-    shouldComponentUpdate: false
+    currentAnswer: payload
   }),
   [QUIZ_TIMEOUT]: (state) => ({
     ...state,
-    timeOut: true,
-    // Prevent clock being update and re-render twice
-    shouldComponentUpdate: false
+    timeOut: true
   })
 }, defaultState)

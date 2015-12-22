@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import { actions as timerActions } from './timer'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -27,6 +28,18 @@ export const onPlay = createAction(PLAYER_ON_PLAY)
 export const onEnd = createAction(PLAYER_ON_END)
 export const onLoad = createAction(PLAYER_ON_LOAD)
 
+export const onPlayWithTimer = () => {
+  return (dispatch, getState) => {
+    dispatch(onPlay())
+
+    // Only start a new timer when timer is not ticking
+    if (!getState().timer.ticking) {
+      let seconds = getState().quiz.secondsPerWord
+      dispatch(timerActions.timerStart(seconds))
+    }
+  }
+}
+
 export const actions = {
   actionChangeSource,
   actionPlay,
@@ -36,6 +49,7 @@ export const actions = {
   actionToggleLoop,
   actionUpdateSeek,
   onPlay,
+  onPlayWithTimer,
   onEnd,
   onLoad
 }

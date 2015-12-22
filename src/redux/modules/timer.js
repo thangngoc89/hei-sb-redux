@@ -1,46 +1,62 @@
 import { createAction, handleActions } from 'redux-actions'
+import { onTimeout as quizOnTimeout } from './quiz'
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const TIMER_START = 'TIMER_START'
 export const TIMER_TICK = 'TIMER_TICK'
+export const TIMER_RESET = 'TIMER_RESET'
 // ------------------------------------
 // Actions
 // ------------------------------------
 export const timerStart = createAction(TIMER_START, (seconds) => seconds)
 export const timerTick = createAction(TIMER_TICK)
+export const timerReset = createAction(TIMER_RESET)
+
+export const timerTickWithQuiz = () => {
+  return (dispatch, getState) => {
+    let remain = (getState().timer.remain)
+    // Dispatch on timeout action from quiz
+    // on timeout (ofcourse)
+    if (remain === 1) {
+      dispatch(quizOnTimeout())
+    }
+
+    dispatch(timerTick())
+  }
+}
 
 export const actions = {
   timerStart,
-  timerTick
+  timerTick: timerTickWithQuiz,
+  timerReset
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 let defaultState = {
-  startTime: undefined,
-  seconds: undefined,
-  remain: undefined,
-  finished: undefined
+  seconds: 0,
+  remain: 0,
+  ticking: false
 }
 
 export default handleActions({
   [TIMER_START]: (state, { payload }) => ({
     ...state,
-    startTime: Date.now(),
     seconds: payload,
     remain: payload,
-    finished: false
+    ticking: true
   }),
-  [TIMER_TICK]: (state, { payload }) => {
-    let remain = state.seconds - (state.startTime - Date.now())
-    let finished = (remain < 0)
+  [TIMER_TICK]: (state) => {
+    let remain = ((state.remain - 1) < 0) ? 0 : (state.remain - 1)
+    let ticking = (remain !== 0)
 
     return {
       ...state,
       remain,
-      finished
+      ticking
     }
-  }
+  },
+  [TIMER_RESET]: (state) => defaultState
 }, defaultState)
