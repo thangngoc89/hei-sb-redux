@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
+import { ParseConfig } from 'redux/config'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
 // ------------------------------------
@@ -35,8 +36,8 @@ export const fetchQuizData = () => {
     dispatch(requestData())
 
     request.post('https://api.parse.com/1/functions/wordList')
-      .set('X-Parse-Application-Id', 'wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX')
-      .set('X-Parse-REST-API-Key', 'sViFSueciljQ1aTmNwAJ9vTHbE9zcIEwMCSXzx20')
+      .set('X-Parse-Application-Id', ParseConfig.applicationId)
+      .set('X-Parse-REST-API-Key', ParseConfig.restKey)
       .send()
       .end(function (err, res) {
         if (err) {

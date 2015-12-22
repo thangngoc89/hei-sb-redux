@@ -5,66 +5,67 @@ const isEmpty = value => value === undefined || value === null || value === ''
 const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).filter(error => !!error)[0 /* first error */ ]
 /* eslint-enable */
 
-export const email = (value, formValues, message) => {
+export function email (value) {
+  // Let's not start a debate on email regex. This is just for an example app!
   if (!isEmpty(value) && !validator.isEmail(value)) {
-    return (isEmpty(message)) ? 'Invalid email address' : message
+    return 'Invalid email address'
   }
 }
 
-export const required = (value, formValues, message) => {
+export function required (value) {
   if (isEmpty(value)) {
-    return (isEmpty(message)) ? 'Required' : message
+    return 'Required'
   }
 }
 
-export const fixedLength = (length, formValues, message) => {
+export function fixedLength (length) {
   return value => {
     if (!isEmpty(value) && value.length !== length) {
-      return (isEmpty(message)) ? `Must be ${length} characters` : message
+      return `Must be ${length} characters`
     }
   }
 }
-export const minLength = (min, formValues, message) => {
+export function minLength (min) {
   return value => {
     if (!isEmpty(value) && value.length < min) {
-      return (isEmpty(message)) ? `Must be at least ${min} characters` : message
+      return `Must be at least ${min} characters`
     }
   }
 }
 
-export const maxLength = (max, formValues, message) => {
+export function maxLength (max) {
   return value => {
     if (!isEmpty(value) && value.length > max) {
-      return (isEmpty(message)) ? `Must be no more than ${max} characters` : message
+      return `Must be no more than ${max} characters`
     }
   }
 }
 
-export const integer = (value, formValues, message) => {
+export function integer (value) {
   if (!Number.isInteger(Number(value))) {
-    return (isEmpty(message)) ? 'Must be an integer' : message
+    return 'Must be an integer'
   }
 }
 
-export const oneOf = (enumeration, formValues, message) => {
+export function oneOf (enumeration) {
   return value => {
     if (!~enumeration.indexOf(value)) {
-      return (isEmpty(message)) ? `Must be one of: ${enumeration.join(', ')}` : message
+      return `Must be one of: ${enumeration.join(', ')}`
     }
   }
 }
 
-export const match = (field, formValues, message) => {
+export function match (field) {
   return (value, data) => {
     if (data) {
       if (value !== data[field]) {
-        return (isEmpty(message)) ? 'Do not match' : message
+        return 'Do not match'
       }
     }
   }
 }
 
-export const createValidator = (rules) => {
+export function createValidator (rules) {
   return (data = {}) => {
     const errors = {}
     Object.keys(rules).forEach((key) => {

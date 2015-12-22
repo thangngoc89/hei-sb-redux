@@ -6,7 +6,7 @@ import { createValidator,
 
 const LoginFormValidator = createValidator({
   fullName: [required, minLength(4)],
-  DOD: [required], // TODO: Enforce date validation here
+  dayOfBirth: [required], // TODO: Enforce date validation here
   university: [required, minLength(6)],
   email: [required, email],
   code: [required, fixedLength(10)]
