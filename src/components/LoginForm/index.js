@@ -21,11 +21,16 @@ export class LoginForm extends React.Component {
     pristine: PropTypes.bool.isRequired,
     invalid: PropTypes.bool.isRequired,
     modal: PropTypes.object,
+    isSaving: PropTypes.bool.isRequired,
     // Actions
     handleSubmit: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     closeReminderModal: PropTypes.func.isRequired
+  }
+
+  save = (e) => {
+
   }
 
   render () {
@@ -34,6 +39,7 @@ export class LoginForm extends React.Component {
       handleSubmit,
       submitting,
       pristine,
+      isSaving,
       invalid,
       modal
     } = this.props
@@ -69,9 +75,9 @@ export class LoginForm extends React.Component {
             block
             onClick={handleSubmit(this.props.save)}
             className={styles['submit-button']}
-            disabled={pristine || invalid || submitting}
+            disabled={pristine || invalid || submitting || isSaving}
           >
-            {submitting
+            {(submitting || isSaving)
               ? <span><i className='fa fa-circle-o-notch fa-spin'></i> Submiting...</span>
               : 'Submit'
             }

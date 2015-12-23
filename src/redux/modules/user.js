@@ -5,7 +5,7 @@ import request from 'superagent'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const USER_SAVE = 'USER_SAVE'
+export const USER_SAVING = 'USER_SAVING'
 export const USER_SAVE_SUCCESS = 'USER_SAVE_SUCCESS'
 export const USER_SAVE_FAILED = 'USER_SAVE_FAILED'
 export const SHOW_REMINDER_MODAL = 'SHOW_REMINDER_MODAL'
@@ -13,15 +13,15 @@ export const CLOSE_MODAL = 'CLOSE_MODAL'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const save = createAction(USER_SAVE)
+export const saving = createAction(USER_SAVING)
 export const saveSuccess = createAction(USER_SAVE_SUCCESS, (data) => data)
 export const saveFailed = createAction(USER_SAVE_FAILED, (data) => data)
 export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
-export const submit = (values, dispatch) => {
-  return new Promise((resolve, reject) => {
-    dispatch(save())
+export const save = (values) => {
+  return (dispatch, getState) => {
+    dispatch(saving())
     request.post('https://api.parse.com/1/functions/checkCode')
       .set('X-Parse-Application-Id', ParseConfig.applicationId)
       .send({data: values})
@@ -30,14 +30,12 @@ export const submit = (values, dispatch) => {
         if (err) {
           let error = JSON.parse(res.body.error)
           dispatch(saveFailed(error))
-          reject()
         } else {
           dispatch(saveSuccess(res.body.result))
           dispatch(showReminderModal())
-          resolve()
         }
       })
-  })
+  }
 }
 
 export const closeReminderModal = () => {
@@ -48,7 +46,7 @@ export const closeReminderModal = () => {
 }
 
 export const actions = {
-  save: submit,
+  save: save,
   closeModal,
   closeReminderModal
 }
@@ -61,21 +59,27 @@ let defaultState = {
   contestantId: undefined,
   saveSuccess: undefined,
   saveErrorInfo: undefined,
-  modal: undefined
+  modal: undefined,
+  isSaving: false
 }
 
 export default handleActions({
-  [USER_SAVE]: (state) => ({...state}),
+  [USER_SAVING]: (state) => ({
+    ...state,
+    isSaving: true
+  }),
   [USER_SAVE_SUCCESS]: (state, { payload }) => ({
     ...state,
     ...payload,
     saveSuccess: true,
-    saveErrorInfo: undefined
+    saveErrorInfo: undefined,
+    isSaving: false
   }),
   [USER_SAVE_FAILED]: (state, { payload }) => ({
     ...state,
     saveSuccess: false,
     saveErrorInfo: payload,
+    isSaving: false,
     modal: {
       type: 'error',
       title: 'Oops!',
