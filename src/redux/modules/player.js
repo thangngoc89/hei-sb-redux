@@ -100,13 +100,20 @@ export default handleActions({
     ...state,
     mute: !state.mute
   }),
+  [PLAYER_ON_LOAD]: (state) => ({
+    ...state,
+    isLoading: true,
+    isPlaying: false
+  }),
   [PLAYER_ON_PLAY]: (state) => ({
     ...state,
+    isLoading: false,
     isPlaying: true
   }),
   [PLAYER_ON_END]: (state) => ({
     ...state,
     isPlaying: false,
+    isLoading: false,
     seek: 0
   }),
   [PLAYER_ACTION_UPDATE_SEEK]: (state, { payload }) => ({

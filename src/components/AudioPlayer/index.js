@@ -19,6 +19,7 @@ class AudioPlayer extends React.Component {
     seek: PropTypes.number.isRequired,
     // state
     isPlaying: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     // action
     actionToggle: PropTypes.func.isRequired,
     actionToggleMute: PropTypes.func.isRequired,
@@ -139,7 +140,13 @@ class AudioPlayer extends React.Component {
     let playPauseClass = classnames({
       'fa': true,
       'fa-play': !this.props.isPlaying,
-      'fa-pause': this.props.isPlaying
+      'fa-pause': this.props.isPlaying,
+      'hide': this.props.isLoading
+    })
+
+    let loadingClass = classnames({
+      'fa fa-circle-o-notch fa-spin': this.props.isLoading,
+      'hide': !this.props.isLoading
     })
 
     // let volumeClass = classnames({
@@ -158,6 +165,12 @@ class AudioPlayer extends React.Component {
       <div className='player-container'>
         <div className='player-control-wrapper'>
           <div className='player-buttons'>
+            <button
+              className='player-btn'
+              title='Loading'
+            >
+              <i className={loadingClass}></i>
+            </button>
             <button
               onClick={this.actionToggle}
               className='player-btn'
