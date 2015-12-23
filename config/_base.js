@@ -26,6 +26,7 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   compiler_css_modules     : true,
+  compiler_css_hash        : '[name]__[local]___[hash:base64:5]',
   compiler_enable_hmr      : false,
   compiler_source_maps     : true,
   compiler_hash_type       : 'hash',

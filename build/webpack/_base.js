@@ -8,14 +8,13 @@ const paths = config.utils_paths
 const debug = _debug('app:webpack:_base')
 
 debug('Create configuration.')
-
 const CSS_LOADER = !config.compiler_css_modules
   ? 'css-loader?sourceMap'
   : [
     'css-loader?modules',
     'sourceMap',
     'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
+    'localIdentName=' + config.compiler_css_hash,
   ].join('&')
 
 const webpackConfig = {
