@@ -63,7 +63,7 @@ export class LoginForm extends React.Component {
       <div>
         <form onSubmit={handleSubmit(this.props.save)}>
           <LoginFormInput displayName='Full name' icon='name' object={fullName} />
-          <LoginFormInput displayName='Date of Birth' icon='dayOfBirth' object={dayOfBirth} />
+          <LoginFormInput displayName='Date of Birth (DD/MM/YYYY)' icon='dayOfBirth' object={dayOfBirth} />
           <LoginFormInput displayName='University' icon='university' object={university} />
           <LoginFormInput displayName='Email' icon='email' type='email' object={email} />
           <LoginFormInput displayName='Code' icon='code' object={code} />
