@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../redux/modules/quiz'
 import Container from 'layouts/TransparentContainerLayout'
-import { Button } from 'react-bootstrap'
 import LoadingScreen from 'components/LoadingScreen'
 import ErrorScreen from 'components/ErrorScreen'
 import EndScreen from 'components/EndScreen'
@@ -24,16 +23,28 @@ class QuizView extends Component {
     // Below props are actions
     fetchQuizData: PropTypes.func.isRequired,
     nextWord: PropTypes.func.isRequired,
-    resetQuiz: PropTypes.func,
-    answerOnChange: PropTypes.func.isRequired
+    answerOnChange: PropTypes.func.isRequired,
+    hardReset: PropTypes.func.isRequired
   }
 
   componentDidMount () {
     this.props.fetchQuizData()
-    window.onbeforeunload = this.onBeforeUnload
+    this.confirmMessage()
   }
 
-  onBeforeUnload = (e) => {
+  componentWillUnmount () {
+    this.confirmMessage()
+    this.props.hardReset()
+  }
+
+  confirmMessage () {
+    window.onbeforeunload = this.confirmMessageContent
+    window.unload = this.confirmMessageContent
+    window.pagehide = this.confirmMessageContent
+  }
+
+  confirmMessageContent = (e) => {
+    // TODO: Check if on /quiz route
     if (this.props.isComplete) {
       return
     }
@@ -76,10 +87,9 @@ class QuizView extends Component {
         isTimeOut={this.props.timeOut}
       />
     }
-    let resetButton = <Button bsStyle='danger' onClick={this.props.resetQuiz}>Reset Quiz</Button>
     return (
       <div>
-        <Container xs={12} sm={10} md={8} lg={6} outside={resetButton}>
+        <Container xs={12} sm={10} md={8} lg={6}>
           { component }
         </Container>
       </div>

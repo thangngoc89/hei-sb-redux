@@ -13,6 +13,7 @@ export const PLAYER_ACTION_UPDATE_SEEK = 'PLAYER_ACTION_UPDATE_SEEK'
 export const PLAYER_ON_PLAY = 'PLAYER_ON_PLAY'
 export const PLAYER_ON_END = 'PLAYER_ON_END'
 export const PLAYER_ON_LOAD = 'PLAYER_ON_LOAD'
+export const PLAYER_RESET = 'PLAYER_RESET'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -22,7 +23,9 @@ export const actionToggle = createAction(PLAYER_ACTION_TOGGLE)
 export const actionVolume = createAction(PLAYER_ACTION_VOLUME, (volume) => volume)
 export const actionToggleMute = createAction(PLAYER_ACTION_TOGGLE_MUTE)
 export const actionToggleLoop = createAction(PLAYER_ACTION_TOGGLE_LOOP)
+// TODO: Implement seek
 export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
+export const actionPlayerReset = createAction(PLAYER_RESET)
 // Event from howler.js
 export const onPlay = createAction(PLAYER_ON_PLAY)
 export const onEnd = createAction(PLAYER_ON_END)
@@ -113,5 +116,6 @@ export default handleActions({
   [PLAYER_ACTION_TOGGLE_LOOP]: (state) => ({
     ...state,
     loop: !state.loop
-  })
+  }),
+  [PLAYER_RESET]: (state) => defaultState
 }, defaultState)

@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
+import { actionPlayerReset } from './player'
 import { ParseConfig } from 'redux/config'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
@@ -20,7 +21,7 @@ export const requestData = createAction(QUIZ_REQUEST_DATA)
 export const receiveData = createAction(QUIZ_RECEIVE_DATA, (data) => data)
 export const receiveDataError = createAction(QUIZ_RECEIVE_DATA_ERROR, (error) => (error))
 export const nextWord = createAction(QUIZ_NEXT_WORD)
-export const resetQuiz = createAction(QUIZ_RESET)
+export const actionQuizReset = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
 export const onTimeout = createAction(QUIZ_TIMEOUT)
 
@@ -50,6 +51,14 @@ export const fetchQuizData = () => {
   }
 }
 
+export const hardReset = () => {
+  return (dispatch, getState) => {
+    dispatch(actionQuizReset())
+    dispatch(actionPlayerReset())
+    dispatch(timerReset())
+  }
+}
+
 export const actionNextWordWithTimer = () => {
   return (dispatch, getState) => {
     dispatch(nextWord())
@@ -61,7 +70,7 @@ export const actions = {
   fetchQuizData,
   nextWord: actionNextWordWithTimer,
   answerOnChange,
-  resetQuiz,
+  hardReset,
   onTimeout
 }
 
@@ -121,11 +130,6 @@ export default handleActions({
       timeOut: false
     }
   },
-  [QUIZ_RESET]: (state) => ({
-    ...defaultState,
-    isLoading: false,
-    wordList: state.wordList
-  }),
   [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => ({
     ...state,
     currentAnswer: payload
@@ -133,5 +137,6 @@ export default handleActions({
   [QUIZ_TIMEOUT]: (state) => ({
     ...state,
     timeOut: true
-  })
+  }),
+  [QUIZ_RESET]: (state) => defaultState
 }, defaultState)

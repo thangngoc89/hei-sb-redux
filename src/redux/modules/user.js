@@ -20,6 +20,7 @@ export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
 export const saveData = (values) => {
+  // TODO: Return a promise for redux-form goodness
   return (dispatch, getState) => {
     dispatch(save())
     request.post('https://api.parse.com/1/functions/checkCode')
@@ -41,7 +42,6 @@ export const saveData = (values) => {
 export const closeReminderModal = () => {
   return (dispatch, getState) => {
     dispatch(closeModal())
-    // TODO: Also in quiz view, reset to initial state onComponentWillUnmount
     dispatch(pushPath('/quiz'))
   }
 }
@@ -59,7 +59,7 @@ let defaultState = {
   code: undefined,
   contestantId: undefined,
   saveSuccess: undefined,
-  errorObject: undefined,
+  saveErrorInfo: undefined,
   modal: undefined
 }
 
@@ -69,26 +69,32 @@ export default handleActions({
     ...state,
     ...payload,
     saveSuccess: true,
-    errorObject: undefined
+    saveErrorInfo: undefined
   }),
   [USER_SAVE_FAILED]: (state, { payload }) => ({
     ...state,
     saveSuccess: false,
-    errorObject: payload
+    saveErrorInfo: payload,
+    modal: {
+      type: 'error',
+      title: 'Oops!',
+      body: payload.message,
+      button: `I understand. I'll fix it`,
+      buttonStyle: 'danger'
+    }
   }),
   [CLOSE_MODAL]: (state) => ({
     ...state,
-    errorObject: undefined,
+    saveErrorInfo: undefined,
     modal: undefined
   }),
   [SHOW_REMINDER_MODAL]: (state) => ({
     ...state,
     modal: {
       type: 'reminder',
-      title: 'Remember!',
+      title: 'Succeed!',
       body: 'You will have ten senconds to answer each questions.',
-      button: 'Got it',
-      buttonStyle: 'success'
+      button: 'Got it !'
     }
   })
 }, defaultState)
