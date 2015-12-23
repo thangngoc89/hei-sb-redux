@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-export default `## Welcome to Spelling Bee 2016 - UMP version!
+## Welcome to Spelling Bee 2016 - UMP version!
 
 Congratulations, now you are an official contestant of Spelling Bee 2016 - UMP version.
 Before taking the test, please read and follow the **instructions** to avoid unnecessary mistakes.
@@ -18,4 +16,3 @@ and not be able to redo the question.
 When you are ready, click the **READY** button to fill in information and start your test.
 
 #### Good luck!
-`
