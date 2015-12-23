@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
-import { actionPlayerReset } from './player'
+import { actionPlayerReset, onLoad as playerOnLoad } from './player'
 import { ParseConfig } from 'redux/config'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
@@ -63,6 +63,10 @@ export const actionNextWordWithTimer = () => {
   return (dispatch, getState) => {
     dispatch(nextWord())
     dispatch(timerReset())
+    // playerOnLoad event is not neccessary
+    // but it is just for a better ux
+    // (show loading indicator immedially)
+    dispatch(playerOnLoad())
   }
 }
 
