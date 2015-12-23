@@ -8,6 +8,7 @@ import request from 'superagent'
 export const USER_SAVE = 'USER_SAVE'
 export const USER_SAVE_SUCCESS = 'USER_SAVE_SUCCESS'
 export const USER_SAVE_FAILED = 'USER_SAVE_FAILED'
+export const SHOW_REMINDER_MODAL = 'SHOW_REMINDER_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
 // ------------------------------------
 // Actions
@@ -15,6 +16,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL'
 export const save = createAction(USER_SAVE)
 export const saveSuccess = createAction(USER_SAVE_SUCCESS, (data) => data)
 export const saveFailed = createAction(USER_SAVE_FAILED, (data) => data)
+export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
 export const saveData = (values) => {
@@ -30,18 +32,24 @@ export const saveData = (values) => {
           dispatch(saveFailed(error))
         } else {
           dispatch(saveSuccess(res.body.result))
-          // TODO: Don't redirect to quiz page immedialy
-          // Show a modal for reminding
-          // Also in quiz view, reset to initial state onComponentWillUnmount
-          dispatch(pushPath('/quiz'))
+          dispatch(showReminderModal())
         }
       })
   }
 }
 
+export const closeReminderModal = () => {
+  return (dispatch, getState) => {
+    dispatch(closeModal())
+    // TODO: Also in quiz view, reset to initial state onComponentWillUnmount
+    dispatch(pushPath('/quiz'))
+  }
+}
+
 export const actions = {
   save: saveData,
-  closeModal
+  closeModal,
+  closeReminderModal
 }
 
 // ------------------------------------
@@ -50,8 +58,9 @@ export const actions = {
 let defaultState = {
   code: undefined,
   contestantId: undefined,
-  isSuccess: undefined,
-  errorObject: undefined
+  saveSuccess: undefined,
+  errorObject: undefined,
+  modal: undefined
 }
 
 export default handleActions({
@@ -59,16 +68,27 @@ export default handleActions({
   [USER_SAVE_SUCCESS]: (state, { payload }) => ({
     ...state,
     ...payload,
-    isSuccess: true,
+    saveSuccess: true,
     errorObject: undefined
   }),
   [USER_SAVE_FAILED]: (state, { payload }) => ({
     ...state,
-    isSuccess: false,
+    saveSuccess: false,
     errorObject: payload
   }),
   [CLOSE_MODAL]: (state) => ({
     ...state,
-    errorObject: undefined
+    errorObject: undefined,
+    modal: undefined
+  }),
+  [SHOW_REMINDER_MODAL]: (state) => ({
+    ...state,
+    modal: {
+      type: 'reminder',
+      title: 'Remember!',
+      body: 'You will have ten senconds to answer each questions.',
+      button: 'Got it',
+      buttonStyle: 'success'
+    }
   })
 }, defaultState)

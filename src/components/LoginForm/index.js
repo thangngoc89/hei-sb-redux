@@ -21,10 +21,12 @@ export class LoginForm extends React.Component {
     pristine: PropTypes.bool.isRequired,
     invalid: PropTypes.bool.isRequired,
     errorObject: PropTypes.object,
+    modal: PropTypes.object,
     // Actions
     handleSubmit: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired
+    closeModal: PropTypes.func.isRequired,
+    closeReminderModal: PropTypes.func.isRequired
   }
 
   render () {
@@ -33,11 +35,12 @@ export class LoginForm extends React.Component {
       handleSubmit,
       submitting,
       pristine,
-      invalid
+      invalid,
+      modal
     } = this.props
 
     let component
-    
+
     if (this.props.errorObject) {
       component =
         <Modal
@@ -47,6 +50,13 @@ export class LoginForm extends React.Component {
           body={this.props.errorObject.message}
           button='Got it'
           buttonStyle='danger'
+        />
+    } else if (modal && modal.type === 'reminder') {
+      component =
+        <Modal
+          show
+          close={this.props.closeReminderModal}
+          {...modal}
         />
     }
 
