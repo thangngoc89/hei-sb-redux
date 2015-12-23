@@ -31,6 +31,7 @@ class Word extends Component {
   }
 
   nextWord (e) {
+    e.preventDefault()
     this.props.handleNextWord()
     this.input.getInputDOMNode().focus()
   }
@@ -41,7 +42,7 @@ class Word extends Component {
 
   render () {
     return (
-      <div>
+      <form onSubmit={this.nextWord.bind(this)}>
         <Row>
           <Col xs={8} sm={9} md={10}>
             <WordNavigator
@@ -59,7 +60,6 @@ class Word extends Component {
         <AudioPlayer
           song={this.getCurrentWordUrl()}
         />
-
         <Input
           type='text'
           label='Type your answer into the field below:'
@@ -72,7 +72,7 @@ class Word extends Component {
         <Row>
           <Col xs={12}>
             <Button
-              onClick={this.nextWord.bind(this)}
+              type='submit'
               className='pull-right'
               bsStyle='primary'
             >
@@ -80,7 +80,6 @@ class Word extends Component {
             </Button>
           </Col>
         </Row>
-
         <Modal
           show={this.props.isTimeOut}
           close={this.nextWord.bind(this)}
@@ -88,7 +87,7 @@ class Word extends Component {
           body='Your time is up for this question.'
           button='Continue'
         />
-      </div>
+      </form>
     )
   }
 }
