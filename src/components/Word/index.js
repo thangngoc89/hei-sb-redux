@@ -30,7 +30,7 @@ class Word extends Component {
     this.props.handleOnChange(input)
   }
 
-  nextWord (e) {
+  handleSubmit (e) {
     e.preventDefault()
     this.props.handleNextWord()
     this.input.getInputDOMNode().focus()
@@ -42,7 +42,7 @@ class Word extends Component {
 
   render () {
     return (
-      <form onSubmit={this.nextWord.bind(this)}>
+      <div>
         <Row>
           <Col xs={8} sm={9} md={10}>
             <WordNavigator
@@ -60,6 +60,7 @@ class Word extends Component {
         <AudioPlayer
           song={this.getCurrentWordUrl()}
         />
+        <form onSubmit={this.handleSubmit.bind(this)}>
         <Input
           type='text'
           label='Type your answer into the field below:'
@@ -80,14 +81,15 @@ class Word extends Component {
             </Button>
           </Col>
         </Row>
+        </form>
         <Modal
           show={this.props.isTimeOut}
-          close={this.nextWord.bind(this)}
+          close={this.handleSubmit.bind(this)}
           title='Time up!'
           body='Your time is up for this question.'
           button='Continue'
         />
-      </form>
+      </div>
     )
   }
 }
