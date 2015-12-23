@@ -28,23 +28,27 @@ class QuizView extends Component {
   }
 
   componentDidMount () {
+    // TODO: Prevent user from directly access this page
     this.props.fetchQuizData()
-    this.confirmMessage()
+    this.setConfirmMessage(this.confirmMessage)
   }
 
   componentWillUnmount () {
-    this.confirmMessage()
+    // TODO: Apply router transition event here
+    // to confirm for transition
     this.props.hardReset()
+    this.setConfirmMessage(() => {
+      return
+    })
   }
 
-  confirmMessage () {
-    window.onbeforeunload = this.confirmMessageContent
-    window.unload = this.confirmMessageContent
-    window.pagehide = this.confirmMessageContent
+  setConfirmMessage (func) {
+    window.onbeforeunload = func
+    window.unload = func
+    window.pagehide = func
   }
 
-  confirmMessageContent = (e) => {
-    // TODO: Check if on /quiz route
+  confirmMessage = (e) => {
     if (this.props.isComplete) {
       return
     }
@@ -72,6 +76,7 @@ class QuizView extends Component {
     } else if (this.props.error) {
       component = <ErrorScreen message={this.props.error} title='Error while getting word list' />
     } else if (this.props.wordList.length < 1) {
+      // TODO: Use modal for this
       component = <ErrorScreen message='No words are available' title='Logic Error'/>
     } else if (this.props.isComplete) {
       component = <EndScreen />
