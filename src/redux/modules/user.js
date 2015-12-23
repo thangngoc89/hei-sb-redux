@@ -19,9 +19,8 @@ export const saveFailed = createAction(USER_SAVE_FAILED, (data) => data)
 export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
-export const saveData = (values) => {
-  // TODO: Return a promise for redux-form goodness
-  return (dispatch, getState) => {
+export const submit = (values, dispatch) => {
+  return new Promise((resolve, reject) => {
     dispatch(save())
     request.post('https://api.parse.com/1/functions/checkCode')
       .set('X-Parse-Application-Id', ParseConfig.applicationId)
@@ -31,12 +30,14 @@ export const saveData = (values) => {
         if (err) {
           let error = JSON.parse(res.body.error)
           dispatch(saveFailed(error))
+          reject()
         } else {
           dispatch(saveSuccess(res.body.result))
           dispatch(showReminderModal())
+          resolve()
         }
       })
-  }
+  })
 }
 
 export const closeReminderModal = () => {
@@ -47,7 +48,7 @@ export const closeReminderModal = () => {
 }
 
 export const actions = {
-  save: saveData,
+  save: submit,
   closeModal,
   closeReminderModal
 }

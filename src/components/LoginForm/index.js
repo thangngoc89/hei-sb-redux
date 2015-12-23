@@ -71,7 +71,10 @@ export class LoginForm extends React.Component {
             className={styles['submit-button']}
             disabled={pristine || invalid || submitting}
           >
-            {submitting ? 'Loading...' : 'Submit'}
+            {submitting
+              ? <span><i className='fa fa-circle-o-notch fa-spin'></i> Submiting...</span>
+              : 'Submit'
+            }
           </Button>
         </form>
       {component}
