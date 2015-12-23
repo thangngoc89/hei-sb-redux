@@ -51,8 +51,7 @@ export const actions = {
   actionToggleMute,
   actionToggleLoop,
   actionUpdateSeek,
-  onPlay,
-  onPlayWithTimer,
+  onPlay: onPlayWithTimer,
   onEnd,
   onLoad
 }
