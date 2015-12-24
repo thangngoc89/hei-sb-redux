@@ -20,8 +20,7 @@ const LoopButton = (props) => {
 
 LoopButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  loop: PropTypes.bool.isRequired,
-  show: PropTypes.bool.isRequired
+  loop: PropTypes.bool.isRequired
 }
 
 export default LoopButton

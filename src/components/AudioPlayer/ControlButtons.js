@@ -10,25 +10,27 @@ const ControlButtons = (props) => {
   return (
     <div className='player-control-wrapper'>
       <div className='player-buttons'>
-        <LoadingButton
-          show={show.LoadingButton}
-          isLoading={props.isLoading}
-        />
-        <PlayButton
-          show={show.PlayButton}
-          isPlaying={props.isPlaying}
-          onClick={props.playButtonAction}
-        />
-        <MuteButton
-          show={show.MuteButton}
-          mute={props.mute}
-          onClick={props.muteButtonAction}
-        />
-        <LoopButton
-          show={show.LoopButton}
-          loop={props.loop}
-          onClick={props.loopButtonAction}
-        />
+        {show.LoadingButton &&
+          <LoadingButton isLoading={props.isLoading} />
+        }
+        {show.PlayButton &&
+          <PlayButton
+            isPlaying={props.isPlaying}
+            onClick={props.playButtonAction}
+          />
+        }
+        {show.MuteButton &&
+          <MuteButton
+            mute={props.mute}
+            onClick={props.muteButtonAction}
+          />
+        }
+        {show.LoopButton &&
+          <LoopButton
+            loop={props.loop}
+            onClick={props.loopButtonAction}
+          />
+        }
       </div>
     </div>
   )

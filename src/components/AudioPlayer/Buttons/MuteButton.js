@@ -5,8 +5,7 @@ const MuteButton = (props) => {
   let iconClass = classnames({
     'fa': true,
     'fa-volume-up': !props.mute,
-    'fa-volume-off': props.mute,
-    hide: !props.show
+    'fa-volume-off': props.mute
   })
 
   return (
@@ -22,8 +21,7 @@ const MuteButton = (props) => {
 
 MuteButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  mute: PropTypes.bool.isRequired,
-  show: PropTypes.bool.isRequired
+  mute: PropTypes.bool.isRequired
 }
 
 export default MuteButton

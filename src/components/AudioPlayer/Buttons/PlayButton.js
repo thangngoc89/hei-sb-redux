@@ -5,8 +5,7 @@ const PlayButton = (props) => {
   let iconClass = classnames({
     'fa': true,
     'fa-play': !props.isPlaying,
-    'fa-pause': props.isPlaying,
-    'hide': !props.show
+    'fa-pause': props.isPlaying
   })
 
   return (
@@ -22,8 +21,7 @@ const PlayButton = (props) => {
 
 PlayButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  show: PropTypes.bool.isRequired
+  isPlaying: PropTypes.bool.isRequired
 }
 
 export default PlayButton

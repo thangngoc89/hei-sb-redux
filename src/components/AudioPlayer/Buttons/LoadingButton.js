@@ -3,8 +3,7 @@ import classnames from 'classnames'
 
 const LoadingButton = (props) => {
   let iconClass = classnames({
-    'fa fa-circle-o-notch fa-spin': props.isLoading,
-    'hide': !props.show
+    'fa fa-circle-o-notch fa-spin': props.isLoading
   })
 
   return (
@@ -18,8 +17,7 @@ const LoadingButton = (props) => {
 }
 
 LoadingButton.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  show: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired
 }
 
 export default LoadingButton
