@@ -66,7 +66,7 @@ export const actionNextWordWithTimer = () => {
     // playerOnLoad event is not neccessary
     // but it is just for a better ux
     // (show loading indicator immedially)
-    dispatch(playerOnLoad())
+    // dispatch(playerOnLoad())
   }
 }
 

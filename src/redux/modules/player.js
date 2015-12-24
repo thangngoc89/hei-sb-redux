@@ -3,17 +3,20 @@ import { actions as timerActions } from './timer'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const PLAYER_ACTION_CHANGE_SOURCE = 'PLAYER_ACTION_CHANGE_SOURCE'
-export const PLAYER_ACTION_PLAY = 'PLAYER_ACTION_PLAY'
-export const PLAYER_ACTION_TOGGLE = 'PLAYER_ACTION_TOGGLE'
-export const PLAYER_ACTION_VOLUME = 'PLAYER_ACTION_VOLUME'
-export const PLAYER_ACTION_TOGGLE_MUTE = 'PLAYER_ACTION_TOGGLE_MUTE'
-export const PLAYER_ACTION_TOGGLE_LOOP = 'PLAYER_ACTION_TOGGLE_LOOP'
-export const PLAYER_ACTION_UPDATE_SEEK = 'PLAYER_ACTION_UPDATE_SEEK'
-export const PLAYER_ON_PLAY = 'PLAYER_ON_PLAY'
-export const PLAYER_ON_END = 'PLAYER_ON_END'
-export const PLAYER_ON_LOAD = 'PLAYER_ON_LOAD'
-export const PLAYER_RESET = 'PLAYER_RESET'
+export const PLAYER_ACTION_CHANGE_SOURCE = '@@player/action/CHANGE_SOURCE'
+export const PLAYER_ACTION_PLAY = '@@player/action/PLAY'
+export const PLAYER_ACTION_TOGGLE = '@@player/action/TOGGLE'
+export const PLAYER_ACTION_VOLUME = '@@player/action/VOLUME'
+export const PLAYER_ACTION_TOGGLE_MUTE = '@@player/action/TOGGLE_MUTE'
+export const PLAYER_ACTION_TOGGLE_LOOP = '@@player/action/TOGGLE_LOOP'
+export const PLAYER_ACTION_UPDATE_SEEK = '@@player/action/UPDATE_SEEK'
+export const PLAYER_ENABLE_PLAY_BUTTON = '@@player/action/ENABLE_PLAY_BUTTON'
+export const PLAYER_DISABLE_PLAY_BUTTON = '@@player/action/DISABLE_PLAY_BUTTON'
+export const PLAYER_RESET = '@@player/action/PLAYER_RESET'
+
+export const PLAYER_ON_PLAY = '@@player/event/ON_PLAY'
+export const PLAYER_ON_END = '@@player/event/ON_END'
+export const PLAYER_ON_LOAD = '@@player/event/ON_LOAD'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -67,6 +70,7 @@ let defaultState = {
   volume: 1,
   seek: 0,
   loop: false,
+  canUserPlay: true,
   buttons: {
     LoadingButton: false,
     LoopButton: false,

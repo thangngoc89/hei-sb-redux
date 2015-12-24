@@ -5,14 +5,7 @@ import LoopButton from './Buttons/LoopButton'
 import LoadingButton from './Buttons/LoadingButton'
 
 const ControlButtons = (props) => {
-  let buttons = props.buttons
-  // Do we need this ?
-  let show = {
-    LoadingButton: (props.isLoading && buttons.LoadingButton),
-    PlayButton: buttons.PlayButton,
-    MuteButton: buttons.MuteButton,
-    LoopButton: buttons.LoopButton
-  }
+  let show = props.buttons
 
   return (
     <div className='player-control-wrapper'>
