@@ -33,17 +33,20 @@ export const fetchQuizData = () => {
   return (dispatch, getState) => {
     // Fake an API request in development mode
     if (__DEV__) {
-      let data = require('redux/data/quiz')
+      const data = require('redux/data/quiz')
       dispatch(fetchSuccess(data))
       return
     }
-
+    const postData = {
+      contestantId: getState().user.contestantId,
+      code: getState().user.code
+    }
     dispatch(fetchStart())
     // TODO: Compose contestantID and code for payload
     request.post('https://api.parse.com/1/functions/wordList')
       .set('X-Parse-Application-Id', ParseConfig.applicationId)
       .set('X-Parse-REST-API-Key', ParseConfig.restKey)
-      .send()
+      .send({data: postData})
       .end(function (err, res) {
         if (err) {
           dispatch(fetchError(err))
