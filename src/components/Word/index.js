@@ -19,11 +19,7 @@ class Word extends Component {
   }
 
   componentDidMount () {
-    this.input.getInputDOMNode().focus()
-  }
-
-  componentWillReceiveProps () {
-    this.input.getInputDOMNode().focus()
+    this.focusOnInput()
   }
 
   onInputChange (e) {
@@ -34,6 +30,10 @@ class Word extends Component {
   handleSubmit (e) {
     e.preventDefault()
     this.props.handleNextWord()
+    this.focusOnInput()
+  }
+
+  focusOnInput () {
     this.input.getInputDOMNode().focus()
   }
 
@@ -77,6 +77,7 @@ class Word extends Component {
               type='submit'
               className='pull-right'
               bsStyle='primary'
+              disabled={(this.props.currentAnswer === '')}
             >
               Submit
             </Button>
