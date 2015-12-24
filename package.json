@@ -26,9 +26,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "git+https://github.com/twbs/bootstrap.git#v4-dev",
-    "history": "1.13.1",
+    "history": "1.17.0",
     "howler": "git+https://github.com/goldfire/howler.js.git#v2.0.0-beta5",
     "lodash.shuffle": "^3.1.0",
+    "moment": "^2.10.6",
     "react": "^0.14.0",
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.0",

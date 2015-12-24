@@ -5,7 +5,7 @@ import request from 'superagent'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const USER_SAVING = 'USER_SAVING'
+export const USER_SAVE_START = 'USER_SAVE_START'
 export const USER_SAVE_SUCCESS = 'USER_SAVE_SUCCESS'
 export const USER_SAVE_FAILED = 'USER_SAVE_FAILED'
 export const SHOW_REMINDER_MODAL = 'SHOW_REMINDER_MODAL'
@@ -13,18 +13,18 @@ export const CLOSE_MODAL = 'CLOSE_MODAL'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const saving = createAction(USER_SAVING)
+export const saveStart = createAction(USER_SAVE_START)
 export const saveSuccess = createAction(USER_SAVE_SUCCESS, (data) => data)
 export const saveFailed = createAction(USER_SAVE_FAILED, (data) => data)
 export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
-export const save = (values) => {
+export const save = (userInput) => {
   return (dispatch, getState) => {
-    dispatch(saving())
+    dispatch(saveStart())
     request.post('https://api.parse.com/1/functions/checkCode')
       .set('X-Parse-Application-Id', ParseConfig.applicationId)
-      .send({data: values})
+      .send({data: userInput})
       .set('X-Parse-REST-API-Key', ParseConfig.restKey)
       .end(function (err, res) {
         if (err) {
@@ -64,7 +64,7 @@ let defaultState = {
 }
 
 export default handleActions({
-  [USER_SAVING]: (state) => ({
+  [USER_SAVE_START]: (state) => ({
     ...state,
     isSaving: true
   }),

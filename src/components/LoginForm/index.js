@@ -8,7 +8,7 @@ import LoginFormInput from './LoginFormInput'
 import validator from './LoginFormValidator'
 import styles from './style.scss'
 
-const fields = ['fullName', 'dayOfBirth', 'university', 'email', 'code']
+const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code']
 
 const mapStateToProps = (state) => ({
   ...state.user
@@ -31,7 +31,7 @@ export class LoginForm extends React.Component {
 
   render () {
     const {
-      fields: {fullName, dayOfBirth, university, email, code},
+      fields: {fullName, dateOfBirth, university, email, code},
       handleSubmit,
       submitting,
       pristine,
@@ -63,7 +63,7 @@ export class LoginForm extends React.Component {
       <div>
         <form onSubmit={handleSubmit(this.props.save)}>
           <LoginFormInput displayName='Full name' icon='name' object={fullName} />
-          <LoginFormInput displayName='Date of Birth (DD/MM/YYYY)' icon='dayOfBirth' object={dayOfBirth} />
+          <LoginFormInput displayName='Date of Birth (DD/MM/YYYY)' icon='dateOfBirth' object={dateOfBirth} />
           <LoginFormInput displayName='University' icon='university' object={university} />
           <LoginFormInput displayName='Email' icon='email' type='email' object={email} />
           <LoginFormInput displayName='Code' icon='code' object={code} />

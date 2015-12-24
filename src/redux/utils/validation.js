@@ -1,6 +1,6 @@
 import validator from 'validator'
 
-const isEmpty = value => value === undefined || value === null || value === ''
+export const isEmpty = value => value === undefined || value === null || value === ''
 /* eslint-disable */
 const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).filter(error => !!error)[0 /* first error */ ]
 /* eslint-enable */
