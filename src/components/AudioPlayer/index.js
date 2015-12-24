@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import classnames from 'classnames'
 import { Howl } from 'howler'
+import ControlButtons from './ControlButtons'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
@@ -137,56 +137,15 @@ class AudioPlayer extends React.Component {
   }
 
   render () {
-    let playPauseClass = classnames({
-      'fa': true,
-      'fa-play': !this.props.isPlaying,
-      'fa-pause': this.props.isPlaying,
-      'hide': this.props.isLoading
-    })
-
-    let loadingClass = classnames({
-      'fa fa-circle-o-notch fa-spin': this.props.isLoading,
-      'hide': !this.props.isLoading
-    })
-
-    // let volumeClass = classnames({
-    //   'fa': true,
-    //   'fa-volume-up': !this.props.mute,
-    //   'fa-volume-off': this.props.mute
-    // })
-
-    let loopClass = classnames({
-      'player-btn': true,
-      'loop': true,
-      'active': this.props.loop
-    })
 
     return (
       <div className='player-container'>
-        <div className='player-control-wrapper'>
-          <div className='player-buttons'>
-            <button
-              className='player-btn'
-              title='Loading'
-            >
-              <i className={loadingClass}></i>
-            </button>
-            <button
-              onClick={this.actionToggle}
-              className='player-btn'
-              title='Play/Pause'
-            >
-              <i className={playPauseClass}></i>
-            </button>
-            <button
-              className={loopClass}
-              onClick={this.actionToggleLoop}
-              title='Repeat'
-            >
-              <i className='fa fa-repeat'></i>
-            </button>
-          </div>
-        </div>
+        <ControlButtons
+          {...this.props}
+          playButtonAction={this.actionToggle}
+          loopButtonAction={this.actionToggleLoop}
+          muteButtonAction={this.actionToggleMute}
+        />
         <div className='player-progress-wrapper'>
           <div className='player-progress-container' onClick={this.setProgress}>
             <span className='player-progress-value' style={{width: this.props.seek + '%'}}></span>
