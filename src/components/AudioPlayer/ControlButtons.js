@@ -5,25 +5,34 @@ import LoopButton from './Buttons/LoopButton'
 import LoadingButton from './Buttons/LoadingButton'
 
 const ControlButtons = (props) => {
+  let buttons = props.buttons
+  // Do we need this ?
+  let show = {
+    LoadingButton: (props.isLoading && buttons.LoadingButton),
+    PlayButton: buttons.PlayButton,
+    MuteButton: buttons.MuteButton,
+    LoopButton: buttons.LoopButton
+  }
+
   return (
     <div className='player-control-wrapper'>
       <div className='player-buttons'>
         <LoadingButton
-          show={props.isLoading}
+          show={show.LoadingButton}
           isLoading={props.isLoading}
         />
         <PlayButton
-          show={!props.isLoading}
+          show={show.PlayButton}
           isPlaying={props.isPlaying}
           onClick={props.playButtonAction}
         />
         <MuteButton
-          show
+          show={show.MuteButton}
           mute={props.mute}
           onClick={props.muteButtonAction}
         />
         <LoopButton
-          show
+          show={show.LoopButton}
           loop={props.loop}
           onClick={props.loopButtonAction}
         />
@@ -33,6 +42,7 @@ const ControlButtons = (props) => {
 }
 
 ControlButtons.propTypes = {
+  buttons: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   mute: PropTypes.bool.isRequired,

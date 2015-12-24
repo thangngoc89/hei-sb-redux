@@ -17,6 +17,7 @@ class AudioPlayer extends React.Component {
     mute: PropTypes.bool.isRequired,
     loop: PropTypes.bool.isRequired,
     seek: PropTypes.number.isRequired,
+    buttons: PropTypes.object.isRequired,
     // state
     isPlaying: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,

@@ -66,7 +66,13 @@ let defaultState = {
   mute: false,
   volume: 1,
   seek: 0,
-  loop: false
+  loop: false,
+  buttons: {
+    LoadingButton: false,
+    LoopButton: false,
+    MuteButton: false,
+    PlayButton: true
+  }
 }
 
 export default handleActions({
