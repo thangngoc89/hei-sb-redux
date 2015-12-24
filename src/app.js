@@ -6,8 +6,8 @@ import routes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
 
-const history = createHashHistory()
-const store = configureStore(window.__INITIAL_STATE__)
+export const history = createHashHistory()
+export const store = configureStore(window.__INITIAL_STATE__)
 
 syncReduxAndRouter(history, store, (state) => state.router)
 
