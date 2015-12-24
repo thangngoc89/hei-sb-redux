@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import classnames from 'classnames'
 import PlayButton from './Buttons/PlayButton'
 import MuteButton from './Buttons/MuteButton'
 import LoopButton from './Buttons/LoopButton'
@@ -31,6 +30,16 @@ const ControlButtons = (props) => {
       </div>
     </div>
   )
+}
+
+ControlButtons.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  mute: PropTypes.bool.isRequired,
+  loop: PropTypes.bool.isRequired,
+  playButtonAction: PropTypes.func.isRequired,
+  loopButtonAction: PropTypes.func.isRequired,
+  muteButtonAction: PropTypes.func.isRequired
 }
 
 export default ControlButtons
