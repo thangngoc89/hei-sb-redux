@@ -134,7 +134,7 @@ export default handleActions({
       isComplete,
       userAnswers: {
         ...state.userAnswers,
-        [currentWordId]: state.currentAnswer
+        [currentWordId]: state.currentAnswer.trim().toLowerCase()
       },
       currentAnswer: '',
       currentWord: nextWord,
