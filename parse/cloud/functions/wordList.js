@@ -11,7 +11,6 @@ module.exports = function (req, res) {
     .then(function (result) {
       var wordList = result.map(function (word) {
         return {
-          word: word.get('word'),
           id: word.id,
           soundFile: word.get('soundFile').url()
         }

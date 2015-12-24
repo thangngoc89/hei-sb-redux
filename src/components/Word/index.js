@@ -49,7 +49,6 @@ class Word extends Component {
               current={this.props.wordCurrent}
               total={this.props.wordTotal}
             />
-            <p>Current word: {this.props.word.word}</p>
             <hr />
           </Col>
           <Col xs={4} sm={3} md={2}>
