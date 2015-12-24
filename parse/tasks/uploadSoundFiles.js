@@ -1,11 +1,12 @@
 var getSoundFileData = require('./getSoundFileData')
+var randomstring = require("randomstring")
 var Parse = require('parse/node')
 Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
 var WordObject = Parse.Object.extend('Word')
 
 var query = new Parse.Query(WordObject)
-query.equalTo('soundFile', undefined)
-// query.limit(1)
+// query.equalTo('soundFile', undefined)
+query.limit(200) // We only have 120 words. 200 should be fine
 query.find().then(
   function (res) {
     if (res.length > 0) {
@@ -28,8 +29,9 @@ var doUploadFile = function (object) {
   var word = object.get('word')
   console.log('Processing ' + word)
   var fileData = getSoundFileData(word)
-
-  var parseFile = new Parse.File(word + '.mp3', fileData)
+  // Generate a random file name here
+  var randomFilename = randomstring.generate(10) + '.mp3'
+  var parseFile = new Parse.File(randomFilename, fileData)
 
   parseFile.save().then(function () {
     return parseFile
