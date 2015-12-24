@@ -13,6 +13,7 @@ class Word extends Component {
     wordCurrent: PropTypes.number.isRequired,
     isTimeOut: PropTypes.bool.isRequired,
     currentAnswer: PropTypes.string.isRequired,
+    audioPlayedTimes: PropTypes.number.isRequired,
     handleOnChange: PropTypes.func.isRequired,
     handleNextWord: PropTypes.func.isRequired
   }
@@ -59,6 +60,7 @@ class Word extends Component {
         <AudioPlayer
           song={this.getCurrentWordUrl()}
         />
+        <p>You played this audio {this.props.audioPlayedTimes} time(s).</p>
         <form onSubmit={this.handleSubmit.bind(this)}>
         <Input
           type='text'
