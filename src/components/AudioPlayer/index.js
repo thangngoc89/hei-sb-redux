@@ -64,7 +64,7 @@ class AudioPlayer extends React.Component {
 
   onPlay = (id) => {
     this.props.onPlay(id)
-    this.tick()
+    // this.tick()
   }
 
   onEnd = (id) => {
