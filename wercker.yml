@@ -29,6 +29,10 @@ build:
         code: |
           npm run compile
     - script:
+        name: Run test
+        code: |
+          npm test
+    - script:
         name: Copy dist into deploy folder
         code: |
           cp -r dist/ $WERCKER_OUTPUT_DIR
