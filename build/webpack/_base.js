@@ -35,6 +35,9 @@ const webpackConfig = {
     new webpack.DefinePlugin(config.globals),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
+    // http://stackoverflow.com/a/25426019
+    // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new HtmlWebpackPlugin({
       template: paths.client('index.html'),
       hash: false,
