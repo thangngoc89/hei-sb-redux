@@ -88,7 +88,7 @@ export const actions = {
 // Reducer
 // ------------------------------------
 let defaultState = {
-  secondsPerWord: 10,
+  secondsPerWord: 15,
   wordList: [],
   userAnswers: {},
   currentAnswer: '',
