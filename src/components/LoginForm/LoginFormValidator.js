@@ -5,6 +5,7 @@ import { createValidator,
           minLength,
           fixedLength } from 'redux/utils/validation'
 import moment from 'moment'
+import memoize from 'lru-memoize'
 
 const validDate = value => {
   if (!isEmpty(value)) {
@@ -25,10 +26,10 @@ const validDate = value => {
 
 const LoginFormValidator = createValidator({
   fullName: [required, minLength(4)],
-  dateOfBirth: [required, validDate], // TODO: Enforce date validation here
+  dateOfBirth: [required, validDate],
   university: [required, minLength(6)],
   email: [required, email],
   code: [required, fixedLength(10)]
 })
 
-export default LoginFormValidator
+export default memoize(10)(LoginFormValidator)
