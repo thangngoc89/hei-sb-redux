@@ -30,7 +30,7 @@ export const actionToggleLoop = createAction(PLAYER_ACTION_TOGGLE_LOOP)
 export const actionEnablePlayButton = createAction(PLAYER_ACTION_ENABLE_PLAY_BUTTON)
 export const actionDisablePlayButton = createAction(PLAYER_ACTION_DISABLE_PLAY_BUTTON)
 // TODO: Implement seek
-// export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
+export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
 export const actionPlayerReset = createAction(PLAYER_RESET)
 // Event from howler.js
 export const onPlay = createAction(PLAYER_ON_PLAY)
@@ -65,6 +65,7 @@ export const actions = {
   actionPlay,
   actionToggle,
   actionVolume,
+  actionUpdateSeek,
   actionToggleMute,
   actionToggleLoop,
   onPlay: onPlayWithTimer,

@@ -91,7 +91,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #CDD2D8;
   background-color: transparent;
   border: 0;
   outline: 0;
@@ -102,19 +102,15 @@
     margin: 0 auto;
   }
 
-  // &.active {
-  //   color: #fff;
-  // }
-  //
-  // &:hover {
-  //   color: #fff;
-  // }
+  &.active {
+    color: #fff;
+  }
 
   &.volume {
     width: 40px;
   }
 
   &:disabled {
-    opacity: .5;
+    opacity: .2;
   }
 }

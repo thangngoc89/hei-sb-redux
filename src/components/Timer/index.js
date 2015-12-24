@@ -27,14 +27,14 @@ class Timer extends React.Component {
     this.canvasSetup()
     this.canvasDraw(this.props)
     if (this.props.ticking) {
-      // this.tick()
+      this.tick()
     }
   }
 
   componentWillReceiveProps (props) {
     this.canvasDraw(props)
     if (props.ticking) {
-      // this.tick()
+      this.tick()
     }
     if (props.seconds === 0) {
       this.stopTick()
