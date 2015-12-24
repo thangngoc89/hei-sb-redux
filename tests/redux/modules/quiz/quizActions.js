@@ -4,8 +4,8 @@ import createAction from 'redux-actions'
 
 describe('(redux) quiz actions', () => {
   it('should create an action to request data', function () {
-    expect(quiz.requestData()).to.deep.equal({
-      type: quiz.QUIZ_REQUEST_DATA,
+    expect(quiz.fetchStart()).to.deep.equal({
+      type: quiz.QUIZ_FETCH_START,
       payload: undefined
     })
   })
@@ -13,8 +13,8 @@ describe('(redux) quiz actions', () => {
   it('should create an action to receive data', () => {
     const data = {foo: 'bar'}
 
-    expect(quiz.receiveData(data)).to.deep.equal({
-      type: quiz.QUIZ_RECEIVE_DATA,
+    expect(quiz.fetchSuccess(data)).to.deep.equal({
+      type: quiz.QUIZ_FETCH_SUCCESS,
       payload: data
     })
   })
@@ -22,8 +22,8 @@ describe('(redux) quiz actions', () => {
   it('should create an action to handle request data error', () => {
     const data = {}
 
-    expect(quiz.receiveDataError(data)).to.deep.equal({
-      type: quiz.QUIZ_RECEIVE_DATA_ERROR,
+    expect(quiz.fetchError(data)).to.deep.equal({
+      type: quiz.QUIZ_FETCH_ERROR,
       payload: data
     })
   })

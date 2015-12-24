@@ -7,24 +7,24 @@ import shuffle from 'lodash.shuffle'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const QUIZ_REQUEST_DATA = 'QUIZ_REQUEST_DATA'
-export const QUIZ_RECEIVE_DATA = 'QUIZ_RECEIVE_DATA'
-export const QUIZ_RECEIVE_DATA_ERROR = 'QUIZ_RECEIVE_DATA_ERROR'
-export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
-export const QUIZ_RESET = 'QUIZ_RESET'
-export const QUIZ_ANSWER_ONCHANGE = 'QUIZ_ANSWER_ONCHANGE'
-export const QUIZ_TIMEOUT = 'QUIZ_TIMEOUT'
-export const QUIZ_RESET_AUDIO_PLAYED_TIMES = 'QUIZ_RESET_AUDIO_PLAYED_TIMES'
-export const QUIZ_INCREMENT_AUDIO_PLAYED_TIMES = 'QUIZ_INCREMENT_AUDIO_PLAYED_TIMES'
+export const QUIZ_FETCH_START = '@@quiz/fetch/START'
+export const QUIZ_FETCH_SUCCESS = '@@quiz/fetch/SUCCESS'
+export const QUIZ_FETCH_ERROR = '@@quiz/fetch/ERROR'
+export const QUIZ_NEXT_WORD = '@@quiz/action/NEXT_WORD'
+export const QUIZ_RESET = '@@quiz/action/RESET'
+export const QUIZ_ANSWER_ONCHANGE = '@@quiz/action/ANSWER_ONCHANGE'
+export const QUIZ_TIMEOUT = '@@quiz/action/TIMEOUT'
+export const QUIZ_RESET_AUDIO_PLAYED_TIMES = '@@quiz/action/RESET_AUDIO_PLAYED_TIMES'
+export const QUIZ_INCREMENT_AUDIO_PLAYED_TIMES = '@@quiz/action/INCREMENT_AUDIO_PLAYED_TIMES'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const requestData = createAction(QUIZ_REQUEST_DATA)
-export const receiveData = createAction(QUIZ_RECEIVE_DATA, (data) => data)
-export const receiveDataError = createAction(QUIZ_RECEIVE_DATA_ERROR, (error) => (error))
+export const fetchStart = createAction(QUIZ_FETCH_START)
+export const fetchSuccess = createAction(QUIZ_FETCH_SUCCESS)
+export const fetchError = createAction(QUIZ_FETCH_ERROR)
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const actionQuizReset = createAction(QUIZ_RESET)
-export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
+export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE)
 export const onTimeout = createAction(QUIZ_TIMEOUT)
 export const resetAudioPlayedTimes = createAction(QUIZ_RESET_AUDIO_PLAYED_TIMES)
 export const incrementAudioPlayedTimes = createAction(QUIZ_INCREMENT_AUDIO_PLAYED_TIMES)
@@ -34,22 +34,22 @@ export const fetchQuizData = () => {
     // Fake an API request in development mode
     if (__DEV__) {
       let data = require('redux/data/quiz')
-      dispatch(receiveData(data))
+      dispatch(fetchSuccess(data))
       return
     }
 
-    dispatch(requestData())
-
+    dispatch(fetchStart())
+    // TODO: Compose contestantID and code for payload
     request.post('https://api.parse.com/1/functions/wordList')
       .set('X-Parse-Application-Id', ParseConfig.applicationId)
       .set('X-Parse-REST-API-Key', ParseConfig.restKey)
       .send()
       .end(function (err, res) {
         if (err) {
-          dispatch(receiveDataError(err))
+          dispatch(fetchError(err))
           // TODO: Send request to reset user's code
         } else {
-          dispatch(receiveData(res.body))
+          dispatch(fetchSuccess(res.body))
         }
       })
   }
@@ -104,8 +104,8 @@ let defaultState = {
 }
 
 export default handleActions({
-  [QUIZ_REQUEST_DATA]: (state, { payload }) => ({...state, isLoading: true}),
-  [QUIZ_RECEIVE_DATA]: (state, { payload }) => {
+  [QUIZ_FETCH_START]: (state, { payload }) => ({...state, isLoading: true}),
+  [QUIZ_FETCH_SUCCESS]: (state, { payload }) => {
     let result = shuffle(payload.result)
 
     return {
@@ -114,7 +114,7 @@ export default handleActions({
       wordList: result
     }
   },
-  [QUIZ_RECEIVE_DATA_ERROR]: (state, { payload }) => ({
+  [QUIZ_FETCH_ERROR]: (state, { payload }) => ({
     ...state,
     error: payload
   }),
