@@ -23,12 +23,12 @@
 	line-height: 1.5rem;
 	background: #fbfbfb;
 	padding: 0.825rem 0.825rem 0.825rem 3.375rem;
-	width:100%;
+	width: 100%;
 	box-sizing: border-box;
-  border: 0.25rem solid $color-transparent;
+  border: 0.2rem solid $color-transparent;
 
  &:focus {
-		border: 0.25rem solid $color-main;
+		border-color: $color-main;
 		color: $color-main;
 		outline: none;
 	}
