@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
-import { actionPlayerReset, onLoad as playerOnLoad } from './player'
+import { actionPlayerReset, actionEnablePlayButton } from './player'
 import { ParseConfig } from 'redux/config'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
@@ -14,6 +14,8 @@ export const QUIZ_NEXT_WORD = 'QUIZ_NEXT_WORD'
 export const QUIZ_RESET = 'QUIZ_RESET'
 export const QUIZ_ANSWER_ONCHANGE = 'QUIZ_ANSWER_ONCHANGE'
 export const QUIZ_TIMEOUT = 'QUIZ_TIMEOUT'
+export const QUIZ_RESET_AUDIO_PLAYED_TIMES = 'QUIZ_RESET_AUDIO_PLAYED_TIMES'
+export const QUIZ_INCREMENT_AUDIO_PLAYED_TIMES = 'QUIZ_INCREMENT_AUDIO_PLAYED_TIMES'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -24,6 +26,8 @@ export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const actionQuizReset = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE, (answer) => answer)
 export const onTimeout = createAction(QUIZ_TIMEOUT)
+export const resetAudioPlayedTimes = createAction(QUIZ_RESET_AUDIO_PLAYED_TIMES)
+export const incrementAudioPlayedTimes = createAction(QUIZ_INCREMENT_AUDIO_PLAYED_TIMES)
 
 export const fetchQuizData = () => {
   return (dispatch, getState) => {
@@ -61,12 +65,14 @@ export const hardReset = () => {
 
 export const actionNextWordWithTimer = () => {
   return (dispatch, getState) => {
-    dispatch(nextWord())
+    dispatch(resetAudioPlayedTimes())
+    dispatch(actionEnablePlayButton())
     dispatch(timerReset())
+    dispatch(nextWord())
     // playerOnLoad event is not neccessary
     // but it is just for a better ux
     // (show loading indicator immedially)
-    dispatch(playerOnLoad())
+    // dispatch(playerOnLoad())
   }
 }
 
@@ -93,7 +99,8 @@ let defaultState = {
   // Show EndScreen when set to true
   isComplete: false,
   // Show time out modal
-  timeOut: false
+  timeOut: false,
+  audioPlayedTimes: 0
 }
 
 export default handleActions({
@@ -142,5 +149,13 @@ export default handleActions({
     ...state,
     timeOut: true
   }),
-  [QUIZ_RESET]: (state) => defaultState
+  [QUIZ_RESET]: (state) => defaultState,
+  [QUIZ_RESET_AUDIO_PLAYED_TIMES]: (state) => ({
+    ...state,
+    audioPlayedTimes: 0
+  }),
+  [QUIZ_INCREMENT_AUDIO_PLAYED_TIMES]: (state) => ({
+    ...state,
+    audioPlayedTimes: state.audioPlayedTimes + 1
+  })
 }, defaultState)

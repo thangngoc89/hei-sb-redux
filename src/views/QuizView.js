@@ -27,6 +27,7 @@ class QuizView extends Component {
     currentAnswer: PropTypes.string.isRequired,
     timeOut: PropTypes.bool.isRequired,
     error: PropTypes.any.isRequired,
+    audioPlayedTimes: PropTypes.number.isRequired,
     // Below props are actions
     fetchQuizData: PropTypes.func.isRequired,
     nextWord: PropTypes.func.isRequired,
@@ -101,6 +102,7 @@ class QuizView extends Component {
         handleNextWord={this.props.nextWord}
         handleOnChange={this.props.answerOnChange}
         currentAnswer={this.props.currentAnswer}
+        audioPlayedTimes={this.props.audioPlayedTimes}
         isTimeOut={this.props.timeOut}
       />
     }
