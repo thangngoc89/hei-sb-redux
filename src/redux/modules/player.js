@@ -53,7 +53,7 @@ export const onEndWithQuiz = () => {
   return (dispatch, getState) => {
     dispatch(onEnd())
     dispatch(incrementAudioPlayedTimes())
-    
+
     if (getState().quiz.audioPlayedTimes >= 2) {
       dispatch(actionDisablePlayButton())
     }

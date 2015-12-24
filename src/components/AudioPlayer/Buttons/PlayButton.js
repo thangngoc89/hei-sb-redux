@@ -5,7 +5,7 @@ const PlayButton = (props) => {
   let iconClass = classnames({
     'fa': true,
     'fa-play': !props.isPlaying,
-    'fa-pause': props.isPlaying,
+    'fa-pause': props.isPlaying
   })
 
   return (

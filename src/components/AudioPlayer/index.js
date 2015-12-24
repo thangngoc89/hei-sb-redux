@@ -26,6 +26,7 @@ class AudioPlayer extends React.Component {
     actionToggle: PropTypes.func.isRequired,
     actionToggleMute: PropTypes.func.isRequired,
     actionToggleLoop: PropTypes.func.isRequired,
+    actionUpdateSeek: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
     onLoad: PropTypes.func.isRequired

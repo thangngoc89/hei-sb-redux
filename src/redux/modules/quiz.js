@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
-import { actionPlayerReset, actionEnablePlayButton, PLAYER_ON_END } from './player'
+import { actionPlayerReset, actionEnablePlayButton } from './player'
 import { ParseConfig } from 'redux/config'
 import request from 'superagent'
 import shuffle from 'lodash.shuffle'
