@@ -17,6 +17,7 @@ const ControlButtons = (props) => {
           <PlayButton
             isPlaying={props.isPlaying}
             onClick={props.playButtonAction}
+            disable={props.canUserToggleAudio}
           />
         }
         {show.MuteButton &&
@@ -42,6 +43,7 @@ ControlButtons.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   mute: PropTypes.bool.isRequired,
   loop: PropTypes.bool.isRequired,
+  canUserToggleAudio: PropTypes.bool.isRequired,
   playButtonAction: PropTypes.func.isRequired,
   loopButtonAction: PropTypes.func.isRequired,
   muteButtonAction: PropTypes.func.isRequired

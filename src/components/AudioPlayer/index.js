@@ -21,11 +21,11 @@ class AudioPlayer extends React.Component {
     // state
     isPlaying: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    canUserToggleAudio: PropTypes.bool.isRequired,
     // action
     actionToggle: PropTypes.func.isRequired,
     actionToggleMute: PropTypes.func.isRequired,
     actionToggleLoop: PropTypes.func.isRequired,
-    actionUpdateSeek: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
     onLoad: PropTypes.func.isRequired

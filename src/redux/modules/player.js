@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { actions as timerActions } from './timer'
+import { incrementAudioPlayedTimes } from './quiz'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -10,8 +11,8 @@ export const PLAYER_ACTION_VOLUME = '@@player/action/VOLUME'
 export const PLAYER_ACTION_TOGGLE_MUTE = '@@player/action/TOGGLE_MUTE'
 export const PLAYER_ACTION_TOGGLE_LOOP = '@@player/action/TOGGLE_LOOP'
 export const PLAYER_ACTION_UPDATE_SEEK = '@@player/action/UPDATE_SEEK'
-export const PLAYER_ENABLE_PLAY_BUTTON = '@@player/action/ENABLE_PLAY_BUTTON'
-export const PLAYER_DISABLE_PLAY_BUTTON = '@@player/action/DISABLE_PLAY_BUTTON'
+export const PLAYER_ACTION_ENABLE_PLAY_BUTTON = '@@player/action/ENABLE_PLAY_BUTTON'
+export const PLAYER_ACTION_DISABLE_PLAY_BUTTON = '@@player/action/DISABLE_PLAY_BUTTON'
 export const PLAYER_RESET = '@@player/action/PLAYER_RESET'
 
 export const PLAYER_ON_PLAY = '@@player/event/ON_PLAY'
@@ -26,8 +27,10 @@ export const actionToggle = createAction(PLAYER_ACTION_TOGGLE)
 export const actionVolume = createAction(PLAYER_ACTION_VOLUME, (volume) => volume)
 export const actionToggleMute = createAction(PLAYER_ACTION_TOGGLE_MUTE)
 export const actionToggleLoop = createAction(PLAYER_ACTION_TOGGLE_LOOP)
+export const actionEnablePlayButton = createAction(PLAYER_ACTION_ENABLE_PLAY_BUTTON)
+export const actionDisablePlayButton = createAction(PLAYER_ACTION_DISABLE_PLAY_BUTTON)
 // TODO: Implement seek
-export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
+// export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
 export const actionPlayerReset = createAction(PLAYER_RESET)
 // Event from howler.js
 export const onPlay = createAction(PLAYER_ON_PLAY)
@@ -46,6 +49,17 @@ export const onPlayWithTimer = () => {
   }
 }
 
+export const onEndWithQuiz = () => {
+  return (dispatch, getState) => {
+    dispatch(onEnd())
+    dispatch(incrementAudioPlayedTimes())
+    
+    if (getState().quiz.audioPlayedTimes >= 2) {
+      dispatch(actionDisablePlayButton())
+    }
+  }
+}
+
 export const actions = {
   actionChangeSource,
   actionPlay,
@@ -53,9 +67,8 @@ export const actions = {
   actionVolume,
   actionToggleMute,
   actionToggleLoop,
-  actionUpdateSeek,
   onPlay: onPlayWithTimer,
-  onEnd,
+  onEnd: onEndWithQuiz,
   onLoad
 }
 
@@ -70,7 +83,7 @@ let defaultState = {
   volume: 1,
   seek: 0,
   loop: false,
-  canUserPlay: true,
+  canUserToggleAudio: true,
   buttons: {
     LoadingButton: false,
     LoopButton: false,
@@ -132,6 +145,14 @@ export default handleActions({
   [PLAYER_ACTION_TOGGLE_LOOP]: (state) => ({
     ...state,
     loop: !state.loop
+  }),
+  [PLAYER_ACTION_ENABLE_PLAY_BUTTON]: (state) => ({
+    ...state,
+    canUserToggleAudio: true
+  }),
+  [PLAYER_ACTION_DISABLE_PLAY_BUTTON]: (state) => ({
+    ...state,
+    canUserToggleAudio: false
   }),
   [PLAYER_RESET]: (state) => defaultState
 }, defaultState)
