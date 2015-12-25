@@ -58,6 +58,7 @@ class AudioPlayer extends React.Component {
 
   clearSoundObject () {
     if (this._audio) {
+      this._audio.stop()
       this._audio.unload()
       this._audio = null
     }
