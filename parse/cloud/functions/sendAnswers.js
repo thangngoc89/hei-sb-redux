@@ -9,7 +9,7 @@ var resultObject = new Parse.Object.extend('Result')
 var contestantQuery = new Parse.Query('Contestant')
 var codeQuery = new Parse.Query('Code')
 
-var code, contestant
+var code, contestant, data
 
 module.exports = function (req, res) {
   var body = JSON.parse(req.body)
@@ -42,7 +42,7 @@ module.exports = function (req, res) {
     }
   }
 
-  var data = body.data
+  data = body.data
 
   codeQuery.get(data.code)
   .then(setCodeAndQueryContestant)
@@ -53,6 +53,10 @@ module.exports = function (req, res) {
     res.success('success')
   }).then(null, function(err) {
     // Catch all error
+    if (typeof err === 'string') {
+      res.error('Error: ' + err)
+      return
+    }
     console.error(err)
     res.error('error')
   })
