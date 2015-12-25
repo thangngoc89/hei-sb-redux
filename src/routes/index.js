@@ -31,6 +31,7 @@ export default (
     { /* Protected routes */ }
     <Route onEnter={requireLogin}>
       <Route getComponent={loadContainerAsync('QuizView')} path='/quiz' />
+      <Route getComponent={loadContainerAsync('CompleteView')} path='/complete' />
     </Route>
 
     { /* Catch all route */ }

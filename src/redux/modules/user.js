@@ -1,7 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { pushPath } from 'redux-simple-router'
-import { ParseConfig } from 'redux/config'
-import request from 'superagent'
+import request from 'redux/utils/request'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -14,27 +13,23 @@ export const CLOSE_MODAL = 'CLOSE_MODAL'
 // Actions
 // ------------------------------------
 export const saveStart = createAction(USER_SAVE_START)
-export const saveSuccess = createAction(USER_SAVE_SUCCESS, (data) => data)
-export const saveFailed = createAction(USER_SAVE_FAILED, (data) => data)
+export const saveSuccess = createAction(USER_SAVE_SUCCESS)
+export const saveFailed = createAction(USER_SAVE_FAILED)
 export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
 
 export const save = (userInput) => {
   return (dispatch, getState) => {
     dispatch(saveStart())
-    request.post('https://api.parse.com/1/functions/checkCode')
-      .set('X-Parse-Application-Id', ParseConfig.applicationId)
-      .send({data: userInput})
-      .set('X-Parse-REST-API-Key', ParseConfig.restKey)
-      .end(function (err, res) {
-        if (err) {
-          let error = JSON.parse(res.body.error)
-          dispatch(saveFailed(error))
-        } else {
-          dispatch(saveSuccess(res.body.result))
-          dispatch(showReminderModal())
-        }
-      })
+    request('checkCode', userInput, (err, res) => {
+      if (err) {
+        const error = JSON.parse(res.body.error)
+        dispatch(saveFailed(error))
+        return
+      }
+      dispatch(saveSuccess(res.body.result))
+      dispatch(showReminderModal())
+    })
   }
 }
 

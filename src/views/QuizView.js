@@ -4,7 +4,6 @@ import { actions as counterActions } from '../redux/modules/quiz'
 import Container from 'layouts/TransparentContainerLayout'
 import LoadingScreen from 'components/LoadingScreen'
 import ErrorScreen from 'components/ErrorScreen'
-import EndScreen from 'components/EndScreen'
 import Word from 'components/Word'
 
 const mapStateToProps = (state) => ({
@@ -29,11 +28,8 @@ class QuizView extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchQuizData()
-  }
-
-  componentWillUnmount () {
     this.props.hardReset()
+    this.props.fetchQuizData()
   }
 
   currentWord () {
@@ -54,8 +50,6 @@ class QuizView extends Component {
     } else if (this.props.wordList.length < 1) {
       // TODO: Use modal for this
       component = <ErrorScreen message='No words are available' title='Logic Error'/>
-    } else if (this.props.isComplete) {
-      component = <EndScreen />
     } else {
       component =
       <Word
@@ -69,12 +63,11 @@ class QuizView extends Component {
         isTimeOut={this.props.timeOut}
       />
     }
+
     return (
-      <div>
-        <Container xs={12} sm={10} md={8} lg={6}>
-          { component }
-        </Container>
-      </div>
+      <Container xs={12} sm={10} md={8} lg={6}>
+        { component }
+      </Container>
     )
   }
 }
