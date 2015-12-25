@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "compile": "NODE_ENV=production node -r dotenv/config --harmony bin/compile",
+    "compile": "npm run clean && NODE_ENV=production node -r dotenv/config --harmony bin/compile",
     "compile:serve": "npm run compile && cd dist && python -m SimpleHTTPServer 3000",
     "lint": "eslint **/* --quiet",
     "lint:fix": "npm run lint -- --fix",

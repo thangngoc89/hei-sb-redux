@@ -48,6 +48,7 @@ const config = {
     'redux-simple-router',
     'redux-form'
   ],
+  compiler_save_stats: !argv['save-stats'],
 
   // ----------------------------------
   // Test Configuration

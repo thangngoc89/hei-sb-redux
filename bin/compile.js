@@ -2,6 +2,8 @@ require('babel-register')
 
 const config = require('../config')
 const debug = require('debug')('app:bin:compile')
+const fs = require('fs')
+const path = require('path')
 
 debug('Create webpack compiler.')
 
@@ -12,6 +14,15 @@ compiler.run(function (err, stats) {
 
   debug('Webpack compile completed.')
   console.log(stats.toString(config.compiler_stats))
+
+  // Write stats.json to file for analyse
+  if (config.compiler_save_stats) {
+    const saveTo = path.join(config.path_base, 'stats.json')
+
+    fs.writeFile(saveTo, JSON.stringify(jsonStats), () =>{
+      debug('Written Webpack compile status to stats.json')
+    })
+  }
 
   if (err) {
     debug('Webpack compiler encountered a fatal error.', err)
