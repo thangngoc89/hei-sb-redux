@@ -6,19 +6,12 @@ import LoadingScreen from 'components/LoadingScreen'
 import ErrorScreen from 'components/ErrorScreen'
 import EndScreen from 'components/EndScreen'
 import Word from 'components/Word'
-import reactMixin from 'react-mixin'
-import { Lifecycle } from 'react-router'
 
 const mapStateToProps = (state) => ({
   ...state.quiz
 })
 
 class QuizView extends Component {
-  constructor (props) {
-    super(props)
-    this.routerWillLeave = this.routerWillLeave.bind(this)
-  }
-
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isComplete: PropTypes.bool.isRequired,
@@ -36,41 +29,11 @@ class QuizView extends Component {
   }
 
   componentDidMount () {
-    // TODO: Prevent user from directly access this page
     this.props.fetchQuizData()
-    this.setConfirmMessage(this.confirmMessage)
   }
 
   componentWillUnmount () {
     this.props.hardReset()
-    this.setConfirmMessage(() => {
-      return
-    })
-  }
-
-  routerWillLeave (nextLocation) {
-    // TODO: [Refactor] Merge this with confirmMessage
-    if (!this.props.isComplete) {
-      return 'You are doing the exam. You CAN NOT do it again once you leave.'
-    }
-  }
-
-  setConfirmMessage (func) {
-    window.onbeforeunload = func
-    window.unload = func
-    window.pagehide = func
-  }
-
-  confirmMessage = (e) => {
-    if (this.props.isComplete) {
-      return
-    }
-    let message = 'You are doing the exam. You CAN NOT do it again once you leave.'
-    e = e || window.event
-    if (e) {
-      e.returnValue = message
-    }
-    return message
   }
 
   currentWord () {
@@ -116,4 +79,4 @@ class QuizView extends Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(reactMixin.onClass(QuizView, Lifecycle))
+export default connect(mapStateToProps, counterActions)(QuizView)

@@ -1,17 +1,15 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import CoreLayout from 'layouts/CoreLayout'
-// import LoginView from 'views/LoginView'
 import RuleView from 'views/RuleView'
-// import QuizView from 'views/QuizView'
 import NotFound from 'views/NotFound'
-import { store } from 'app'
+import store from 'redux/store'
 
 const requireLogin = (nextState, replaceState, next) => {
   if (__DEV__) {
     next()
+    return
   }
-
   const {user: { code, contestantId }} = store.getState()
   if (!code || !contestantId) {
     replaceState(null, '/')
