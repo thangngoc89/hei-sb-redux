@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import CoreLayout from 'layouts/CoreLayout'
-import LoginView from 'views/LoginView'
+// import LoginView from 'views/LoginView'
 import RuleView from 'views/RuleView'
-import QuizView from 'views/QuizView'
+// import QuizView from 'views/QuizView'
 import NotFound from 'views/NotFound'
 import { store } from 'app'
 
@@ -19,14 +19,20 @@ const requireLogin = (nextState, replaceState, next) => {
   next()
 }
 
+const loadContainerAsync = view => (location, cb) => {
+  require.ensure([], (require) => {
+    cb(null, require('views/' + view))
+  })
+}
+
 export default (
   <Route component={CoreLayout} path='/'>
     <IndexRoute component={RuleView} />
-    <Route component={LoginView} path='/login' />
+    <Route getComponent={loadContainerAsync('LoginView')} path='/login' />
 
     { /* Protected routes */ }
     <Route onEnter={requireLogin}>
-      <Route component={QuizView} path='/quiz' />
+      <Route getComponent={loadContainerAsync('QuizView')} path='/quiz' />
     </Route>
 
     { /* Catch all route */ }
