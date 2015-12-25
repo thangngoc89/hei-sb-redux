@@ -145,7 +145,12 @@ class AudioPlayer extends React.Component {
     return (
       <div className='player-container'>
         <ControlButtons
-          {...this.props}
+          buttons={this.props.buttons}
+          isLoading={this.props.isLoading}
+          isPlaying={this.props.isPlaying}
+          mute={this.props.mute}
+          loop={this.props.loop}
+          canUserToggleAudio={this.props.canUserToggleAudio}
           playButtonAction={this.actionToggle}
           loopButtonAction={this.actionToggleLoop}
           muteButtonAction={this.actionToggleMute}
