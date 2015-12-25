@@ -1,13 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createHashHistory } from 'history'
 import { syncReduxAndRouter } from 'redux-simple-router'
-import routes from './routes'
 import Root from './containers/Root'
-import configureStore from './redux/configureStore'
-
-export const history = createHashHistory()
-export const store = configureStore(window.__INITIAL_STATE__)
+import routes from './routes'
+import history from './routes/history'
+import store from './redux/store'
 
 syncReduxAndRouter(history, store, (state) => state.router)
 
