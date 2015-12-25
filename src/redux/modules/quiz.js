@@ -99,7 +99,8 @@ let defaultState = {
   currentWord: 0,
   // Show loading indicator
   isLoading: true,
-  // Show EndScreen when set to true
+  // Start && complete state
+  isStarted: false,
   isComplete: false,
   // Show time out modal
   timeOut: false,
@@ -114,6 +115,8 @@ export default handleActions({
     return {
       ...state,
       isLoading: false,
+      // TODO: Dispatch a reducer to get started
+      isStarted: true,
       wordList: result
     }
   },
