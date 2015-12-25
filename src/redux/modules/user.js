@@ -23,7 +23,7 @@ export const save = (userInput) => {
     dispatch(saveStart())
     request('checkCode', userInput, (err, res) => {
       if (err) {
-        const error = JSON.parse(res.body.error)
+        const error = (res) ? JSON.parse(res.body.error) : null
         dispatch(saveFailed(error))
         return
       }
@@ -53,7 +53,7 @@ let defaultState = {
   code: undefined,
   contestantId: undefined,
   saveSuccess: undefined,
-  saveErrorInfo: undefined,
+  saveErrorInfo: [],
   modal: undefined,
   isSaving: false
 }
@@ -70,22 +70,27 @@ export default handleActions({
     saveErrorInfo: undefined,
     isSaving: false
   }),
-  [USER_SAVE_FAILED]: (state, { payload }) => ({
-    ...state,
-    saveSuccess: false,
-    saveErrorInfo: payload,
-    isSaving: false,
-    modal: {
-      type: 'error',
-      title: 'Oops!',
-      body: payload.message,
-      button: `I understand. I'll fix it`,
-      buttonStyle: 'danger'
+  [USER_SAVE_FAILED]: (state, { payload }) => {
+    const message = (payload) ? payload.message : 'Looks like you are having a connection issue'
+    return {
+      ...state,
+      saveSuccess: false,
+      saveErrorInfo: [
+        ...state.saveErrorInfo,
+        payload
+      ],
+      isSaving: false,
+      modal: {
+        type: 'error',
+        title: 'Oops!',
+        body: message,
+        button: `I understand. I'll fix it`,
+        buttonStyle: 'danger'
+      }
     }
-  }),
+  },
   [CLOSE_MODAL]: (state) => ({
     ...state,
-    saveErrorInfo: undefined,
     modal: undefined
   }),
   [SHOW_REMINDER_MODAL]: (state) => ({
