@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
 import { actionPlayerReset, actionEnablePlayButton } from './player'
-import { ParseConfig } from 'redux/config'
-import request from 'superagent'
+import { pushPath } from 'redux-simple-router'
+import request from 'redux/utils/request'
 import shuffle from 'lodash.shuffle'
 // ------------------------------------
 // Constants
@@ -10,18 +10,20 @@ import shuffle from 'lodash.shuffle'
 export const QUIZ_FETCH_START = '@@quiz/fetch/START'
 export const QUIZ_FETCH_SUCCESS = '@@quiz/fetch/SUCCESS'
 export const QUIZ_FETCH_ERROR = '@@quiz/fetch/ERROR'
+
 export const QUIZ_NEXT_WORD = '@@quiz/action/NEXT_WORD'
 export const QUIZ_RESET = '@@quiz/action/RESET'
 export const QUIZ_ANSWER_ONCHANGE = '@@quiz/action/ANSWER_ONCHANGE'
-export const QUIZ_TIMEOUT = '@@quiz/action/TIMEOUT'
-export const QUIZ_RESET_AUDIO_PLAYED_TIMES = '@@quiz/action/RESET_AUDIO_PLAYED_TIMES'
-export const QUIZ_INCREMENT_AUDIO_PLAYED_TIMES = '@@quiz/action/INCREMENT_AUDIO_PLAYED_TIMES'
+export const QUIZ_RESET_AUDIO_PLAYED_TIMES = '@@quiz/action/RESET_PLAYED_TIMES'
+export const QUIZ_INCREMENT_AUDIO_PLAYED_TIMES = '@@quiz/action/INCREMENT_PLAYED_TIMES'
+export const QUIZ_TIMEOUT = '@@quiz/event/TIMEOUT'
 // ------------------------------------
 // Actions
 // ------------------------------------
 export const fetchStart = createAction(QUIZ_FETCH_START)
 export const fetchSuccess = createAction(QUIZ_FETCH_SUCCESS)
 export const fetchError = createAction(QUIZ_FETCH_ERROR)
+
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const actionQuizReset = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE)
@@ -42,19 +44,15 @@ export const fetchQuizData = () => {
       code: getState().user.code
     }
     dispatch(fetchStart())
-    // TODO: Compose contestantID and code for payload
-    request.post('https://api.parse.com/1/functions/wordList')
-      .set('X-Parse-Application-Id', ParseConfig.applicationId)
-      .set('X-Parse-REST-API-Key', ParseConfig.restKey)
-      .send({data: postData})
-      .end(function (err, res) {
-        if (err) {
-          dispatch(fetchError(err))
-          // TODO: Send request to reset user's code
-        } else {
-          dispatch(fetchSuccess(res.body))
-        }
-      })
+
+    request('wordList', postData, (err, res) => {
+      if (err) {
+        // TODO: Send request to reset user's code
+        dispatch(fetchError(err))
+        return
+      }
+      dispatch(fetchSuccess(res.body))
+    })
   }
 }
 
@@ -72,10 +70,13 @@ export const actionNextWordWithTimer = () => {
     dispatch(actionEnablePlayButton())
     dispatch(timerReset())
     dispatch(nextWord())
-    // playerOnLoad event is not neccessary
-    // but it is just for a better ux
-    // (show loading indicator immedially)
-    // dispatch(playerOnLoad())
+
+    // TODO: Re-consider this
+    // Does nexWord() fast enough
+    // to get (isComplete === true) here
+    if (getState().quiz.isComplete) {
+      dispatch(pushPath('/complete'))
+    }
   }
 }
 
