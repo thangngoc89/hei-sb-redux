@@ -21,16 +21,16 @@ export const PLAYER_ON_LOAD = '@@player/event/ON_LOAD'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const actionChangeSource = createAction(PLAYER_ACTION_CHANGE_SOURCE, (url) => url)
+export const actionChangeSource = createAction(PLAYER_ACTION_CHANGE_SOURCE)
 export const actionPlay = createAction(PLAYER_ACTION_PLAY)
 export const actionToggle = createAction(PLAYER_ACTION_TOGGLE)
-export const actionVolume = createAction(PLAYER_ACTION_VOLUME, (volume) => volume)
+export const actionVolume = createAction(PLAYER_ACTION_VOLUME)
 export const actionToggleMute = createAction(PLAYER_ACTION_TOGGLE_MUTE)
 export const actionToggleLoop = createAction(PLAYER_ACTION_TOGGLE_LOOP)
 export const actionEnablePlayButton = createAction(PLAYER_ACTION_ENABLE_PLAY_BUTTON)
 export const actionDisablePlayButton = createAction(PLAYER_ACTION_DISABLE_PLAY_BUTTON)
 // TODO: Implement seek
-export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK, (seek) => seek)
+export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK)
 export const actionPlayerReset = createAction(PLAYER_RESET)
 // Event from howler.js
 export const onPlay = createAction(PLAYER_ON_PLAY)
