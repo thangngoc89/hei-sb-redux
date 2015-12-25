@@ -1,17 +1,21 @@
 import { createAction, handleActions } from 'redux-actions'
 import request from 'redux/utils/request'
+import { userReset } from './user'
+import { hardReset } from './quiz'
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const SEND_START = '@@answers/send/START'
 export const SEND_SUCCESS = '@@answers/send/SUCCESS'
 export const SEND_ERROR = '@@answers/send/ERROR'
+export const COMPLETE_RESET = '@@complete/reset'
 // ------------------------------------
 // Actions
 // ------------------------------------
 export const sendStart = createAction(SEND_START)
 export const sendSuccess = createAction(SEND_SUCCESS)
 export const sendError = createAction(SEND_ERROR)
+export const completeReset = createAction(COMPLETE_RESET)
 
 // Send user answers to Parse
 // No thing will be returned
@@ -26,17 +30,21 @@ export const send = () => {
 
     request('sendAnswers', postData, (err, res) => {
       if (err) {
-        dispatch(sendError(res.body))
+        const errorMessage = (res) ? res.body : null
+        dispatch(sendError(errorMessage))
         return
       }
 
       dispatch(sendSuccess())
+      dispatch(userReset())
+      dispatch(hardReset())
     })
   }
 }
 
 export const actions = {
-  send
+  send,
+  completeReset
 }
 
 // ------------------------------------
@@ -70,5 +78,6 @@ export default handleActions({
       payload
     ],
     isLoading: false
-  })
+  }),
+  [COMPLETE_RESET]: (state) => defaultState
 }, defaultState)
