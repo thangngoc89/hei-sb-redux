@@ -14,13 +14,17 @@ class CompleteView extends Component {
   static propTypes = {
     error: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    send: PropTypes.func.isRequired
+    send: PropTypes.func.isRequired,
+    completeReset: PropTypes.func.isRequired
   }
 
   componentDidMount () {
-    // TODO: What if user access this route directly
-    // with out being redirect by QuizView
     this.props.send()
+  }
+
+  componentWillUnmount () {
+    // Reset CompleteView state when leave
+    this.props.completeReset()
   }
 
   render () {

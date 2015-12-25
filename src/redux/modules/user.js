@@ -4,11 +4,12 @@ import request from 'redux/utils/request'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const USER_SAVE_START = 'USER_SAVE_START'
-export const USER_SAVE_SUCCESS = 'USER_SAVE_SUCCESS'
-export const USER_SAVE_FAILED = 'USER_SAVE_FAILED'
-export const SHOW_REMINDER_MODAL = 'SHOW_REMINDER_MODAL'
-export const CLOSE_MODAL = 'CLOSE_MODAL'
+export const USER_SAVE_START = '@@user/save/START'
+export const USER_SAVE_SUCCESS = '@@user/save/SUCCESS'
+export const USER_SAVE_FAILED = '@@user/save/FAILED'
+export const SHOW_REMINDER_MODAL = '@@user/modal/SHOW_REMINDER_MODAL'
+export const CLOSE_MODAL = '@@user/modal/CLOSE'
+export const USER_RESET = '@@user/action/RESET'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -17,6 +18,7 @@ export const saveSuccess = createAction(USER_SAVE_SUCCESS)
 export const saveFailed = createAction(USER_SAVE_FAILED)
 export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
 export const closeModal = createAction(CLOSE_MODAL)
+export const userReset = createAction(USER_RESET)
 
 export const save = (userInput) => {
   return (dispatch, getState) => {
@@ -101,5 +103,6 @@ export default handleActions({
       body: 'You will have ten senconds to answer each questions.',
       button: 'Got it !'
     }
-  })
+  }),
+  [USER_RESET]: (state) => defaultState
 }, defaultState)

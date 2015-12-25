@@ -10,9 +10,29 @@ const requireLogin = (nextState, replaceState, next) => {
     next()
     return
   }
-  const {user: { code, contestantId }} = store.getState()
+  const {
+    user: { code, contestantId },
+    quiz: { isComplete }
+  } = store.getState()
   if (!code || !contestantId) {
     replaceState(null, '/')
+  }
+  // Redirect to /complete view when completed
+  if (isComplete) {
+    replaceState(null, '/complete')
+  }
+  next()
+}
+
+// Am I need this
+const hasToDoneExamFirst = (nextState, replaceState, next) => {
+  if (__DEV__) {
+    next()
+    return
+  }
+  const {quiz: { isComplete }} = store.getState()
+  if (!isComplete) {
+    replaceState(null, '/quiz')
   }
   next()
 }
@@ -31,6 +51,9 @@ export default (
     { /* Protected routes */ }
     <Route onEnter={requireLogin}>
       <Route getComponent={loadContainerAsync('QuizView')} path='/quiz' />
+    </Route>
+
+    <Route onEnter={hasToDoneExamFirst}>
       <Route getComponent={loadContainerAsync('CompleteView')} path='/complete' />
     </Route>
 
