@@ -47,7 +47,7 @@ export const fetchQuizData = () => {
 
     request('wordList', postData, (err, res) => {
       if (err) {
-        // TODO: Send request to reset user's code
+        // TODO: Handle error properly
         dispatch(fetchError(err))
         return
       }
