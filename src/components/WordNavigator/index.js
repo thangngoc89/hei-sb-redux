@@ -1,9 +1,15 @@
 import React from 'react'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
-const WordNavigator = ({ current, total }) => {
-  return (
-    <strong>Question {current + 1} of {total}</strong>
-  )
+class WordNavigator extends React.Component {
+  shouldComponentUpdate = shouldPureComponentUpdate
+
+  render () {
+    const { current, total } = this.props
+    return (
+      <strong>Question {current + 1} of {total}</strong>
+    )
+  }
 }
 
 WordNavigator.propTypes = {

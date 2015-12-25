@@ -2,14 +2,10 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import { Input } from 'react-bootstrap'
 import styles from './style.scss'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
 class LoginFormInput extends React.Component {
-  static propTypes = {
-    type: PropTypes.string,
-    displayName: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    object: PropTypes.object
-  }
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render () {
     let type = this.props.type || 'text'
@@ -45,6 +41,13 @@ class LoginFormInput extends React.Component {
       </div>
     )
   }
+}
+
+LoginFormInput.propTypes = {
+  type: PropTypes.string,
+  displayName: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  object: PropTypes.object
 }
 
 export default LoginFormInput
