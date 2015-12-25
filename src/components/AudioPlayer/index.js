@@ -59,6 +59,8 @@ class AudioPlayer extends React.Component {
   clearSoundObject () {
     if (this._audio) {
       this._audio.stop()
+      // Also update seek when stop for a better UX
+      this.props.actionUpdateSeek(0)
       this._audio.unload()
       this._audio = null
     }
