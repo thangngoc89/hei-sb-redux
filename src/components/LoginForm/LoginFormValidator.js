@@ -18,7 +18,7 @@ const validDate = value => {
     if (age <= 1) {
       return `Are you sure you are 1 year old ?`
     }
-    if (age < 10) {
+    if (age < 10 || age > 100) {
       return `Are you sure you are ${age} years old ?`
     }
   }
