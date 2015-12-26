@@ -30,7 +30,9 @@ export const save = (userInput) => {
         return
       }
       dispatch(saveSuccess(res.body.result))
-      dispatch(showReminderModal())
+
+      const secondsPerWord = getState().quiz.secondsPerWord
+      dispatch(showReminderModal(secondsPerWord))
     })
   }
 }
@@ -95,12 +97,12 @@ export default handleActions({
     ...state,
     modal: undefined
   }),
-  [SHOW_REMINDER_MODAL]: (state) => ({
+  [SHOW_REMINDER_MODAL]: (state, { payload }) => ({
     ...state,
     modal: {
       type: 'reminder',
       title: 'Succeed!',
-      body: 'You will have ten senconds to answer each questions.',
+      body: `You will have ${ payload } seconds to answer each question.`,
       button: 'Got it !'
     }
   }),
