@@ -69,7 +69,7 @@ export class LoginForm extends React.Component {
           <LoginFormInput displayName='Code' icon='code' object={code} />
           <Button
             block
-            onClick={handleSubmit(this.props.save)}
+            type='submit'
             className={styles['submit-button']}
             disabled={pristine || invalid || submitting || isSaving}
           >
