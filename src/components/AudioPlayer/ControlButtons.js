@@ -10,7 +10,13 @@ class ControlButtons extends React.Component {
 
   render () {
     const props = this.props
-    const show = props.buttons
+    let show = props.buttons
+    // Show PlayButton when none given
+    if (show === undefined || show === null) {
+      show = {
+        PlayButton: true
+      }
+    }
 
     return (
       <div className='player-control-wrapper'>
@@ -22,7 +28,7 @@ class ControlButtons extends React.Component {
             <PlayButton
               isPlaying={props.isPlaying}
               onClick={props.playButtonAction}
-              disable={props.canUserToggleAudio}
+              disabled={!props.canUserToggleAudio}
             />
           }
           {show.MuteButton &&
@@ -44,7 +50,7 @@ class ControlButtons extends React.Component {
 }
 
 ControlButtons.propTypes = {
-  buttons: PropTypes.object.isRequired,
+  buttons: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   mute: PropTypes.bool.isRequired,
