@@ -8,21 +8,32 @@ debug('Create configuration.')
 const karmaConfig = {
   basePath: '../', // project root in relation to bin/karma.js
   files: [
-    './node_modules/phantomjs-polyfill/bind-polyfill.js',
+    // './node_modules/phantomjs-polyfill/bind-polyfill.js',
     {
       pattern: `./${config.dir_test}/**/*.js`,
       watched: false,
       served: true,
       included: true
+    },
+    {
+      pattern: `./${config.dir_test}/stubs/sounds/*.mp3`,
+      watched: false,
+      served: true,
+      included: false,
+      nocache: false
     }
   ],
+  proxies: {
+    '/sounds/': '/base/tests/stubs/sounds/'
+  },
+  hostname: '0.0.0.0',
   singleRun: !argv.watch,
   frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
   preprocessors: {
     [`${config.dir_test}/**/*.js`]: ['webpack']
   },
   reporters: ['spec'],
-  browsers: ['PhantomJS'],
+  browsers: ['Chrome'],
   webpack: {
     devtool: 'inline-source-map',
     resolve: webpackConfig.resolve,
