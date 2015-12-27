@@ -29,7 +29,8 @@ class AudioPlayer extends React.Component {
     actionUpdateSeek: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
-    onLoad: PropTypes.func.isRequired
+    onLoad: PropTypes.func.isRequired,
+    onLoadError: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -52,7 +53,7 @@ class AudioPlayer extends React.Component {
       onend: this.onEnd,
       onplay: this.onPlay,
       onload: props.onLoad,
-      onloaderror: this.onLoadError
+      onloaderror: props.onLoadError()
     })
   }
 
@@ -75,10 +76,6 @@ class AudioPlayer extends React.Component {
   onEnd = (id) => {
     this.props.onEnd(id)
     this.stop()
-  }
-
-  onLoadError = (id, message) => {
-    throw new Error(message)
   }
 
   tick () {

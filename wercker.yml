@@ -1,4 +1,4 @@
-box: node:5.3.0
+box: thangngoc89/node-karma:latest
 
 dev:
   steps:
@@ -25,17 +25,21 @@ build:
           mkdir -p _cache/babel
     - npm-install
     - script:
-        name: Run build
-        code: |
-          npm run compile
-    - script:
         name: Run test
         code: |
           npm test
     - script:
+        name: Run build
+        code: |
+          npm run compile
+    - script:
         name: Copy dist into deploy folder
         code: |
           cp -r dist/ $WERCKER_OUTPUT_DIR
+    - script:
+        name: Save coverage
+        code: |
+          cp -r coverage/ $WERCKER_REPORT_ARTIFACTS_DIR
 
 deploy:
   steps:

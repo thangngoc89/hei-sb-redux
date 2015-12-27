@@ -3,7 +3,7 @@ import data from 'redux/data/quiz'
 import createAction from 'redux-actions'
 
 describe('(redux) quiz actions', () => {
-  it('should create an action to request data', function () {
+  it('should create an action to request data', () => {
     expect(quiz.fetchStart()).to.deep.equal({
       type: quiz.QUIZ_FETCH_START,
       payload: undefined
@@ -27,4 +27,56 @@ describe('(redux) quiz actions', () => {
       payload: data
     })
   })
+
+  it('should create an action to handle next word transition', () => {
+    expect(quiz.nextWord()).to.deep.equal({
+      type: quiz.QUIZ_NEXT_WORD,
+      payload: undefined
+    })
+  })
+
+  it('should create an action to reset quiz', () => {
+    expect(quiz.actionQuizReset()).to.deep.equal({
+      type: quiz.QUIZ_RESET,
+      payload: undefined
+    })
+  })
+
+  it('should create an action to handle answer input onchange event', () => {
+    expect(quiz.answerOnChange()).to.deep.equal({
+      type: quiz.QUIZ_ANSWER_ONCHANGE,
+      payload:undefined
+    })
+  })
+
+  it('should create an action to handle time out event', () => {
+    expect(quiz.onTimeout()).to.deep.equal({
+      type: quiz.QUIZ_TIMEOUT,
+      payload: undefined
+    })
+  })
+
+  it('should create an action to reset audio played times', () => {
+    expect(quiz.resetAudioPlayedTimes()).to.deep.equal({
+      type: quiz.QUIZ_RESET_AUDIO_PLAYED_TIMES,
+      payload: undefined
+    })
+  })
+
+  it('should create an action to increase audio played times', () => {
+    expect(quiz.incrementAudioPlayedTimes()).to.deep.equal({
+      type: quiz.QUIZ_INCREMENT_AUDIO_PLAYED_TIMES,
+      payload: undefined
+    })
+  })
+
+  // describe('Thunks', () => {
+  //   beforeEach(() => {
+  //
+  //   })
+  //
+  //   it('should create a thunk to fetch quiz data', () => {
+  //
+  //   })
+  // })
 })

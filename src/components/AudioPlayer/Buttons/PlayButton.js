@@ -13,7 +13,7 @@ const PlayButton = (props) => {
       onClick={props.onClick}
       className='player-btn'
       title='Play/Pause'
-      disabled={!props.disable}
+      disabled={props.disabled}
     >
       <i className={iconClass}></i>
     </button>
@@ -23,7 +23,7 @@ const PlayButton = (props) => {
 PlayButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  disable: PropTypes.bool.isRequired
+  disabled: PropTypes.bool.isRequired
 }
 
 export default PlayButton
