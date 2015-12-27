@@ -16,14 +16,14 @@ describe('(Component) AudioPlayer', function () {
     _props = {
       song: '/sounds/accuse.mp3',
       autoplay: true,
-      mute: false,
+      mute: true, // I have that sound
       loop: false,
       seek: 0,
       buttons: {
         'LoadingButton': true,
         'PlayButton': true,
         'MuteButton': true,
-        'LoopButton': false
+        'LoopButton': true
       },
       isPlaying: false,
       isLoading: true,
@@ -40,6 +40,10 @@ describe('(Component) AudioPlayer', function () {
       }, _spies.dispatch = sinon.spy())
     }
     $root = renderWithProps(_props)
+  })
+
+  afterEach(() => {
+    $root.unmount()
   })
 
   it('Should be rendered', function () {
@@ -59,9 +63,37 @@ describe('(Component) AudioPlayer', function () {
     _spies.actionToggle.should.have.been.called
   })
 
-  it('Should autoplay')
-  it('Should call onLoadError when provide a broken file')
-  it('Should call onPlay')
-  it('Should call onEnd')
-  it('Should update progress bar')
+  it('Should trigger action when click on Mute/Unmute button', () => {
+    $btn = $root.find('button.player-btn[title="Mute/Unmute"]')
+    expect($btn.length).to.equal(1)
+
+    _spies.actionToggleMute.should.have.not.been.called
+    $btn.trigger('click')
+    _spies.actionToggleMute.should.have.been.called
+  })
+
+  it('Should trigger action when click on Loop button', () => {
+    $btn = $root.find('button.player-btn[title="Repeat"]')
+    expect($btn.length).to.equal(1)
+
+    _spies.actionToggleLoop.should.have.not.been.called
+    $btn.trigger('click')
+    _spies.actionToggleLoop.should.have.been.called
+  })
+
+  it('Should update seek bar after called play', () => {
+    $root = renderWithProps({
+      ..._props,
+      autoplay: false
+    })
+    _spies.actionUpdateSeek.should.have.not.been.called
+    $btn = $root.find('button.player-btn[title="Play/Pause"]')
+    $btn.trigger('click')
+    _spies.actionUpdateSeek.should.have.not.been.called
+  })
+  // 
+  // it('Should autoplay')
+  // it('Should call onLoadError when provide a broken file')
+  // it('Should call onPlay')
+  // it('Should call onEnd')
 })
