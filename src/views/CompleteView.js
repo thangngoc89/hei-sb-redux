@@ -5,6 +5,7 @@ import Container from 'layouts/TransparentContainerLayout'
 import EndScreen from 'components/EndScreen'
 import LoadingScreen from 'components/LoadingScreen'
 import Modal from 'components/Modal'
+import HomeLink from 'components/HomeLink'
 
 const mapStateToProps = (state) => ({
   ...state.complete
@@ -48,7 +49,7 @@ class CompleteView extends Component {
     }
 
     return (
-      <Container xs={12} sm={10} md={8} lg={6}>
+      <Container xs={12} sm={10} md={8} lg={6} outside={<HomeLink />}>
         {component}
       </Container>
     )
