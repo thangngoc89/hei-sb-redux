@@ -51,6 +51,10 @@ describe('(Component) AudioPlayer -> ControlButtons', function () {
     $root = renderWithProps(_props)
   })
 
+  afterEach(() => {
+    $root.unmount()
+  })
+
   it('Should render as a <div>.', function () {
     expect(_component.type).to.equal('div')
   })

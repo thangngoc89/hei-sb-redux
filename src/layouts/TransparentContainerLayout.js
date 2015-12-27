@@ -13,8 +13,10 @@ const TransparentContainerLayout = (props) => {
 
   if (props.colClassName) className += props.colClassName
 
+  const fluid = (props.fluid === undefined || props.fluid)
+
   return (
-    <Grid fluid>
+    <Grid fluid={fluid}>
       <Row>
         <Col {...col} className='center-block'>
           <div className={className}>
@@ -34,7 +36,8 @@ TransparentContainerLayout.propTypes = {
   sm: PropTypes.number,
   md: PropTypes.number,
   lg: PropTypes.number,
-  colClassName: PropTypes.string
+  colClassName: PropTypes.string,
+  fluid: PropTypes.bool
 }
 
 export default TransparentContainerLayout
