@@ -18,6 +18,7 @@ export const PLAYER_RESET = '@@player/action/PLAYER_RESET'
 export const PLAYER_ON_PLAY = '@@player/event/ON_PLAY'
 export const PLAYER_ON_END = '@@player/event/ON_END'
 export const PLAYER_ON_LOAD = '@@player/event/ON_LOAD'
+export const PLAYER_ON_LOAD_ERROR = '@@player/event/ON_LOAD_ERROR'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -36,6 +37,7 @@ export const actionPlayerReset = createAction(PLAYER_RESET)
 export const onPlay = createAction(PLAYER_ON_PLAY)
 export const onEnd = createAction(PLAYER_ON_END)
 export const onLoad = createAction(PLAYER_ON_LOAD)
+export const onLoadError = createAction(PLAYER_ON_LOAD_ERROR)
 
 export const onPlayWithTimer = () => {
   return (dispatch, getState) => {
@@ -70,7 +72,8 @@ export const actions = {
   actionToggleLoop,
   onPlay: onPlayWithTimer,
   onEnd: onEndWithQuiz,
-  onLoad
+  onLoad,
+  onLoadError
 }
 
 // ------------------------------------

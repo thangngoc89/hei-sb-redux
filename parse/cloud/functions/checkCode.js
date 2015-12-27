@@ -53,11 +53,15 @@ module.exports = function (req, res) {
   var contestantObject = undefined
 
   var query = new Parse.Query('Code')
-  query.get(body.data.code)
+  query.equalTo('code', body.data.code)
+  query.find()
   // Process received Code object
   .then(function (code) {
-    codeObject = code
-    if (!code.get('isValid')) {
+    if (code.length === 0) {
+      return Parse.Promise.error(INVALID_CODE)
+    }
+    codeObject = code[0]
+    if (!codeObject.get('isValid')) {
       return Parse.Promise.error(USED_CODE)
     }
   })

@@ -53,7 +53,7 @@ class AudioPlayer extends React.Component {
       onend: this.onEnd,
       onplay: this.onPlay,
       onload: props.onLoad,
-      onloaderror: props.onLoadError()
+      onloaderror: props.onLoadError
     })
   }
 
