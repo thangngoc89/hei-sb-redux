@@ -2,6 +2,9 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import CoreLayout from 'layouts/CoreLayout'
 import RuleView from 'views/RuleView'
+import QuizView from 'views/QuizView'
+import LoginView from 'views/LoginView'
+import CompleteView from 'views/CompleteView'
 import NotFound from 'views/NotFound'
 import store from 'redux/store'
 
@@ -37,24 +40,24 @@ const hasToDoneExamFirst = (nextState, replaceState, next) => {
   next()
 }
 
-const loadContainerAsync = view => (location, cb) => {
-  require.ensure([], (require) => {
-    cb(null, require('views/' + view))
-  })
-}
+// const loadContainerAsync = view => (location, cb) => {
+//   require.ensure([], (require) => {
+//     cb(null, require('views/' + view))
+//   })
+// }
 
 export default (
   <Route component={CoreLayout} path='/'>
     <IndexRoute component={RuleView} />
-    <Route getComponent={loadContainerAsync('LoginView')} path='/login' />
+    <Route component={LoginView} path='/login' />
 
     { /* Protected routes */ }
     <Route onEnter={requireLogin}>
-      <Route getComponent={loadContainerAsync('QuizView')} path='/quiz' />
+      <Route component={QuizView} path='/quiz' />
     </Route>
 
     <Route onEnter={hasToDoneExamFirst}>
-      <Route getComponent={loadContainerAsync('CompleteView')} path='/complete' />
+      <Route component={CompleteView} path='/complete' />
     </Route>
 
     { /* Catch all route */ }
