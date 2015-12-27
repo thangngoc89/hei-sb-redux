@@ -41,3 +41,43 @@ Parse.Cloud.beforeSave('Code', function(req, res) {
     res.error('Duplicate code')
   })
 })
+
+Parse.Cloud.afterSave('Result', function(req) {
+  if (req.object.get('score') !== undefined) {
+    return
+  }
+
+  var answers = req.object.get('answers')
+  var score = 0
+  var words = {}
+  var query = new Parse.Query('Word')
+  query.limit(200)
+  query.find()
+  // Generate word list
+  .then(function (result) {
+    if (result.length > 0) {
+      for (var i = 0; i < result.length; i++) {
+        var temp = result[i]
+        words[temp.id] = temp.get('word')
+      }
+    }
+  })
+  .then(function () {
+    for (var key in answers) {
+      if (answers.hasOwnProperty(key)) {
+        var answer = answers[key].trim().toLowerCase()
+        if (answer === words[key]) {
+          score++
+        }
+      }
+    }
+  })
+  .then(function () {
+    req.object.set('score', score)
+    return req.object.save()
+  })
+  .then(null, function (error) {
+    console.error('There was an error happen while saving score')
+    console.error(error)
+  })
+})
