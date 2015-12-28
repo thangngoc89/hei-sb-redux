@@ -1,4 +1,4 @@
-box: thangngoc89/node-karma:latest
+box: thangngoc89/hei-sb-redux:latest
 
 dev:
   steps:
