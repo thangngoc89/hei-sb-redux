@@ -51,4 +51,4 @@ deploy:
         name: Deploy to surge
         code: |
           npm install -g surge
-          surge dist hei.khoanguyen.me
+          surge dist $SURGE_DOMAIN
