@@ -72,7 +72,7 @@ export class LoginForm extends React.Component {
             block
             type='submit'
             className={styles['submit-button']}
-            disabled={pristine || invalid || submitting || isSaving}
+            disabled={invalid || isSaving}
           >
             {(submitting || isSaving)
               ? <span><i className='fa fa-circle-o-notch fa-spin'></i> Submiting...</span>
