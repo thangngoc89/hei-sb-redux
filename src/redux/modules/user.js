@@ -21,6 +21,10 @@ export const closeModal = createAction(CLOSE_MODAL)
 export const userReset = createAction(USER_RESET)
 
 export const save = (userInput) => {
+  userInput = {
+    ...userInput,
+    code: userInput.code.trim()
+  }
   return (dispatch, getState) => {
     dispatch(saveStart())
     request('checkCode', userInput, (err, res) => {
