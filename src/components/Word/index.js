@@ -2,7 +2,6 @@ import { Component, PropTypes } from 'react'
 import { Button, Input, Row, Col } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
 import Timer from 'components/WordTimerContainer'
-import Modal from 'components/Modal'
 import AudioPlayer from 'components/WordAudioPlayerContainer'
 import styles from './style.scss'
 
@@ -84,13 +83,6 @@ class Word extends Component {
           </Col>
         </Row>
         </form>
-        <Modal
-          show={this.props.isTimeOut}
-          close={this.handleSubmit.bind(this)}
-          title='Time up!'
-          body='Your time is up for this question.'
-          button='Continue'
-        />
       </div>
     )
   }

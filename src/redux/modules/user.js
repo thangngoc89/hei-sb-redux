@@ -1,14 +1,13 @@
 import { createAction, handleActions } from 'redux-actions'
 import { pushPath } from 'redux-simple-router'
 import request from 'redux/utils/request'
+import { notify } from 'redux/modules/alert'
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const USER_SAVE_START = '@@user/save/START'
 export const USER_SAVE_SUCCESS = '@@user/save/SUCCESS'
 export const USER_SAVE_FAILED = '@@user/save/FAILED'
-export const SHOW_REMINDER_MODAL = '@@user/modal/SHOW_REMINDER_MODAL'
-export const CLOSE_MODAL = '@@user/modal/CLOSE'
 export const USER_RESET = '@@user/action/RESET'
 // ------------------------------------
 // Actions
@@ -16,8 +15,6 @@ export const USER_RESET = '@@user/action/RESET'
 export const saveStart = createAction(USER_SAVE_START)
 export const saveSuccess = createAction(USER_SAVE_SUCCESS)
 export const saveFailed = createAction(USER_SAVE_FAILED)
-export const showReminderModal = createAction(SHOW_REMINDER_MODAL)
-export const closeModal = createAction(CLOSE_MODAL)
 export const userReset = createAction(USER_RESET)
 
 export const save = (userInput) => {
@@ -30,23 +27,49 @@ export const save = (userInput) => {
         return
       }
       dispatch(saveSuccess(res.body.result))
-
-      const secondsPerWord = getState().quiz.secondsPerWord
-      dispatch(showReminderModal(secondsPerWord))
     })
+  }
+}
+
+export const showSaveFailedAlert = ({ payload }) => {
+  return (dispatch, getState) => {
+    const message = (payload) ? payload.message : 'Looks like you are having a connection issue'
+    const alert = {
+      title: 'Oops!',
+      message: message,
+      button: `OK. I'll fix it`,
+      buttonStyle: 'danger'
+    }
+
+    dispatch(notify(alert))
+  }
+}
+
+export const showReminderModal = () => {
+  return (dispatch, getState) => {
+    const secondsPerWord = getState().quiz.secondsPerWord
+    const alert = {
+      title: 'Login succeed',
+      message: `You will have ${ secondsPerWord } seconds to answer each question.`,
+      button: 'Got it!',
+      confirmAction: {
+        module: 'user',
+        action: 'closeReminderModal'
+      }
+    }
+
+    dispatch(notify(alert))
   }
 }
 
 export const closeReminderModal = () => {
   return (dispatch, getState) => {
-    dispatch(closeModal())
     dispatch(pushPath('/quiz'))
   }
 }
 
 export const actions = {
-  save: save,
-  closeModal,
+  save,
   closeReminderModal
 }
 
@@ -58,7 +81,6 @@ let defaultState = {
   contestantId: undefined,
   saveSuccess: undefined,
   saveErrorInfo: [],
-  modal: undefined,
   isSaving: false
 }
 
@@ -75,7 +97,6 @@ export default handleActions({
     isSaving: false
   }),
   [USER_SAVE_FAILED]: (state, { payload }) => {
-    const message = (payload) ? payload.message : 'Looks like you are having a connection issue'
     return {
       ...state,
       saveSuccess: false,
@@ -83,28 +104,8 @@ export default handleActions({
         ...state.saveErrorInfo,
         payload
       ],
-      isSaving: false,
-      modal: {
-        type: 'error',
-        title: 'Oops!',
-        body: message,
-        button: `I understand. I'll fix it`,
-        buttonStyle: 'danger'
-      }
+      isSaving: false
     }
   },
-  [CLOSE_MODAL]: (state) => ({
-    ...state,
-    modal: undefined
-  }),
-  [SHOW_REMINDER_MODAL]: (state, { payload }) => ({
-    ...state,
-    modal: {
-      type: 'reminder',
-      title: 'Succeed!',
-      body: `You will have ${ payload } seconds to answer each question.`,
-      button: 'Got it !'
-    }
-  }),
   [USER_RESET]: (state) => defaultState
 }, defaultState)

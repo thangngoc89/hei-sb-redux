@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import { actions as userActions } from 'redux/modules/user'
 import { Button } from 'react-bootstrap'
-import Modal from 'components/Modal'
 import LoginFormInput from './LoginFormInput'
 import validator from './LoginFormValidator'
 import styles from './style.scss'
@@ -20,12 +19,10 @@ export class LoginForm extends React.Component {
     submitting: PropTypes.bool.isRequired,
     pristine: PropTypes.bool.isRequired,
     invalid: PropTypes.bool.isRequired,
-    modal: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
     // Actions
     handleSubmit: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired,
     closeReminderModal: PropTypes.func.isRequired
   }
 
@@ -33,31 +30,9 @@ export class LoginForm extends React.Component {
     const {
       fields: {fullName, dateOfBirth, university, email, code},
       handleSubmit,
-      submitting,
-      pristine,
       isSaving,
-      invalid,
-      modal
+      invalid
     } = this.props
-
-    let component
-
-    // Format modal
-    if (modal) {
-      let closeFunction
-      if (modal.type === 'error') closeFunction = this.props.closeModal
-      else if (modal.type === 'reminder') closeFunction = this.props.closeReminderModal
-
-      if (closeFunction) {
-        component = (
-          <Modal
-            show
-            close={closeFunction}
-            {...modal}
-          />
-        )
-      }
-    }
 
     return (
       <div>
@@ -71,15 +46,14 @@ export class LoginForm extends React.Component {
             block
             type='submit'
             className={styles['submit-button']}
-            disabled={pristine || invalid || submitting || isSaving}
+            disabled={invalid || isSaving}
           >
-            {(submitting || isSaving)
+            {isSaving
               ? <span><i className='fa fa-circle-o-notch fa-spin'></i> Submiting...</span>
               : 'Submit'
             }
           </Button>
         </form>
-      {component}
       </div>
     )
   }
@@ -88,7 +62,8 @@ export class LoginForm extends React.Component {
 LoginForm = reduxForm({
   form: 'login',
   fields,
-  validate: validator
+  validate: validator,
+  touchOnChange: true
 })(LoginForm)
 
 export default connect(mapStateToProps, userActions)(LoginForm)

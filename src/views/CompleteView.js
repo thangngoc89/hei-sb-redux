@@ -4,7 +4,6 @@ import { actions as completeActions } from '../redux/modules/complete'
 import Container from 'layouts/TransparentContainerLayout'
 import EndScreen from 'components/EndScreen'
 import LoadingScreen from 'components/LoadingScreen'
-import Modal from 'components/Modal'
 import HomeLink from 'components/HomeLink'
 
 const mapStateToProps = (state) => ({
@@ -13,7 +12,6 @@ const mapStateToProps = (state) => ({
 
 class CompleteView extends React.Component {
   static propTypes = {
-    error: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     send: PropTypes.func.isRequired,
     completeReset: PropTypes.func.isRequired,
@@ -30,28 +28,18 @@ class CompleteView extends React.Component {
   }
 
   render () {
-    let component
-
-    if (this.props.error) {
-      component = (
-        <Modal
-          show
-          close={this.props.send}
-          title='Oh snap!'
-          body={`There was a problem while trying to send your answers to us.
-            Please check your internet connection and click the RETRY button below.`}
-          button='Retry'
-        />
-      )
-    } else if (this.props.isLoading) {
-      component = <LoadingScreen />
-    } else {
-      component = <EndScreen score={this.props.score} />
-    }
+    const { isLoading, score } = this.props
 
     return (
       <Container xs={12} sm={10} md={8} lg={6} outside={<HomeLink />}>
-        {component}
+        <div>
+          {isLoading && <LoadingScreen />}
+          {(score !== undefined) && <EndScreen score={score} />}
+          {/*
+            SweetAlert stops showing after about > 3 retries
+            {!score && <Button bsStyle='primary' onClick={this.props.send}>Resend your answers</Button>}
+          */}
+        </div>
       </Container>
     )
   }

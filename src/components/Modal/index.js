@@ -5,6 +5,7 @@ class ModalWrapper extends React.Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
+    size: PropTypes.string,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button: PropTypes.string.isRequired,
@@ -12,7 +13,8 @@ class ModalWrapper extends React.Component {
   }
 
   static defaultProps = {
-    buttonStyle: 'primary'
+    buttonStyle: 'primary',
+    size: ''
   }
 
   render () {
@@ -21,7 +23,7 @@ class ModalWrapper extends React.Component {
         show={this.props.show}
         onHide={this.props.close}
         backdrop='static'
-        bsSize='small'
+        bsSize={this.props.size}
       >
         <Modal.Header>
           <Modal.Title>{this.props.title}</Modal.Title>
