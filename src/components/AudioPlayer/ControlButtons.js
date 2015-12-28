@@ -21,15 +21,15 @@ class ControlButtons extends React.Component {
     return (
       <div className='player-control-wrapper'>
         <div className='player-buttons'>
-          {show.LoadingButton &&
-            <LoadingButton isLoading={props.isLoading} />
-          }
           {show.PlayButton &&
             <PlayButton
               isPlaying={props.isPlaying}
               onClick={props.playButtonAction}
               disabled={!props.canUserToggleAudio}
             />
+          }
+          {show.LoadingButton &&
+            <LoadingButton isLoading={props.isLoading} />
           }
           {show.MuteButton &&
             <MuteButton

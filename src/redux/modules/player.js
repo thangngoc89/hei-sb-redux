@@ -89,7 +89,7 @@ let defaultState = {
   loop: false,
   canUserToggleAudio: true,
   buttons: {
-    LoadingButton: false,
+    LoadingButton: true,
     LoopButton: false,
     MuteButton: false,
     PlayButton: true

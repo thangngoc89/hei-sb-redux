@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
-import { actionPlayerReset, actionEnablePlayButton } from './player'
+import { actionPlayerReset, actionEnablePlayButton, onLoad } from './player'
 import { pushPath } from 'redux-simple-router'
 import request from 'redux/utils/request'
 import shuffle from 'lodash.shuffle'
@@ -67,6 +67,7 @@ export const hardReset = () => {
 export const actionNextWordWithTimer = () => {
   return (dispatch, getState) => {
     dispatch(resetAudioPlayedTimes())
+    dispatch(onLoad())
     dispatch(actionEnablePlayButton())
     dispatch(timerReset())
     dispatch(nextWord())

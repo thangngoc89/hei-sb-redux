@@ -2,14 +2,18 @@ import { PropTypes } from 'react'
 import classnames from 'classnames'
 
 const LoadingButton = (props) => {
+  console.log(props.isLoading)
+
   let iconClass = classnames({
-    'fa fa-circle-o-notch fa-spin': props.isLoading
+    'fa fa-circle-o-notch': true,
+    'fa-spin': props.isLoading
   })
 
   return (
     <button
       className='player-btn'
       title='Loading'
+      disabled={!props.isLoading}
     >
       <i className={iconClass}></i>
     </button>
