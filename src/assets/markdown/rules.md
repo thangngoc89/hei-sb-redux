@@ -6,7 +6,7 @@ Don't be impatient, it just takes a few more seconds!
 
 Contestant (that's you!) will have to listen to **30 words**, one at a time.
 
-At each word, you will have **10 seconds** to hear the audio (and **replay once more time** if necessary)
+At each word, you will have **10 seconds** to hear the audio (and **replay one more time** if necessary)
 and then type it down in **correct spelling**.
 
 Make sure to **check your answer carefully**
