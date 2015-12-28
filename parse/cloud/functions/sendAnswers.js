@@ -10,6 +10,7 @@ var contestantQuery = new Parse.Query('Contestant')
 var codeQuery = new Parse.Query('Code')
 
 var code, contestant, data
+var score = 0
 
 module.exports = function (req, res) {
   var body = JSON.parse(req.body)
@@ -48,9 +49,10 @@ module.exports = function (req, res) {
   .then(setCodeAndQueryContestant)
   .then(setContestant)
   .then(saveResult)
+  .then(calculateScore)
   .then(function () {
     // Catch all success
-    res.success('success')
+    res.success({score: score})
   }).then(null, function(err) {
     // Catch all error
     if (typeof err === 'string') {
@@ -77,5 +79,35 @@ var saveResult = function () {
   result.set('code', code)
   result.set('contestant', contestant)
   result.set('answers', data.answers)
+  result.set('score', score)
   return result.save()
+}
+
+var calculateScore = function () {
+  var answers = data.answers
+  var words = {}
+  var query = new Parse.Query('Word')
+  query.limit(200)
+  return query.find()
+  // Generate word list
+  .then(function (result) {
+    if (result.length > 0) {
+      for (var i = 0; i < result.length; i++) {
+        var temp = result[i]
+        words[temp.id] = temp.get('word')
+      }
+    }
+  })
+  // Match answers against words list
+  .then(function () {
+    for (var key in answers) {
+      if (answers.hasOwnProperty(key)) {
+        var answer = answers[key].trim().toLowerCase()
+        if (answer === words[key]) {
+          score++
+        }
+      }
+    }
+    return score
+  })
 }

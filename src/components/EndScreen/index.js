@@ -1,13 +1,16 @@
 import styles from './style.scss'
 
-const EndScreen = () => {
+const EndScreen = ({ score }) => {
   return (
     <div>
       <h1 className={styles.center}>Congratulations!</h1>
       <hr />
-      <p>You have finished the test.</p>
+      <p>You have finished the test with {score} / 30 points</p>
       <p>We really appreciate your partipation</p>
-      <h4>Thank you so much</h4>
+      <p>For further information, please follow our fanpage at: &nbsp;
+        <a href='//fb.me/engclubhei' target='_blank'>fb.me/engclubhei</a>
+      </p>
+      <p>Thank you so much</p>
     </div>
   )
 }

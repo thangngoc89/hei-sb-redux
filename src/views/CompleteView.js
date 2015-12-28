@@ -16,7 +16,8 @@ class CompleteView extends React.Component {
     error: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     send: PropTypes.func.isRequired,
-    completeReset: PropTypes.func.isRequired
+    completeReset: PropTypes.func.isRequired,
+    score: PropTypes.number
   }
 
   componentDidMount () {
@@ -45,7 +46,7 @@ class CompleteView extends React.Component {
     } else if (this.props.isLoading) {
       component = <LoadingScreen />
     } else {
-      component = <EndScreen />
+      component = <EndScreen score={this.props.score} />
     }
 
     return (
