@@ -44,6 +44,7 @@ build:
     - offlinehacker/pushbullet-notify@0.0.1:
         token: $PUSHBULLET_TOKEN
         channel: hei-sb-build
+        on: failed
 
 deploy:
   steps:
@@ -52,3 +53,10 @@ deploy:
         code: |
           npm install -g surge
           surge dist $SURGE_DOMAIN
+  after-steps:
+    - offlinehacker/pushbullet-notify@0.0.1:
+        token: $PUSHBULLET_TOKEN
+        channel: hei-sb-build
+        passed-title: "Deploy succeed"
+        failed-title: "Deploy failed"
+        on: failed
