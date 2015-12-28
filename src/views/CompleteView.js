@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as completeActions } from '../redux/modules/complete'
 import Container from 'layouts/TransparentContainerLayout'
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
   ...state.complete
 })
 
-class CompleteView extends Component {
+class CompleteView extends React.Component {
   static propTypes = {
     error: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,

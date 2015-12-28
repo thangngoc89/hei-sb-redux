@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import { Button, Input, Row, Col } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
 import Timer from 'components/WordTimerContainer'

@@ -1,6 +1,7 @@
 /* eslint key-spacing:0 */
 import webpack from 'webpack'
 import config from '../../config'
+import WebpackNotifierPlugin from 'webpack-notifier'
 import _debug from 'debug'
 
 const debug = _debug('app:webpack:development')
@@ -11,6 +12,10 @@ export default (webpackConfig) => {
   debug('Override devtool with cheap-module-eval-source-map.')
   webpackConfig.devtool = 'cheap-module-eval-source-map'
 
+  debug('Enable webpack build notification')
+  webpackConfig.plugins.push(
+    new WebpackNotifierPlugin()
+  )
   // ------------------------------------
   // Enable HMR if Configured
   // ------------------------------------

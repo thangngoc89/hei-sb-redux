@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import { PropTypes } from 'react'
 import { Howl } from 'howler'
 import ControlButtons from './ControlButtons'
 

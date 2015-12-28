@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../redux/modules/quiz'
 import Container from 'layouts/TransparentContainerLayout'
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   ...state.quiz
 })
 
-class QuizView extends Component {
+class QuizView extends React.Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isComplete: PropTypes.bool.isRequired,

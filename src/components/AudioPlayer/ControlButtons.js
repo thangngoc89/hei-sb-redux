@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import { PropTypes } from 'react'
 import PlayButton from './Buttons/PlayButton'
 import MuteButton from './Buttons/MuteButton'
 import LoopButton from './Buttons/LoopButton'

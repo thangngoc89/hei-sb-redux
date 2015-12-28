@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import { PropTypes } from 'react'
 import classnames from 'classnames'
 import { Input } from 'react-bootstrap'
 import styles from './style.scss'
