@@ -5,6 +5,7 @@ import timer from 'redux/modules/timer'
 import player from 'redux/modules/player'
 import user from 'redux/modules/user'
 import complete from 'redux/modules/complete'
+import alert from 'redux/modules/alert'
 import {reducer as formReducer} from 'redux-form'
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   timer,
   user,
   quiz,
+  alert,
   router: routeReducer,
   form: formReducer
 })

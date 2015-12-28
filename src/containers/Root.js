@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
+import Modal from 'containers/Modal'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -29,6 +30,7 @@ export default class Root extends React.Component {
         <div style={{ height: '100%' }}>
           {this.content}
           {this.devTools}
+          <Modal />
         </div>
       </Provider>
     )

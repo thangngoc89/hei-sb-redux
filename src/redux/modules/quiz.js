@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { timerReset } from './timer'
 import { actionPlayerReset, actionEnablePlayButton, onLoad } from './player'
 import { pushPath } from 'redux-simple-router'
+import { notify } from 'redux/modules/alert'
 import request from 'redux/utils/request'
 import shuffle from 'lodash.shuffle'
 // ------------------------------------
@@ -35,6 +36,7 @@ export const fetchQuizData = () => {
   return (dispatch, getState) => {
     // Fake an API request in development mode
     if (__DEV__) {
+      dispatch(fetchStart())
       const data = require('redux/data/quiz')
       dispatch(fetchSuccess(data))
       return
@@ -78,6 +80,21 @@ export const actionNextWordWithTimer = () => {
     if (getState().quiz.isComplete) {
       dispatch(pushPath('/complete'))
     }
+  }
+}
+
+export const showTimeoutModal = () => {
+  return (dispatch, getState) => {
+    const alert = {
+      title: 'Time up!',
+      message: 'Your time is up for this question',
+      button: 'Continue',
+      confirmAction: {
+        module: 'quiz',
+        action: 'actionNextWordWithTimer'
+      }
+    }
+    dispatch(notify(alert))
   }
 }
 
