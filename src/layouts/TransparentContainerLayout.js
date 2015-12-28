@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import { PropTypes } from 'react'
 import { Col, Row, Grid } from 'react-bootstrap'
 
 const TransparentContainerLayout = (props) => {

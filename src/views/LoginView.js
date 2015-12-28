@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginForm from 'components/LoginForm'
 import Container from 'layouts/TransparentContainerLayout'
 import HomeLink from 'components/HomeLink'

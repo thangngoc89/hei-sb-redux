@@ -12,10 +12,13 @@
     "__PROD__"     : false,
     "__DEBUG__"    : false,
     "__DEBUG_NEW_WINDOW__" : false,
-    "Parse"        : true
+    "Parse": true,
+    "React": true,
+    "ReactDOM": true
   },
   "rules": {
     "semi" : [2, "never"],
+    "react-in-jsx-scope": 0,
     "no-class-assign": 0
   }
 }

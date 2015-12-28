@@ -1,4 +1,3 @@
-import React from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 class WordNavigator extends React.Component {

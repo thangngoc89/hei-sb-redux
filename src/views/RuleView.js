@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from 'layouts/TransparentContainerLayout'
 import { Link } from 'react-router'
 import { Button } from 'react-bootstrap'

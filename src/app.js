@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import { syncReduxAndRouter } from 'redux-simple-router'
 import Root from './containers/Root'
 import routes from './routes'

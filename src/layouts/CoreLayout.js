@@ -1,4 +1,3 @@
-import React from 'react'
 import 'styles/global.loader'
 
 // Note: Stateless/function components *will not* hot reload!
