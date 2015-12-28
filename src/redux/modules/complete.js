@@ -18,7 +18,6 @@ export const sendError = createAction(SEND_ERROR)
 export const completeReset = createAction(COMPLETE_RESET)
 
 // Send user answers to Parse
-// No thing will be returned
 export const send = () => {
   return (dispatch, getState) => {
     const postData = {
@@ -35,7 +34,7 @@ export const send = () => {
         return
       }
 
-      dispatch(sendSuccess())
+      dispatch(sendSuccess(res.body.result))
       dispatch(userReset())
       dispatch(hardReset())
     })
@@ -65,10 +64,11 @@ export default handleActions({
     error: false,
     retry: state.retry + 1
   }),
-  [SEND_SUCCESS]: (state) => ({
+  [SEND_SUCCESS]: (state, { payload }) => ({
     ...state,
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
+    score: payload.score
   }),
   [SEND_ERROR]: (state, { payload }) => ({
     ...state,
