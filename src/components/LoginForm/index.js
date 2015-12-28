@@ -7,11 +7,11 @@ import Modal from 'components/Modal'
 import LoginFormInput from './LoginFormInput'
 import validator from './LoginFormValidator'
 import styles from './style.scss'
-
 const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code']
 
 const mapStateToProps = (state) => ({
-  ...state.user
+  ...state.user,
+  currentState: state
 })
 
 export class LoginForm extends React.Component {
@@ -22,6 +22,7 @@ export class LoginForm extends React.Component {
     invalid: PropTypes.bool.isRequired,
     modal: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
+    currentState: PropTypes.object.isRequired,
     // Actions
     handleSubmit: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
@@ -79,6 +80,11 @@ export class LoginForm extends React.Component {
             }
           </Button>
         </form>
+        <p>Pristine: {pristine ? 'true' : 'false'}</p>
+        <p>Invalid: {invalid ? 'true' : 'false'}</p>
+        <p>Submit: {submitting ? 'true' : 'false'}</p>
+        <p>isSaving: {isSaving ? 'true' : 'false'}</p>
+        <textarea className={styles.textarea} readOnly value={JSON.stringify(this.props.currentState)}></textarea>
       {component}
       </div>
     )

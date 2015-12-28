@@ -3,6 +3,10 @@
 @import "breakpoints";
 @import "button";
 
+.textarea {
+	width: 100%;
+	min-height: 100px;
+}
 .submit-button {
 	@extend .button-main-color;
 }
