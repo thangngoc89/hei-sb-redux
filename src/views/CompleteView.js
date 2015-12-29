@@ -35,10 +35,6 @@ class CompleteView extends React.Component {
         <div>
           {isLoading && <LoadingScreen />}
           {(score !== undefined) && <EndScreen score={score} />}
-          {/*
-            SweetAlert stops showing after about > 3 retries
-            {!score && <Button bsStyle='primary' onClick={this.props.send}>Resend your answers</Button>}
-          */}
         </div>
       </Container>
     )

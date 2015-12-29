@@ -1,5 +1,17 @@
 @import "font";
+@import "breakpoints";
 
 .center {
   text-align: center;
+  font-size: 2.5em;
+
+  @include media-breakpoint-down(xs) {
+    font-size: 1em;
+	}
+  @include media-breakpoint-down(sm) {
+    font-size: 1.5em;
+	}
+  @include media-breakpoint-down(md) {
+    font-size: 2em;
+	}
 }
