@@ -1,23 +1,31 @@
-var Parse = require('parse/node')
+var _ = require('lodash')
 var randomstring = require("randomstring")
-
-Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
-
+var Parse = require('parse/node')
+var parseKey = require('../config')
+Parse.initialize(parseKey.applicationId, parseKey.jsKey)
 var CodeObject = Parse.Object.extend('Code')
 
-var codeList = []
-for (var i = 0; i < 100; i++) {
-  var code = new CodeObject()
-  var newRandomCode = randomstring.generate({
+// Generate a unique array of code
+var codes = []
+while (codes.length < 1000) {
+  var newRamdomCode = randomstring.generate({
     length: 10,
     readable: true,
     charset: 'QWERTYUPASDFGHJKZXCVBNMqwertyupasdfghjkzxcvbnm23456789'
   })
-  code.set('code', newRandomCode)
+  codes.push(newRamdomCode)
+  codes = _.uniq(codes)
+}
+console.log('Generated codes')
+
+// Iterate through the array and push it to Parse
+var codeList = []
+for (var i = 0; i < codes.length; i++) {
+  var code = new CodeObject()
+  code.set('code', codes[i])
   code.set('isValid', true)
   code.set('isDone', false)
   codeList.push(code)
-  console.log('Generated ' + (i + 1) + ' code(s)')
 }
 
 console.log('Saving codes to Parse Cloud')

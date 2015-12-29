@@ -1,7 +1,8 @@
 var _path = require('path')
 var fs = require('fs')
 var Parse = require('parse/node')
-Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
+var parseKey = require('../config')
+Parse.initialize(parseKey.applicationId, parseKey.jsKey)
 // Get sould file path from word
 // basically start of file name
 var getSoundFilePath = function (word) {

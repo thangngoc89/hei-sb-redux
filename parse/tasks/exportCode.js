@@ -1,9 +1,9 @@
 var Parse = require('parse/node')
-Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
+var parseKey = require('../config')
+Parse.initialize(parseKey.applicationId, parseKey.jsKey)
 
 var printResult = function (result) {
   console.log('Print result')
-  console.log(result)
   if (result.length === 0) {
     return
   }
@@ -16,7 +16,7 @@ var printResult = function (result) {
 
 var query = new Parse.Query('Code')
 query.equalTo('isValid', true)
-query.limit(100)
+query.limit(500)
 query.find()
 .then(printResult)
 .then(null, function (error) {

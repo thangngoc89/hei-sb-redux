@@ -1,7 +1,8 @@
 var getSoundFileData = require('./getSoundFileData')
 var randomstring = require("randomstring")
 var Parse = require('parse/node')
-Parse.initialize('wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX', 'UuxpC6qz6NeU8pauVnzZ7gp9mViPMR3UeUx9K4Fd')
+var parseKey = require('../config')
+Parse.initialize(parseKey.applicationId, parseKey.jsKey)
 var WordObject = Parse.Object.extend('Word')
 
 var query = new Parse.Query(WordObject)
