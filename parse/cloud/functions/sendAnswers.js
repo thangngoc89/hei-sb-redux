@@ -48,8 +48,8 @@ module.exports = function (req, res) {
   codeQuery.get(data.code)
   .then(setCodeAndQueryContestant)
   .then(setContestant)
-  .then(saveResult)
   .then(calculateScore)
+  .then(saveResult)
   .then(function () {
     // Catch all success
     res.success({score: score})
