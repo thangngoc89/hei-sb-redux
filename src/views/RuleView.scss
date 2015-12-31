@@ -1,6 +1,19 @@
 @import "button";
+@import "./LeaderboardView";
 
 .readyButton {
   @extend .button-main-color;
   margin-top: 2rem;
+}
+
+.header {
+  @extend .header;
+}
+
+.title {
+  @extend .title;
+}
+
+.sub-title {
+  @extend .sub-title;
 }

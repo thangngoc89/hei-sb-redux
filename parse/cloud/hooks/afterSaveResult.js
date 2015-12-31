@@ -1,5 +1,5 @@
 module.exports = function(req) {
-  if (!req.object.isNew()) {
+  if (req.object.time !== undefined) {
     return
   }
 

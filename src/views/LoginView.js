@@ -1,5 +1,5 @@
 import LoginForm from 'components/LoginForm'
-import Container from 'layouts/TransparentContainerLayout'
+import Container from 'layouts/MaterialBox'
 import HomeLink from 'components/HomeLink'
 
 const LoginView = () => {

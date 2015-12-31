@@ -23,7 +23,10 @@ describe('(Layout) Core', function () {
   beforeEach(function () {
     _child = <h1 className='child'>Child</h1>
     _props = {
-      children: _child
+      children: _child,
+      location: {
+        currentPath: '/'
+      }
     }
 
     _component = shallowRenderWithProps(_props)

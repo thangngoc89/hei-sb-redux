@@ -1,3 +1,78 @@
-$enable-flex: true;
+@import "color";
 
+$enable-flex: true;
 @import 'bootstrap/scss/bootstrap';
+
+.btn {
+  border-radius: 0.2rem;
+  transition: all 0.3s;
+  padding: .5rem 1.25rem;
+
+  &:disabled {
+    background-color: $color-grey;
+    color: $color-light;
+  }
+
+  &:hover:disabled {
+    background-color: lighten($color-grey, 10%);
+    color: $color-light;
+    border-color: $color-grey;
+  }
+}
+
+.btn-primary {
+  background-color: $color-main;
+  color: $color-light;
+  border: .175rem solid $color-transparent;
+
+  &:hover, &:focus {
+    background-color: $color-light;
+    color: $color-main;
+    border-color: $color-main;
+  }
+}
+
+.btn-danger {
+  background-color: $color-red;
+  color: $color-light;
+  border: .175rem solid $color-transparent;
+
+  &:hover, &:focus {
+    background-color: $color-light;
+    color: $color-red;
+    border-color: $color-red;
+  }
+}
+
+.form-control {
+  border-width: 0 0 0.175rem 0;
+  border-color: $color-grey;
+  border-radius: 0;
+
+  &:focus, &:active {
+    border-color: $color-main;
+  }
+}
+
+/* Modal */
+.modal-content {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  border-radius: 0.2rem;
+  border: 0;
+  background-clip: padding-box;
+  will-change: transform, opacity;
+}
+
+.modal-header {
+  border: 0;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 2.5rem;
+}
+
+.modal-footer {
+  border: 0;
+  text-align: center;
+}

@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../redux/modules/quiz'
-import Container from 'layouts/TransparentContainerLayout'
+import Container from 'layouts/MaterialBox'
 import LoadingScreen from 'components/LoadingScreen'
 import ErrorScreen from 'components/ErrorScreen'
 import Word from 'components/Word'

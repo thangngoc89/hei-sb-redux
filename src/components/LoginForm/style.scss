@@ -9,23 +9,26 @@
 
 .inputDiv {
 	margin-bottom: 1.5rem;
+	transition: all 0.3s;
 }
 
 .group {
 	margin-bottom: 0.2rem;
+	transition: all 0.3s;
 }
 
 .input {
-	color: #3c3c3c;
   font-weight: 500;
 	font-size: $font-size-md;
 	border-radius: 0;
 	line-height: 1.5rem;
-	background: #fbfbfb;
+	background: $color-transparent;
 	padding: 0.825rem 0.825rem 0.825rem 3.375rem;
 	width: 100%;
 	box-sizing: border-box;
-  border: 0.2rem solid $color-transparent;
+  border-style: solid;
+	border-color: rgba($color-grey, .3);
+	border-width: 0 0 0.15rem 0;
 
  &:focus {
 		border-color: $color-main;

@@ -1,4 +1,4 @@
-## Welcome to Spelling Bee 2016 - UMP version!
+*a lovely letter from H.E.I.*...
 
 Congratulations, now you are an official contestant of Spelling Bee 2016 - UMP version.
 Before taking the test, please read and follow the **instructions** to avoid unnecessary mistakes.

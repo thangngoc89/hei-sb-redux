@@ -52,7 +52,7 @@ class Word extends Component {
             <hr />
           </Col>
           <Col xs={4} sm={3} md={2}>
-            <Timer />
+            <Timer size={100} />
           </Col>
         </Row>
 

@@ -1,4 +1,5 @@
 @import "font";
+@import "color";
 
 html {
   box-sizing: border-box;
@@ -8,6 +9,7 @@ body {
   // background:url('../assets/img/pattern.svg') no-repeat;
   // background-size: auto;
   font-family: $font-main;
+  background: $color-grey-background;
 }
 
 html,
@@ -24,9 +26,11 @@ body {
 }
 
 a {
+  color: $color-main;
   text-decoration: none;
 
-  &:hover {
+  &:active, &:hover {
+    color: $color-grey;
     text-decoration: none;
   }
 }
@@ -38,5 +42,9 @@ a {
 
 .footer {
   text-align: center;
-  margin-top: 2rem;
+  padding: 2rem 0;
+}
+
+.root {
+  padding-top: 3rem;
 }
