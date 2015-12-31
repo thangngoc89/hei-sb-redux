@@ -1,4 +1,5 @@
 var wordList = require('cloud/functions/wordList')
+var getLeaderboard = require('cloud/functions/getLeaderboard')
 var checkCode = require('cloud/functions/checkCode')
 var sendAnswers = require('cloud/functions/sendAnswers')
 var beforeSaveCode = require('cloud/hooks/beforeSaveCode')
@@ -9,6 +10,7 @@ Parse.Cloud.useMasterKey()
 Parse.Cloud.define('checkCode', checkCode)
 Parse.Cloud.define('wordList', wordList)
 Parse.Cloud.define('sendAnswers', sendAnswers)
+Parse.Cloud.define('getLeaderboard', getLeaderboard)
 
 // Check for duplicate code before save
 Parse.Cloud.beforeSave('Code', beforeSaveCode)

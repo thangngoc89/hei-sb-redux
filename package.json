@@ -33,6 +33,7 @@
     "moment": "^2.10.6",
     "react": "^0.14.5",
     "react-bootstrap": "^0.28.1",
+    "react-css-modules": "^3.6.3",
     "react-dom": "^0.14.5",
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.0.6",

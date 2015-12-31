@@ -1,0 +1,24 @@
+@import "color";
+@import "breakpoints";
+
+.thead {
+  background: $color-main;
+  color: #fff;
+
+  & tr > th {
+    border: 0;
+
+    @include media-breakpoint-up(md) {
+      &:first-child {
+        max-width: 2rem;
+      }
+    }
+
+    @include media-breakpoint-up(sm) {
+      &:first-child {
+        max-width: 3.5rem;
+      }
+    }
+
+  }
+}

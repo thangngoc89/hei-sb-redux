@@ -6,6 +6,7 @@ import player from 'redux/modules/player'
 import user from 'redux/modules/user'
 import complete from 'redux/modules/complete'
 import alert from 'redux/modules/alert'
+import leaderboard from 'redux/modules/leaderboard'
 import {reducer as formReducer} from 'redux-form'
 
 export default combineReducers({
@@ -15,6 +16,7 @@ export default combineReducers({
   user,
   quiz,
   alert,
+  leaderboard,
   router: routeReducer,
   form: formReducer
 })

@@ -5,6 +5,7 @@ import RuleView from 'views/RuleView'
 import QuizView from 'views/QuizView'
 import LoginView from 'views/LoginView'
 import CompleteView from 'views/CompleteView'
+import LeaderboardView from 'views/LeaderboardView'
 import NotFound from 'views/NotFound'
 import store from 'redux/store'
 
@@ -59,6 +60,8 @@ export default (
     <Route onEnter={hasToDoneExamFirst}>
       <Route component={CompleteView} path='/complete' />
     </Route>
+
+    <Route component={LeaderboardView} path='/leaderboard' />
 
     { /* Catch all route */ }
     <Route path='*' component={NotFound} status={404} />

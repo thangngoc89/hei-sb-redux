@@ -1,5 +1,5 @@
 import 'styles/global.loader'
-
+import NavBar from 'components/NavBar'
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
 //
@@ -12,6 +12,7 @@ import 'styles/global.loader'
 const CoreLayout = ({ children }) => {
   return (
     <div>
+      <NavBar />
       {children}
     </div>
   )

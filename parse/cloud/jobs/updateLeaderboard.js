@@ -14,7 +14,6 @@ module.exports = function(request, status) {
     query.descending('score')
     query.addAscending('time')
     query.limit(10)
-    query.include('contestant')
     return query.find()
   })
   // Generate a new boards array
@@ -25,9 +24,9 @@ module.exports = function(request, status) {
       var result = results[i]
       var board = new boardObject()
       board.set('rank', i + 1)
-      board.set('name', result.get('contestant').get('name'))
       board.set('score', result.get('score'))
       board.set('time', result.get('time'))
+      board.set('contestant', result.get('contestant'))
       board.set('result', result)
       boards.push(board)
     }
