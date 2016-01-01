@@ -14,7 +14,7 @@ class ModalWrapper extends React.Component {
 
   static defaultProps = {
     buttonStyle: 'primary',
-    size: 'sm'
+    size: ''
   }
 
   render () {

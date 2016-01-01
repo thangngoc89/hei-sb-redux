@@ -1,8 +1,12 @@
 @import "color";
 
+/* Config */
 $enable-flex: true;
+$modal-md: 400px;
+
 @import 'bootstrap/scss/bootstrap';
 
+/* Style overide */
 .btn {
   border-radius: 0.2rem;
   transition: all 0.3s;
@@ -55,6 +59,10 @@ $enable-flex: true;
 }
 
 /* Modal */
+.modal-diaglog {
+
+}
+
 .modal-content {
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   border-radius: 0.2rem;
@@ -70,6 +78,10 @@ $enable-flex: true;
 
 .modal-title {
   font-size: 2.5rem;
+}
+
+.modal-body {
+  text-align: center;
 }
 
 .modal-footer {
