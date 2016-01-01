@@ -1,8 +1,8 @@
 import { Component, PropTypes } from 'react'
 import { Button, Input, Row, Col } from 'react-bootstrap'
 import WordNavigator from 'components/WordNavigator'
-import Timer from 'components/WordTimerContainer'
-import AudioPlayer from 'components/WordAudioPlayerContainer'
+import Timer from 'containers/TimerContainer'
+import AudioPlayer from 'containers/AudioPlayerContainer'
 import styles from './style.scss'
 
 class Word extends Component {
