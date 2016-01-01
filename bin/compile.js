@@ -2,8 +2,8 @@ require('babel-register')
 
 const config = require('../config')
 const debug = require('debug')('app:bin:compile')
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs-extra')
+const paths = config.utils_paths
 
 debug('Create webpack compiler.')
 
@@ -17,9 +17,9 @@ compiler.run(function (err, stats) {
 
   // Write stats.json to file for analyse
   if (config.compiler_save_stats) {
-    const saveTo = path.join(config.path_base, 'stats.json')
+    const saveTo = paths.base('stats.json')
 
-    fs.writeFile(saveTo, JSON.stringify(jsonStats), () =>{
+    fs.writeFile(saveTo, JSON.stringify(jsonStats), () => {
       debug('Written Webpack compile status to stats.json')
     })
   }
@@ -39,4 +39,7 @@ compiler.run(function (err, stats) {
   } else {
     debug('No errors / warnings encountered.')
   }
+
+  debug('Copy index.html to 200.html')
+  fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
 })
