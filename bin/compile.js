@@ -42,4 +42,7 @@ compiler.run(function (err, stats) {
 
   debug('Copy index.html to 200.html')
   fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
+
+  debug('Copy static files to dist')
+  fs.copySync(paths.client('static'), paths.dist())
 })

@@ -16,6 +16,7 @@ if (config.compiler_enable_hmr) {
   const webpackConfig = require('../build/webpack')
   const compiler = webpack(webpackConfig)
 
+  app.use(express.static(paths.client('static')))
   app.use(require('./middleware/webpack-dev')({
     compiler,
     publicPath: webpackConfig.output.publicPath
