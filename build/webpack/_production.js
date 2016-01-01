@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import WebpackMd5Hash from 'webpack-md5-hash'
 import config from '../../config'
 import _debug from 'debug'
 
@@ -31,6 +32,7 @@ export default (webpackConfig) => {
     new ExtractTextPlugin('[name].[contenthash].css', {
       allChunks: true
     }),
+    new WebpackMd5Hash(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         unused: true,
