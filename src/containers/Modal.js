@@ -30,8 +30,15 @@ class ModalContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  ...state.alert
-})
+const mapStateToProps = (state) => {
+  const alert = state.alert
+  return {
+    show: alert.get('show'),
+    message: alert.get('message'),
+    title: alert.get('title'),
+    button: alert.get('button'),
+    buttonStyle: alert.get('buttonStyle')
+  }
+}
 
 export default connect(mapStateToProps, alertActions)(ModalContainer)

@@ -1,21 +1,22 @@
 import { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { actions as completeActions } from '../redux/modules/complete'
+import { actions as completeActions } from 'redux/modules/complete'
 import Container from 'layouts/MaterialBox'
 import EndScreen from 'components/EndScreen'
 import LoadingScreen from 'components/LoadingScreen'
 import HomeLink from 'components/HomeLink'
 
 const mapStateToProps = (state) => ({
-  ...state.complete
+  isLoading: state.complete.get('isLoading'),
+  score: state.complete.get('score')
 })
 
 class CompleteView extends React.Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
+    score: PropTypes.number,
     send: PropTypes.func.isRequired,
-    completeReset: PropTypes.func.isRequired,
-    score: PropTypes.number
+    completeReset: PropTypes.func.isRequired
   }
 
   componentDidMount () {

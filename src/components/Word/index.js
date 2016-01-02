@@ -36,7 +36,7 @@ class Word extends Component {
   }
 
   getCurrentWordUrl () {
-    return this.props.word.soundFile
+    return this.props.word.get('soundFile')
   }
 
   render () {

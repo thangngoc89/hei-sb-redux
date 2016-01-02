@@ -2,7 +2,7 @@ import * as quiz from 'redux/modules/quiz'
 import data from 'redux/data/quiz'
 import createAction from 'redux-actions'
 
-describe('(redux) quiz actions', () => {
+describe('(redux) quiz --> actions', () => {
   it('should create an action to request data', () => {
     expect(quiz.fetchStart()).to.deep.equal({
       type: quiz.QUIZ_FETCH_START,
@@ -22,8 +22,8 @@ describe('(redux) quiz actions', () => {
   it('should create an action to handle request data error', () => {
     const data = {}
 
-    expect(quiz.fetchError(data)).to.deep.equal({
-      type: quiz.QUIZ_FETCH_ERROR,
+    expect(quiz.fetchFailed(data)).to.deep.equal({
+      type: quiz.QUIZ_FETCH_FAILED,
       payload: data
     })
   })
@@ -45,7 +45,7 @@ describe('(redux) quiz actions', () => {
   it('should create an action to handle answer input onchange event', () => {
     expect(quiz.answerOnChange()).to.deep.equal({
       type: quiz.QUIZ_ANSWER_ONCHANGE,
-      payload:undefined
+      payload: undefined
     })
   })
 
@@ -69,14 +69,4 @@ describe('(redux) quiz actions', () => {
       payload: undefined
     })
   })
-
-  // describe('Thunks', () => {
-  //   beforeEach(() => {
-  //
-  //   })
-  //
-  //   it('should create a thunk to fetch quiz data', () => {
-  //
-  //   })
-  // })
 })

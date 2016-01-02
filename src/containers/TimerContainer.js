@@ -3,7 +3,9 @@ import { actions as timerActions } from 'redux/modules/timer'
 import Timer from 'components/Timer'
 
 const mapStateToProps = (state) => ({
-  ...state.timer
+  seconds: state.timer.get('seconds'),
+  remain: state.timer.get('remain'),
+  ticking: state.timer.get('ticking')
 })
 
 class WordTimerContainer extends React.Component {

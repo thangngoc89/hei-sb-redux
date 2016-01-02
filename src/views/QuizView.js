@@ -7,14 +7,21 @@ import ErrorScreen from 'components/ErrorScreen'
 import Word from 'components/Word'
 
 const mapStateToProps = (state) => ({
-  ...state.quiz
+  isLoading: state.quiz.get('isLoading'),
+  isComplete: state.quiz.get('isComplete'),
+  wordList: state.quiz.get('wordList'),
+  currentWord: state.quiz.get('currentWord'),
+  currentAnswer: state.quiz.get('currentAnswer'),
+  timeOut: state.quiz.get('timeOut'),
+  error: state.quiz.get('error'),
+  audioPlayedTimes: state.quiz.get('audioPlayedTimes')
 })
 
 class QuizView extends React.Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isComplete: PropTypes.bool.isRequired,
-    wordList: PropTypes.array.isRequired,
+    wordList: PropTypes.object.isRequired,
     currentWord: PropTypes.number.isRequired,
     currentAnswer: PropTypes.string.isRequired,
     timeOut: PropTypes.bool.isRequired,
@@ -33,21 +40,22 @@ class QuizView extends React.Component {
   }
 
   currentWord () {
-    let word = this.props.wordList[this.props.currentWord]
-    if (undefined === word) {
-      throw new Error('Word is not defined')
-    }
+    const word = this.props.wordList.get(this.props.currentWord)
     return word
   }
 
   render () {
     let component
-
     if (this.props.isLoading) {
       component = <LoadingScreen />
     } else if (this.props.error) {
-      component = <ErrorScreen message={this.props.error} title='Error while getting word list' />
-    } else if (this.props.wordList.length < 1) {
+      component =
+      <ErrorScreen
+        message={this.props.error}
+        title='Error while getting word list'
+        action={this.props.fetchQuizData}
+      />
+    } else if (this.props.wordList.count() < 1) {
       // TODO: Use modal for this
       component = <ErrorScreen message='No words are available' title='Logic Error'/>
     } else {
@@ -55,7 +63,7 @@ class QuizView extends React.Component {
       <Word
         word={this.currentWord()}
         wordCurrent={this.props.currentWord}
-        wordTotal={this.props.wordList.length}
+        wordTotal={this.props.wordList.count()}
         handleNextWord={this.props.nextWord}
         handleOnChange={this.props.answerOnChange}
         currentAnswer={this.props.currentAnswer}

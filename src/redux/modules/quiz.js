@@ -3,14 +3,15 @@ import { timerReset } from './timer'
 import { actionPlayerReset, actionEnablePlayButton, onLoad } from './player'
 import { pushPath } from 'redux-simple-router'
 import { notify } from 'redux/modules/alert'
+import { fromJS } from 'immutable'
 import request from 'redux/utils/request'
-import shuffle from 'lodash.shuffle'
+import shuffle from 'lodash/collection/shuffle'
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const QUIZ_FETCH_START = '@@quiz/fetch/START'
 export const QUIZ_FETCH_SUCCESS = '@@quiz/fetch/SUCCESS'
-export const QUIZ_FETCH_ERROR = '@@quiz/fetch/ERROR'
+export const QUIZ_FETCH_FAILED = '@@quiz/fetch/FAILED'
 
 export const QUIZ_NEXT_WORD = '@@quiz/action/NEXT_WORD'
 export const QUIZ_RESET = '@@quiz/action/RESET'
@@ -23,7 +24,7 @@ export const QUIZ_TIMEOUT = '@@quiz/event/TIMEOUT'
 // ------------------------------------
 export const fetchStart = createAction(QUIZ_FETCH_START)
 export const fetchSuccess = createAction(QUIZ_FETCH_SUCCESS)
-export const fetchError = createAction(QUIZ_FETCH_ERROR)
+export const fetchFailed = createAction(QUIZ_FETCH_FAILED)
 
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const actionQuizReset = createAction(QUIZ_RESET)
@@ -35,25 +36,30 @@ export const incrementAudioPlayedTimes = createAction(QUIZ_INCREMENT_AUDIO_PLAYE
 export const fetchQuizData = () => {
   return (dispatch, getState) => {
     // Fake an API request in development mode
-    if (__DEV__) {
-      dispatch(fetchStart())
-      const data = require('redux/data/quiz')
-      dispatch(fetchSuccess(data))
-      return
-    }
+    // if (__DEV__) {
+    //   console.log('it called me')
+    //   dispatch(fetchStart())
+    //   const data = require('redux/data/quiz')
+    //   dispatch(fetchSuccess(data))
+    //   return
+    // }
+
     const postData = {
-      contestantId: getState().user.contestantId,
-      code: getState().user.code
+      contestantId: getState().user.get('contestantId'),
+      code: getState().user.get('code')
     }
     dispatch(fetchStart())
-
     request('wordList', postData, (err, res) => {
+      console.log('got to callback')
+      console.log(res)
+      console.log(err)
       if (err) {
-        // TODO: Handle error properly
-        dispatch(fetchError(err))
+        const error = (res) ? JSON.parse(res.body.error) : 'No connection'
+        dispatch(fetchFailed(error))
         return
       }
-      dispatch(fetchSuccess(res.body))
+      const data = shuffle(res.body.result)
+      dispatch(fetchSuccess(data))
     })
   }
 }
@@ -77,7 +83,7 @@ export const actionNextWordWithTimer = () => {
     // TODO: Re-consider this
     // Does nexWord() fast enough
     // to get (isComplete === true) here
-    if (getState().quiz.isComplete) {
+    if (getState().quiz.get('isComplete')) {
       dispatch(pushPath('/complete'))
     }
   }
@@ -109,7 +115,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let defaultState = {
+export const initialState = fromJS({
   secondsPerWord: 15,
   wordList: [],
   userAnswers: {},
@@ -124,63 +130,44 @@ let defaultState = {
   // Show time out modal
   timeOut: false,
   audioPlayedTimes: 0
-}
+})
 
 export default handleActions({
-  [QUIZ_FETCH_START]: (state, { payload }) => ({...state, isLoading: true}),
-  [QUIZ_FETCH_SUCCESS]: (state, { payload }) => {
-    let result = shuffle(payload.result)
-
-    return {
-      ...state,
-      isLoading: false,
-      // TODO: Dispatch a reducer to get started
-      isStarted: true,
-      wordList: result
-    }
-  },
-  [QUIZ_FETCH_ERROR]: (state, { payload }) => ({
-    ...state,
-    error: payload
+  [QUIZ_FETCH_START]: (state) => state.set('isLoading', true),
+  [QUIZ_FETCH_SUCCESS]: (state, { payload }) => state.merge({
+    isLoading: false,
+    isStarted: true,
+    wordList: fromJS(payload)
+  }),
+  [QUIZ_FETCH_FAILED]: (state, { payload }) => state.merge({
+    error: payload,
+    isLoading: false
   }),
   [QUIZ_NEXT_WORD]: (state) => {
-    let nextWord = state.currentWord + 1
+    let nextWord = state.get('currentWord') + 1
     let isComplete = false
 
-    if (nextWord >= state.wordList.length) {
+    if (nextWord >= state.get('wordList').count()) {
       isComplete = true
       nextWord = 0
     }
+    const currentWordIndex = state.get('currentWord')
+    const currentWordId = state.get('wordList').get(currentWordIndex).get('id')
 
-    let currentWordId = state.wordList[state.currentWord].id
-
-    return {
-      ...state,
+    return state.merge({
       isComplete,
-      userAnswers: {
-        ...state.userAnswers,
-        [currentWordId]: state.currentAnswer.trim().toLowerCase()
-      },
+      userAnswers: state.get('userAnswers').merge({
+        [currentWordId]: state.get('currentAnswer').trim().toLowerCase()
+      }),
       currentAnswer: '',
       currentWord: nextWord,
       timeOut: false
-    }
+    })
   },
-  [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => ({
-    ...state,
-    currentAnswer: payload
-  }),
-  [QUIZ_TIMEOUT]: (state) => ({
-    ...state,
-    timeOut: true
-  }),
-  [QUIZ_RESET]: (state) => defaultState,
-  [QUIZ_RESET_AUDIO_PLAYED_TIMES]: (state) => ({
-    ...state,
-    audioPlayedTimes: 0
-  }),
-  [QUIZ_INCREMENT_AUDIO_PLAYED_TIMES]: (state) => ({
-    ...state,
-    audioPlayedTimes: state.audioPlayedTimes + 1
-  })
-}, defaultState)
+  [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => state.set('currentAnswer', payload),
+  [QUIZ_TIMEOUT]: (state) => state.set('timeOut', true),
+  [QUIZ_RESET_AUDIO_PLAYED_TIMES]: (state) => state.set('audioPlayedTimes', 0),
+  [QUIZ_INCREMENT_AUDIO_PLAYED_TIMES]: (state) =>
+    state.set('audioPlayedTimes', state.get('audioPlayedTimes') + 1),
+  [QUIZ_RESET]: (state) => initialState
+}, initialState)

@@ -19,19 +19,12 @@ export default class Root extends React.Component {
   }
 
   get devTools () {
-    if (__DEBUG__) {
-      if (__DEBUG_NEW_WINDOW__) {
-        if (!window.devToolsExtension) {
-          require('../redux/utils/createDevToolsWindow')(this.props.store)
-        } else {
-          window.devToolsExtension.open()
-        }
-      } else if (!window.devToolsExtension) {
-        const DevTools = require('containers/DevTools')
-        return <DevTools />
-      }
+    if (__DEBUG__ && !__DEBUG_NEW_WINDOW__) {
+      const DevTools = require('containers/DevTools')
+      return <DevTools />
     }
   }
+
   render () {
     return (
       <ToolboxApp>

@@ -14,10 +14,11 @@ const requireLogin = (nextState, replaceState, next) => {
     next()
     return
   }
-  const {
-    user: { code, contestantId },
-    quiz: { isComplete }
-  } = store.getState()
+
+  const code = store.getState().user.get('code')
+  const contestantId = store.getState().user.get('contestantId')
+  const isComplete = store.getState().quiz.get('isComplete')
+
   if (!code || !contestantId) {
     replaceState(null, '/')
   }
@@ -34,7 +35,7 @@ const hasToDoneExamFirst = (nextState, replaceState, next) => {
     next()
     return
   }
-  const {quiz: { isComplete }} = store.getState()
+  const isComplete = store.getState().quiz.get('isComplete')
   if (!isComplete) {
     replaceState(null, '/quiz')
   }

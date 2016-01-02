@@ -28,11 +28,20 @@ const karmaConfig = {
   },
   hostname: '0.0.0.0',
   singleRun: !argv.watch,
-  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
+  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai-immutable', 'chai'],
   preprocessors: {
     [`${config.dir_test}/**/*.js`]: ['webpack']
   },
-  reporters: ['spec', 'notify'],
+  reporters: ['mocha', 'notify'],
+  mochaReporter: {
+    ignoreSkipped: true,
+    colors: {
+      success: 'green',
+      info: 'white',
+      warning: 'yellow',
+      error: 'bgCyan'
+    }
+  },
   browsers: ['Chrome', 'Firefox'],
   webpack: {
     devtool: 'inline-source-map',
@@ -43,7 +52,10 @@ const karmaConfig = {
       loaders: webpackConfig.module.loaders
     },
     sassLoader: webpackConfig.sassLoader,
-    toolbox: webpackConfig.toolbox
+    toolbox: webpackConfig.toolbox,
+    node: {
+      fs: 'empty'
+    }
   },
   webpackMiddleware: {
     noInfo: true

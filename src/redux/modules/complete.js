@@ -3,6 +3,7 @@ import request from 'redux/utils/request'
 import { userReset } from './user'
 import { hardReset } from './quiz'
 import { notify } from 'redux/modules/alert'
+import { fromJS } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -22,9 +23,9 @@ export const completeReset = createAction(COMPLETE_RESET)
 export const send = () => {
   return (dispatch, getState) => {
     const postData = {
-      contestantId: getState().user.contestantId,
-      code: getState().user.code,
-      answers: getState().quiz.userAnswers
+      contestantId: getState().user.get('contestantId'),
+      code: getState().user.get('code'),
+      answers: getState().quiz.get('userAnswers')
     }
     dispatch(sendStart())
 
@@ -63,7 +64,7 @@ export const showScoreModal = ({ payload }) => {
   return (dispatch, getState) => {
     const alert = {
       title: 'Congratulations !',
-      message: `You scored ${getState().complete.score} / 30 points`,
+      message: `You scored ${getState().complete.get('score')} / 30 points`,
       button: 'Great'
     }
     dispatch(notify(alert))
@@ -78,32 +79,26 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let defaultState = {
+let initialState = fromJS({
   isLoading: true,
   isSuccess: false,
   retry: 0,
   errorMessage: []
-}
+})
 
 export default handleActions({
-  [SEND_START]: (state) => ({
-    ...state,
+  [SEND_START]: (state) => state.merge({
     isLoading: true,
-    retry: state.retry + 1
+    retry: state.get('retry') + 1
   }),
-  [SEND_SUCCESS]: (state, { payload }) => ({
-    ...state,
+  [SEND_SUCCESS]: (state, { payload }) => state.merge({
     isSuccess: true,
     isLoading: false,
     score: payload.score
   }),
-  [SEND_FAILED]: (state, { payload }) => ({
-    ...state,
-    errorMessage: [
-      ...state.errorMessage,
-      payload
-    ],
+  [SEND_FAILED]: (state, { payload }) => state.merge({
+    errorMessage: state.get('errorMessage').push(payload),
     isLoading: false
   }),
-  [COMPLETE_RESET]: (state) => defaultState
-}, defaultState)
+  [COMPLETE_RESET]: (state) => initialState
+}, initialState)
