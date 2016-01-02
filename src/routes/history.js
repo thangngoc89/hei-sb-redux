@@ -4,10 +4,13 @@ import store from '../redux/store'
 
 const confirm = () => {
   const {
-    quiz: { isComplete, isStarted },
-    complete: { isSuccess, retry },
     router: { path }
   } = store.getState()
+
+  const isComplete = store.getState().quiz.get('isComplete')
+  const isStarted = store.getState().quiz.get('isStarted')
+  const isSuccess = store.getState().complete.get('isSuccess')
+  const retry = store.getState().complete.get('retry')
 
   if (path === '/quiz' && !isComplete && isStarted) {
     return 'You are doing the exam. You CAN NOT do it again once you leave.'

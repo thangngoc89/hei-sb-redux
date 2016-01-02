@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { onTimeout as quizOnTimeout } from './quiz'
+import { Map } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -15,7 +16,7 @@ export const timerReset = createAction(TIMER_RESET)
 
 export const timerTickWithQuiz = () => {
   return (dispatch, getState) => {
-    let remain = (getState().timer.remain)
+    let remain = (getState().timer.get('remain'))
     // Dispatch on timeout action from quiz
     // on timeout (ofcourse)
     if (remain === 1) {
@@ -35,28 +36,26 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let defaultState = {
+const initialState = Map({
   seconds: 0,
   remain: 0,
   ticking: false
-}
+})
 
 export default handleActions({
-  [TIMER_START]: (state, { payload }) => ({
-    ...state,
+  [TIMER_START]: (state, { payload }) => state.merge({
     seconds: payload,
     remain: payload,
     ticking: true
   }),
   [TIMER_TICK]: (state) => {
-    let remain = ((state.remain - 1) < 0) ? 0 : (state.remain - 1)
+    let remain = ((state.get('remain') - 1) < 0) ? 0 : (state.get('remain') - 1)
     let ticking = (remain !== 0)
 
-    return {
-      ...state,
+    return state.merge({
       remain,
       ticking
-    }
+    })
   },
-  [TIMER_RESET]: (state) => defaultState
-}, defaultState)
+  [TIMER_RESET]: (state) => initialState
+}, initialState)

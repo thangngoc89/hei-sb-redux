@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { pushPath } from 'redux-simple-router'
 import request from 'redux/utils/request'
 import { notify } from 'redux/modules/alert'
+import { fromJS, List } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -40,14 +41,13 @@ export const showSaveFailedAlert = ({ payload }) => {
       button: `OK. I'll fix it`,
       buttonStyle: 'danger'
     }
-
     dispatch(notify(alert))
   }
 }
 
 export const showReminderModal = () => {
   return (dispatch, getState) => {
-    const secondsPerWord = getState().quiz.secondsPerWord
+    const secondsPerWord = getState().quiz.get('secondsPerWord')
     const alert = {
       title: 'Login succeed',
       message: `You will have ${ secondsPerWord } seconds to answer each question.`,
@@ -76,36 +76,28 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let defaultState = {
+let initialState = fromJS({
   code: undefined,
   contestantId: undefined,
   saveSuccess: undefined,
   saveErrorInfo: [],
   isSaving: false
-}
+})
 
 export default handleActions({
-  [USER_SAVE_START]: (state) => ({
-    ...state,
+  [USER_SAVE_START]: (state) => state.merge({
     isSaving: true
   }),
-  [USER_SAVE_SUCCESS]: (state, { payload }) => ({
-    ...state,
+  [USER_SAVE_SUCCESS]: (state, { payload }) => state.merge({
     ...payload,
     saveSuccess: true,
-    saveErrorInfo: undefined,
+    saveErrorInfo: List(),
     isSaving: false
   }),
-  [USER_SAVE_FAILED]: (state, { payload }) => {
-    return {
-      ...state,
-      saveSuccess: false,
-      saveErrorInfo: [
-        ...state.saveErrorInfo,
-        payload
-      ],
-      isSaving: false
-    }
-  },
-  [USER_RESET]: (state) => defaultState
-}, defaultState)
+  [USER_SAVE_FAILED]: (state, { payload }) => state.merge({
+    saveSuccess: false,
+    saveErrorInfo: state.get('saveErrorInfo').push(payload),
+    isSaving: false
+  }),
+  [USER_RESET]: (state) => initialState
+}, initialState)

@@ -22,8 +22,8 @@ describe('(redux) quiz actions', () => {
   it('should create an action to handle request data error', () => {
     const data = {}
 
-    expect(quiz.fetchError(data)).to.deep.equal({
-      type: quiz.QUIZ_FETCH_ERROR,
+    expect(quiz.fetchFailed(data)).to.deep.equal({
+      type: quiz.QUIZ_FETCH_FAILED,
       payload: data
     })
   })
@@ -45,7 +45,7 @@ describe('(redux) quiz actions', () => {
   it('should create an action to handle answer input onchange event', () => {
     expect(quiz.answerOnChange()).to.deep.equal({
       type: quiz.QUIZ_ANSWER_ONCHANGE,
-      payload:undefined
+      payload: undefined
     })
   })
 

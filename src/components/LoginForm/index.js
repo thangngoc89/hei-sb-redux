@@ -9,14 +9,12 @@ import validator from './LoginFormValidator'
 const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code']
 
 const mapStateToProps = (state) => ({
-  ...state.user
+  isSaving: state.user.get('isSaving')
 })
 
 export class LoginForm extends React.Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    pristine: PropTypes.bool.isRequired,
     invalid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     // Actions

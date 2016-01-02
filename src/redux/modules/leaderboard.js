@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import request from 'redux/utils/request'
 import sortByOrder from 'lodash/collection/sortByOrder'
+import moment from 'moment'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -18,9 +19,14 @@ export const fetch = () => {
   return (dispatch, getState) => {
     const lastUpdate = getState().leaderboard.lastUpdate
 
-    // TODO: Add more valid condition
+    // Don't reload before 10 mins
     if (lastUpdate !== undefined) {
-      return
+      const diff = moment() - moment(lastUpdate)
+      const tenMins = 1000 * 60 * 10 // milisec * min * 10
+
+      if (diff < tenMins) {
+        return
+      }
     }
 
     dispatch(fetchStart())
