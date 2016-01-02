@@ -33,7 +33,7 @@
     "howler": "git+https://github.com/goldfire/howler.js.git#v2.0.0-beta5",
     "lodash.shuffle": "^3.1.0",
     "lru-memoize": "^1.0.0",
-    "moment": "^2.10.6",
+    "moment": "^2.11.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.5",
     "react-addons-css-transition-group": "^0.14.5",
