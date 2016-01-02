@@ -42,7 +42,8 @@ const karmaConfig = {
     module: {
       loaders: webpackConfig.module.loaders
     },
-    sassLoader: webpackConfig.sassLoader
+    sassLoader: webpackConfig.sassLoader,
+    toolbox: webpackConfig.toolbox
   },
   webpackMiddleware: {
     noInfo: true

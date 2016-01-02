@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   margin: 0 auto;
   overflow: hidden;
-  background-color: $color-transparent-dark;
+  background-color: rgba($color-main, .7);
   border-radius: 0.5rem;
 }
 
@@ -55,7 +55,7 @@
     height: 1rem;
 
     border-radius: 50%;
-    background-color: $color-main;
+    background-color: $color-main-yellow;
     box-shadow: rgba(0,0,0,.2) 0 0 5px 2px;
   }
 
@@ -91,7 +91,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  color: #CDD2D8;
+  color: $color-light;
   background-color: transparent;
   border: 0;
   outline: 0;
@@ -111,6 +111,6 @@
   }
 
   &:disabled {
-    opacity: .2;
+    opacity: .5;
   }
 }

@@ -51,7 +51,7 @@ const webpackConfig = {
   ],
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.js', '.jsx', 'scss']
+    extensions: ['', '.js', '.jsx', '.scss']
   },
   module: {
     preLoaders: [
@@ -78,7 +78,8 @@ const webpackConfig = {
           'style-loader',
           CSS_LOADER,
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          'toolbox'
         ]
       },
       {
@@ -110,6 +111,9 @@ const webpackConfig = {
       { test: /\.md$/, loader: "html!markdown?gfm=false" }
     ]
   },
+  toolbox: {
+    theme: paths.client('styles/theme.scss')
+  },
   sassLoader: {
     includePaths: [
       paths.client('styles'),
@@ -130,7 +134,8 @@ const webpackConfig = {
         removeAll: true
       }
     }),
-    pxtorem()
+    pxtorem(),
+    require('postcss-strip-zero-length-units')
   ],
   eslint: {
     configFile: `${paths.base()}/.eslintrc`

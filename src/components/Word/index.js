@@ -1,9 +1,9 @@
 import { Component, PropTypes } from 'react'
-import { Button, Input, Row, Col } from 'react-bootstrap'
+import Button from 'react-toolbox/lib/button'
+import Input from 'react-toolbox/lib/input'
 import WordNavigator from 'components/WordNavigator'
 import Timer from 'containers/TimerContainer'
 import AudioPlayer from 'containers/AudioPlayerContainer'
-import styles from './style.scss'
 
 class Word extends Component {
   static propTypes = {
@@ -21,9 +21,8 @@ class Word extends Component {
     this.focusOnInput()
   }
 
-  onInputChange (e) {
-    let input = e.target.value
-    this.props.handleOnChange(input)
+  onInputChange (name, value) {
+    this.props.handleOnChange(value)
   }
 
   handleSubmit (e) {
@@ -33,7 +32,7 @@ class Word extends Component {
   }
 
   focusOnInput () {
-    this.input.getInputDOMNode().focus()
+    this.input.focus()
   }
 
   getCurrentWordUrl () {
@@ -43,35 +42,41 @@ class Word extends Component {
   render () {
     return (
       <div>
-        <Row>
-          <Col xs={8} sm={9} md={10}>
+        <div className='row'>
+          <div className='col-xs-7 col-sm-8 col-md-9'>
             <WordNavigator
               current={this.props.wordCurrent}
               total={this.props.wordTotal}
             />
             <hr />
-          </Col>
-          <Col xs={4} sm={3} md={2}>
+          </div>
+          <div className='col-xs-5 col-sm-4 col-md-3'>
             <Timer size={100} />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         <AudioPlayer
           song={this.getCurrentWordUrl()}
         />
         <p>You played this audio {this.props.audioPlayedTimes} time(s).</p>
         <form onSubmit={this.handleSubmit.bind(this)}>
-        <Input
-          type='text'
-          label='Type your answer into the field below:'
-          ref={(ref) => this.input = ref}
-          onChange={this.onInputChange.bind(this)}
-          value={this.props.currentAnswer}
-          groupClassName={styles['input-wrapper']}
-        />
+        <div className='row'>
+          <div className='col-xs-12'>
+            <Input
+              primary
+              raised
+              type='text'
+              label='Type your answer into the field below'
+              ref={(ref) => this.input = ref}
+              name='answer'
+              onChange={this.onInputChange.bind(this, 'answer')}
+              value={this.props.currentAnswer}
+            />
+          </div>
+        </div>
 
-        <Row>
-          <Col xs={12}>
+        <div className='row'>
+          <div className='col-xs-12'>
             <Button
               type='submit'
               className='pull-right'
@@ -80,8 +85,8 @@ class Word extends Component {
             >
               Submit
             </Button>
-          </Col>
-        </Row>
+          </div>
+        </div>
         </form>
       </div>
     )

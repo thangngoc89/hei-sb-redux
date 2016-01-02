@@ -6,8 +6,6 @@ html {
 }
 
 body {
-  // background:url('../assets/img/pattern.svg') no-repeat;
-  // background-size: auto;
   font-family: $font-main;
   background: $color-grey-background;
 }
@@ -43,8 +41,4 @@ a {
 .footer {
   text-align: center;
   padding: 2rem 0;
-}
-
-.root {
-  padding-top: 3rem;
 }

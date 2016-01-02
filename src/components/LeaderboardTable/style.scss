@@ -1,24 +1,38 @@
 @import "color";
 @import "breakpoints";
 
-.thead {
-  background: $color-main;
-  color: #fff;
+.table {
+  & > thead {
+    background: $color-main;
+    color: #fff;
 
-  & tr > th {
-    border: 0;
+    // & tr > th {
+    //   &:first-child {
+    //     max-width: 1rem;
+    //   }
+    //   &:nth-child(2) {
+    //     max-width: 2rem;
+    //   }
+    //
+    //   &:nth-child(3) {
+    //     max-width: 5rem;
+    //   }
+    //
+    //   &:nth-child(4) {
+    //     max-width: 3rem;
+    //   }
+    // }
+  }
 
-    @include media-breakpoint-up(md) {
-      &:first-child {
-        max-width: 2rem;
+  & > tbody {
+    & > tr {
+      &:hover {
+        background: rgba($color-main, 0.1);
       }
-    }
 
-    @include media-breakpoint-up(sm) {
-      &:first-child {
-        max-width: 3.5rem;
-      }
+      @include media-breakpoint-down(sm) {
+    		line-height: 1.5rem !important;
+    	}
     }
-
   }
 }

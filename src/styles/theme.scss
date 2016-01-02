@@ -1,0 +1,10 @@
+/* Custom color for material react-toolbox theme */
+@import "color";
+
+$color-primary: $color-main !default;
+$color-primary-dark: rgb(74,20,140) !default;
+
+$color-accent: $palette-red-a200 !default;
+$color-accent-dark: $palette-red-a700 !default;
+
+$unit: 0.8rem !default;

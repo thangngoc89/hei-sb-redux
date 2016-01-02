@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import Dialog from 'react-toolbox/lib/dialog'
+import styles from './style.scss'
 
 class ModalWrapper extends React.Component {
   static propTypes = {
@@ -14,32 +15,27 @@ class ModalWrapper extends React.Component {
 
   static defaultProps = {
     buttonStyle: 'primary',
-    size: ''
+    size: 'normal'
   }
 
   render () {
+    const actions = [{
+      label: this.props.button,
+      onClick: this.props.close,
+      primary: (this.props.buttonStyle === 'primary'),
+      accent: (this.props.buttonStyle === 'danger')
+    }]
+
     return (
-      <Modal
-        show={this.props.show}
-        onHide={this.props.close}
-        backdrop='static'
-        bsSize={this.props.size}
+      <Dialog
+        actions={actions}
+        active={this.props.show}
+        title={this.props.title}
+        type={this.props.size}
+        className={styles.modal}
       >
-        <Modal.Header>
-          <Modal.Title>{this.props.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {this.props.body}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={this.props.close}
-            bsStyle={this.props.buttonStyle}
-          >
-            {this.props.button}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        {this.props.body}
+      </Dialog>
     )
   }
 }

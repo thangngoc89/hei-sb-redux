@@ -44,7 +44,7 @@ build:
     - offlinehacker/pushbullet-notify@0.0.1:
         token: $PUSHBULLET_TOKEN
         channel: hei-sb-build
-        on: failed
+        #on: failed
 
 deploy:
   steps:
@@ -59,4 +59,4 @@ deploy:
         channel: hei-sb-build
         passed-title: "Deploy succeed"
         failed-title: "Deploy failed"
-        on: failed
+        #on: failed

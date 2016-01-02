@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Modal from 'containers/Modal'
+import ToolboxApp from 'react-toolbox/lib/app'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -26,13 +27,15 @@ export default class Root extends React.Component {
 
   render () {
     return (
-      <Provider store={this.props.store}>
-        <div style={{ height: '100%' }}>
-          {this.content}
-          {this.devTools}
-          <Modal />
-        </div>
-      </Provider>
+      <ToolboxApp>
+        <Provider store={this.props.store}>
+          <div style={{height: '100%', 'paddingTop': '3rem'}}>
+            {this.content}
+            {this.devTools}
+            <Modal />
+          </div>
+        </Provider>
+      </ToolboxApp>
     )
   }
 }
