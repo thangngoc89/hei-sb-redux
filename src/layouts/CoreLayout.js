@@ -1,19 +1,13 @@
 import 'styles/global.loader'
 import NavBar from 'components/NavBar'
+import Footer from 'components/Footer'
 
 const CoreLayout = ({ children, location }) => {
   return (
     <div>
       <NavBar location={location}/>
       {children}
-
-      <footer className='footer'>
-        <div className='container'>
-          <p className='text-muted'>
-            Handcrafted with <i className='fa fa-heart'/> by <a href='http://khoanguyen.me' target='_blank'>Khoa Nguyen</a>
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
