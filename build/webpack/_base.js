@@ -1,6 +1,4 @@
 import webpack from 'webpack'
-import cssnano from 'cssnano'
-import pxtorem from 'postcss-pxtorem'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import config from '../../config'
 import _debug from 'debug'
@@ -121,22 +119,6 @@ const webpackConfig = {
       paths.base('src')
     ]
   },
-  postcss: [
-    cssnano({
-      sourcemap: true,
-      autoprefixer: {
-        add: true,
-        remove: true,
-        browsers: ['last 2 versions']
-      },
-      safe: true,
-      discardComments: {
-        removeAll: true
-      }
-    }),
-    pxtorem(),
-    require('postcss-strip-zero-length-units')
-  ],
   eslint: {
     configFile: `${paths.base()}/.eslintrc`
   }

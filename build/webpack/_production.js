@@ -41,5 +41,25 @@ export default (webpackConfig) => {
     })
   )
 
+  webpackConfig = {
+    ...webpackConfig,
+    postcss: [
+      require('cssnano')({
+        sourcemap: true,
+        autoprefixer: {
+          add: true,
+          remove: true,
+          browsers: ['last 2 versions']
+        },
+        safe: true,
+        discardComments: {
+          removeAll: true
+        }
+      }),
+      require('postcss-pxtorem')(),
+      require('postcss-strip-zero-length-units')()
+    ]
+  }
+
   return webpackConfig
 }
