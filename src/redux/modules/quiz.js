@@ -36,25 +36,30 @@ export const incrementAudioPlayedTimes = createAction(QUIZ_INCREMENT_AUDIO_PLAYE
 export const fetchQuizData = () => {
   return (dispatch, getState) => {
     // Fake an API request in development mode
-    if (__DEV__) {
-      dispatch(fetchStart())
-      const data = require('redux/data/quiz')
-      dispatch(fetchSuccess(data))
-      return
-    }
+    // if (__DEV__) {
+    //   console.log('it called me')
+    //   dispatch(fetchStart())
+    //   const data = require('redux/data/quiz')
+    //   dispatch(fetchSuccess(data))
+    //   return
+    // }
+
     const postData = {
       contestantId: getState().user.get('contestantId'),
       code: getState().user.get('code')
     }
     dispatch(fetchStart())
-
     request('wordList', postData, (err, res) => {
+      console.log('got to callback')
+      console.log(res)
+      console.log(err)
       if (err) {
         const error = (res) ? JSON.parse(res.body.error) : 'No connection'
         dispatch(fetchFailed(error))
         return
       }
-      dispatch(fetchSuccess(res.body))
+      const data = shuffle(res.body.result)
+      dispatch(fetchSuccess(data))
     })
   }
 }
@@ -110,7 +115,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let initialState = fromJS({
+export const initialState = fromJS({
   secondsPerWord: 15,
   wordList: [],
   userAnswers: {},
@@ -132,7 +137,7 @@ export default handleActions({
   [QUIZ_FETCH_SUCCESS]: (state, { payload }) => state.merge({
     isLoading: false,
     isStarted: true,
-    wordList: fromJS(shuffle(payload.result))
+    wordList: fromJS(payload)
   }),
   [QUIZ_FETCH_FAILED]: (state, { payload }) => state.merge({
     error: payload,

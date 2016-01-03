@@ -76,7 +76,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let initialState = fromJS({
+export const initialState = fromJS({
   code: undefined,
   contestantId: undefined,
   saveSuccess: undefined,
