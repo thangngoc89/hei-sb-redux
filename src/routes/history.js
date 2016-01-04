@@ -1,4 +1,4 @@
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import createHistory from 'history/lib/createHashHistory'
 import useBeforeUnload from 'history/lib/useBeforeUnload'
 import store from '../redux/store'
 
@@ -21,7 +21,7 @@ const confirm = () => {
   }
 }
 
-let history = useBeforeUnload(createBrowserHistory)()
+let history = useBeforeUnload(createHistory)()
 // TODO: Prevent listenBefore to be called twice
 history.listenBefore(confirm)
 history.listenBeforeUnload(confirm)

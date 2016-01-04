@@ -40,8 +40,8 @@ compiler.run(function (err, stats) {
     debug('No errors / warnings encountered.')
   }
 
-  debug('Copy index.html to 200.html')
-  fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
+  // debug('Copy index.html to 200.html')
+  // fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
 
   debug('Copy static files to dist')
   fs.copySync(paths.client('static'), paths.dist())
