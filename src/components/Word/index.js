@@ -71,6 +71,7 @@ class Word extends Component {
               name='answer'
               onChange={this.onInputChange.bind(this, 'answer')}
               value={this.props.currentAnswer}
+              disabled={this.props.isTimeOut}
             />
           </div>
         </div>
