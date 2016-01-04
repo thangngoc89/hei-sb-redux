@@ -1,36 +1,17 @@
 import { PropTypes } from 'react'
 import { Howl } from 'howler'
 import ControlButtons from './ControlButtons'
+import raf from 'raf'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
     super(props)
 
     this._audio = null
-    this._interval = null
-  }
-
-  static propTypes = {
-    // props
-    song: PropTypes.string.isRequired,
-    autoplay: PropTypes.bool.isRequired,
-    mute: PropTypes.bool.isRequired,
-    loop: PropTypes.bool.isRequired,
-    seek: PropTypes.number.isRequired,
-    buttons: PropTypes.object.isRequired,
-    // state
-    isPlaying: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    canUserToggleAudio: PropTypes.bool.isRequired,
-    // action
-    actionToggle: PropTypes.func.isRequired,
-    actionToggleMute: PropTypes.func.isRequired,
-    actionToggleLoop: PropTypes.func.isRequired,
-    actionUpdateSeek: PropTypes.func.isRequired,
-    onPlay: PropTypes.func.isRequired,
-    onEnd: PropTypes.func.isRequired,
-    onLoad: PropTypes.func.isRequired,
-    onLoadError: PropTypes.func.isRequired
+    this._rAF = null
+    this.state = {
+      seek: 0
+    }
   }
 
   componentDidMount () {
@@ -40,7 +21,12 @@ class AudioPlayer extends React.Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps.song !== this.props.song) {
       this.initSoundObject(nextProps)
+      this.setSeekBar(0)
     }
+  }
+
+  componentWillUnmount () {
+    raf.cancel(this._rAF)
   }
 
   initSoundObject (props = this.props) {
@@ -60,43 +46,40 @@ class AudioPlayer extends React.Component {
   clearSoundObject () {
     if (this._audio) {
       this._audio.stop()
-      // Also update seek when stop for a better UX
-      this.props.actionUpdateSeek(0)
       this._audio.unload()
       this._audio = null
     }
-    this.stop()
   }
 
   onPlay = (id) => {
     this.props.onPlay(id)
-    this.tick()
+    this.updateSeek()
   }
 
   onEnd = (id) => {
     this.props.onEnd(id)
-    this.stop()
-  }
-
-  tick () {
-    this.stop()
-    this._interval = setInterval(() => {
-      this.updateSeek()
-    }, 1000 / 30)
-  }
-
-  stop () {
-    if (this._interval) {
-      clearInterval(this._interval)
-    }
+    this.updateSeek()
   }
 
   updateSeek () {
-    let duration = this._audio.duration()
-    let currentTime = this._audio.seek()
-    let progress = (currentTime * 100) / duration
+    if (!this._audio) {
+      this.setSeekBar(0)
+      raf.cancel(this._rAF)
+      return
+    }
 
-    this.props.actionUpdateSeek(progress)
+    const progress = (this._audio.seek() * 100) / this._audio.duration()
+    this.setSeekBar(progress)
+
+    // Don't trigger new rAF if audio aren't playing
+    if (this._audio.playing()) {
+      this._rAF = raf(this.updateSeek.bind(this))
+    }
+  }
+
+  setSeekBar (seek) {
+    seek = (seek > 100) ? 100 : seek
+    this.setState({ seek })
   }
 
   // setProgress = (e) => {
@@ -122,7 +105,6 @@ class AudioPlayer extends React.Component {
       this._audio.play()
     } else {
       this._audio.pause()
-      this.stop()
     }
 
     this.props.actionToggle()
@@ -154,12 +136,33 @@ class AudioPlayer extends React.Component {
         />
         <div className='player-progress-wrapper'>
           <div className='player-progress-container' onClick={this.setProgress}>
-            <span className='player-progress-value' style={{width: this.props.seek + '%'}}></span>
+            <span className='player-progress-value' style={{width: this.state.seek + '%'}}></span>
           </div>
         </div>
       </div>
     )
   }
+}
+
+AudioPlayer.propTypes = {
+  // props
+  song: PropTypes.string.isRequired,
+  autoplay: PropTypes.bool.isRequired,
+  mute: PropTypes.bool.isRequired,
+  loop: PropTypes.bool.isRequired,
+  buttons: PropTypes.object.isRequired,
+  // state
+  isPlaying: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  canUserToggleAudio: PropTypes.bool.isRequired,
+  // action
+  actionToggle: PropTypes.func.isRequired,
+  actionToggleMute: PropTypes.func.isRequired,
+  actionToggleLoop: PropTypes.func.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onEnd: PropTypes.func.isRequired,
+  onLoad: PropTypes.func.isRequired,
+  onLoadError: PropTypes.func.isRequired
 }
 
 export default AudioPlayer

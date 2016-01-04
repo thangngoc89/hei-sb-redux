@@ -50,9 +50,6 @@ export const fetchQuizData = () => {
     }
     dispatch(fetchStart())
     request('wordList', postData, (err, res) => {
-      console.log('got to callback')
-      console.log(res)
-      console.log(err)
       if (err) {
         const error = (res) ? JSON.parse(res.body.error) : 'No connection'
         dispatch(fetchFailed(error))

@@ -30,7 +30,6 @@ export const actionToggleLoop = createAction(PLAYER_ACTION_TOGGLE_LOOP)
 export const actionEnablePlayButton = createAction(PLAYER_ACTION_ENABLE_PLAY_BUTTON)
 export const actionDisablePlayButton = createAction(PLAYER_ACTION_DISABLE_PLAY_BUTTON)
 // TODO: Implement seek
-export const actionUpdateSeek = createAction(PLAYER_ACTION_UPDATE_SEEK)
 export const actionPlayerReset = createAction(PLAYER_RESET)
 // Event from howler.js
 export const onPlay = createAction(PLAYER_ON_PLAY)
@@ -65,7 +64,6 @@ export const actions = {
   actionPlay,
   actionToggle,
   actionVolume,
-  actionUpdateSeek,
   actionToggleMute,
   actionToggleLoop,
   onPlay: onPlayWithTimer,
@@ -83,7 +81,6 @@ let initialState = fromJS({
   autoplay: true,
   mute: false,
   volume: 1,
-  seek: 0,
   loop: false,
   canUserToggleAudio: true,
   buttons: {
@@ -118,7 +115,6 @@ export default handleActions({
     isLoading: false,
     seek: 0
   }),
-  [PLAYER_ACTION_UPDATE_SEEK]: (state, { payload }) => state.set('seek', payload),
   [PLAYER_ACTION_TOGGLE_LOOP]: (state) => state.set('loop', !state.get('loop')),
   [PLAYER_ACTION_ENABLE_PLAY_BUTTON]: (state) => state.set('canUserToggleAudio', true),
   [PLAYER_ACTION_DISABLE_PLAY_BUTTON]: (state) => state.set('canUserToggleAudio', false),

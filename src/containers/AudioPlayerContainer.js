@@ -6,7 +6,6 @@ const mapStateToProps = (state) => ({
   autoplay: state.player.get('autoplay'),
   mute: state.player.get('mute'),
   loop: state.player.get('loop'),
-  seek: state.player.get('seek'),
   buttons: state.player.get('buttons').toJS(),
   // state
   isPlaying: state.player.get('isPlaying'),

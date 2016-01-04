@@ -17,7 +17,6 @@ class ControlButtons extends React.Component {
         PlayButton: true
       }
     }
-
     return (
       <div className='player-control-wrapper'>
         <div className='player-buttons'>
