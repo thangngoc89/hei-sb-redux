@@ -1,8 +1,7 @@
 import { PropTypes } from 'react'
-import CSSModules from 'react-css-modules'
 import styles from './style.scss'
-import moment from 'moment'
 import Table from 'react-toolbox/lib/table'
+import LastUpdate from './LastUpdate'
 
 const ResultModel = {
   rank: {type: String},
@@ -43,12 +42,13 @@ class LeaderboardTable extends React.Component {
   }
 
   render () {
-    const lastUpdate = moment(this.props.lastUpdate).fromNow()
-
     return (
       <section>
         <div className='pull-right'>
-          Last update: {lastUpdate}
+          <LastUpdate
+            time={this.props.lastUpdate}
+            interval={10}
+          />
         </div>
         <div className='table-responsive'>
           <Table
@@ -63,4 +63,4 @@ class LeaderboardTable extends React.Component {
   }
 }
 
-export default CSSModules(LeaderboardTable, styles)
+export default LeaderboardTable
