@@ -35,7 +35,7 @@ build:
     - script:
         name: Copy dist into deploy folder
         code: |
-          cp -r dist/ $WERCKER_OUTPUT_DIR
+          cp -r . $WERCKER_OUTPUT_DIR
     - script:
         name: Save coverage
         code: |
@@ -49,10 +49,9 @@ build:
 deploy:
   steps:
     - script:
-        name: Deploy to surge
+        name: Deploy to gh-pages
         code: |
-          npm install -g surge
-          surge dist $SURGE_DOMAIN
+          npm run deploy
   after-steps:
     - offlinehacker/pushbullet-notify@0.0.1:
         token: $PUSHBULLET_TOKEN
