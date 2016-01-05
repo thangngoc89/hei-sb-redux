@@ -6,17 +6,6 @@ import Timer from 'containers/TimerContainer'
 import AudioPlayer from 'containers/AudioPlayerContainer'
 
 class Word extends Component {
-  static propTypes = {
-    word: PropTypes.object.isRequired,
-    wordTotal: PropTypes.number.isRequired,
-    wordCurrent: PropTypes.number.isRequired,
-    isTimeOut: PropTypes.bool.isRequired,
-    currentAnswer: PropTypes.string.isRequired,
-    audioPlayedTimes: PropTypes.number.isRequired,
-    handleOnChange: PropTypes.func.isRequired,
-    handleNextWord: PropTypes.func.isRequired
-  }
-
   componentDidMount () {
     this.focusOnInput()
   }
@@ -51,14 +40,13 @@ class Word extends Component {
             <hr />
           </div>
           <div className='col-xs-5 col-sm-4 col-md-3'>
-            <Timer size={100} />
+            <Timer size={100} handleTimeout={this.props.handleTimeout} />
           </div>
         </div>
 
-        <AudioPlayer
-          song={this.getCurrentWordUrl()}
-        />
+        <AudioPlayer song={this.getCurrentWordUrl()} />
         <p>You played this audio {this.props.audioPlayedTimes} time(s).</p>
+
         <form onSubmit={this.handleSubmit.bind(this)}>
         <div className='row'>
           <div className='col-xs-12'>
@@ -92,6 +80,18 @@ class Word extends Component {
       </div>
     )
   }
+}
+
+Word.propTypes = {
+  word: PropTypes.object.isRequired,
+  wordTotal: PropTypes.number.isRequired,
+  wordCurrent: PropTypes.number.isRequired,
+  isTimeOut: PropTypes.bool.isRequired,
+  currentAnswer: PropTypes.string.isRequired,
+  audioPlayedTimes: PropTypes.number.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleNextWord: PropTypes.func.isRequired,
+  handleTimeout: PropTypes.func.isRequired
 }
 
 export default Word

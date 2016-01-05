@@ -4,7 +4,7 @@ import Timer from 'components/Timer'
 
 const mapStateToProps = (state) => ({
   seconds: state.timer.get('seconds'),
-  remain: state.timer.get('remain'),
+  startAt: state.timer.get('startAt'),
   ticking: state.timer.get('ticking')
 })
 

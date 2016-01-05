@@ -1,62 +1,64 @@
 import { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import raf from 'raf'
 import styles from './style.scss'
 
 class Timer extends React.Component {
   constructor (props) {
     super(props)
     this._canvas = null
-    this._timeout = null
+    this._raf = null
   }
 
   static defaultProps = {
     size: 300
   }
 
-  static propTypes = {
-    size: PropTypes.number,
-    seconds: PropTypes.number.isRequired,
-    remain: PropTypes.number.isRequired,
-    ticking: PropTypes.bool.isRequired,
-    // Actions
-    timerTick: PropTypes.func.isRequired
-  }
-
   componentDidMount () {
     this.scaleSetup()
     this.canvasSetup()
-    this.canvasDraw(this.props)
-    if (this.props.ticking) {
-      this.tick()
-    }
+    this.init()
   }
 
-  componentWillReceiveProps (props) {
-    this.canvasDraw(props)
-    if (props.ticking) {
-      this.tick()
-    }
-    if (props.seconds === 0) {
-      this.stopTick()
+  componentWillReceiveProps (nextProps) {
+    this.init(nextProps)
+
+    if (!nextProps.ticking) {
+      this.clear()
     }
   }
 
   componentWillUnmount () {
-    this.stopTick()
+    this.clear()
   }
 
-  tick () {
-    this._timeout = setTimeout(() => {
-      this.props.timerTick()
-    }, 1000)
+  init (props = this.props) {
+    this.clear()
+    const { seconds, startAt } = props
+    // Only draw track
+    if (seconds === 0) {
+      this.canvasClear()
+      this.canvasDrawTrack()
+      return
+    }
+
+    this._endAt = startAt + seconds * 1000
+    this._total = this._endAt - startAt
+    this.canvasDraw()
   }
 
-  stopTick () {
-    clearTimeout(this._timeout)
+  clear () {
+    raf.cancel(this._raf)
+  }
+
+  handleTimeout () {
+    if (this.props.handleTimeout) {
+      this.props.handleTimeout()
+    }
   }
 
   scaleSetup () {
-    let size = this.props.size
+    const size = this.props.size
     this._lineWidth = size / 10
     this._center = size / 2
     this._radius = this._center - (this._lineWidth / 2)
@@ -68,24 +70,24 @@ class Timer extends React.Component {
     this._context = this._canvas.getContext('2d')
     this._context.textAlign = 'center'
     this._context.textBaseline = 'middle'
-    this._context.font = 'bold ' + this._fontSize + 'px Arial'
+    this._context.font = 'bold ' + this._fontSize + 'px Roboto'
   }
 
   canvasClear () {
     this._context.clearRect(0, 0, this.props.size, this.props.size)
   }
 
-  // Handle logic between seconds and remain
-  // Redraw everything from scratch each time be called
-  canvasDraw ({remain, seconds}) {
+  // Main draw function
+  canvasDraw = () => {
     this.canvasClear()
     this.canvasDrawTrack()
-    if (!seconds || !remain) return
-    if (remain > seconds) {
-      throw new Error('Remaining seconds can not be larger than total seconds')
+    const remain = this._endAt - Date.now()
+    if (remain > 0) {
+      this.canvasDrawRemain(this._total, remain)
+      this._raf = raf(this.canvasDraw)
+    } else {
+      this.handleTimeout()
     }
-
-    this.canvasDrawRemain(remain, seconds)
   }
 
   canvasDrawTrack () {
@@ -96,17 +98,17 @@ class Timer extends React.Component {
     this._context.stroke()
   }
 
-  canvasDrawRemain (remain, seconds) {
+  canvasDrawRemain (total, remain) {
     this._context.strokeStyle = 'hsl(2, 8%, 46%)'
     this._context.lineWidth = this._lineWidth
-    this._context.fillText(remain, this._center, this._center)
+    this._context.fillText((remain / 1000).toFixed(), this._center, this._center)
     this._context.beginPath()
     this._context.arc(
       this._center,
       this._center,
       this._radius,
       Math.PI / -2,
-      (Math.PI * 2) * ((remain - seconds % seconds) / seconds) + (Math.PI / -2),
+      (Math.PI * 2) * ((remain - total % total) / total) + (Math.PI / -2),
       false
     )
     this._context.stroke()
@@ -121,6 +123,14 @@ class Timer extends React.Component {
       ></canvas>
     )
   }
+}
+
+Timer.propTypes = {
+  size: PropTypes.number,
+  seconds: PropTypes.number.isRequired,
+  startAt: PropTypes.number.isRequired,
+  ticking: PropTypes.bool.isRequired,
+  handleTimeout: PropTypes.func
 }
 
 export default Timer
