@@ -105,7 +105,7 @@
     "lodash": "^3.10.1",
     "markdown-loader": "^0.1.7",
     "mocha": "^2.2.5",
-    "nock": "^3.6.0",
+    "nock": "^4.0.0",
     "node-sass": "^3.3.3",
     "parse": "^1.6.13",
     "postcss-loader": "^0.8.0",
