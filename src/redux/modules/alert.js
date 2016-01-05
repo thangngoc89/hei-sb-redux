@@ -33,7 +33,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = Map({
+export const initialState = Map({
   show: false,
   title: undefined,
   message: undefined,

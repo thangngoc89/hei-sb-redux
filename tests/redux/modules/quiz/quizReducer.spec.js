@@ -23,7 +23,7 @@ describe('(redux) quiz --> reducer', () => {
   })
 
   it('should set isLoading state when fetch start', () => {
-    const action = quiz.fetchStart
+    const action = quiz.fetchStart()
     const expectedState = initialState.set('isLoading', true)
 
     expect(reducer(initialState, action)).to.deep.equal(expectedState)

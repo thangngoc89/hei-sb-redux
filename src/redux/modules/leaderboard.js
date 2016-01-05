@@ -48,7 +48,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let defaultState = {
+export const defaultState = {
   isLoading: true,
   fetchErrorInfo: [],
   fetchSuccess: false,
