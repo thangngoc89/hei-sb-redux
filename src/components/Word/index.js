@@ -28,6 +28,26 @@ class Word extends Component {
     return this.props.word.get('soundFile')
   }
 
+  audioPlayedTimes () {
+    let string
+    const times = this.props.audioPlayedTimes
+    switch (times) {
+      case 0:
+        string = <p>You haven't heard this word yet.</p>
+        break
+      case 1:
+        string = <p>You heard this word once.</p>
+        break
+      case 2:
+        string = <p>You heard this word twice so you can't hear it again.</p>
+        break
+      default:
+        string = <p>You heard this word {times} times.</p>
+        break
+    }
+    return string
+  }
+
   render () {
     return (
       <div>
@@ -45,7 +65,7 @@ class Word extends Component {
         </div>
 
         <AudioPlayer song={this.getCurrentWordUrl()} />
-        <p>You played this audio {this.props.audioPlayedTimes} time(s).</p>
+        {this.audioPlayedTimes()}
 
         <form onSubmit={this.handleSubmit.bind(this)}>
         <div className='row'>
@@ -83,7 +103,7 @@ class Word extends Component {
 }
 
 Word.propTypes = {
-  word: PropTypes.objyect.isRequired,
+  word: PropTypes.object.isRequired,
   wordTotal: PropTypes.number.isRequired,
   wordCurrent: PropTypes.number.isRequired,
   isTimeout: PropTypes.bool.isRequired,
