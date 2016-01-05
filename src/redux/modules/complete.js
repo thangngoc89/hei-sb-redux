@@ -79,7 +79,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let initialState = fromJS({
+export const initialState = fromJS({
   isLoading: true,
   isSuccess: false,
   retry: 0,

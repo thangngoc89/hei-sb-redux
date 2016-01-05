@@ -1,6 +1,5 @@
 import * as quiz from 'redux/modules/quiz'
 import data from 'redux/data/quiz'
-import createAction from 'redux-actions'
 
 describe('(redux) quiz --> actions', () => {
   it('should create an action to request data', () => {

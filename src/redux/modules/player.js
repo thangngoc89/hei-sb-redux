@@ -40,10 +40,9 @@ export const onLoadError = createAction(PLAYER_ON_LOAD_ERROR)
 export const onPlayWithTimer = () => {
   return (dispatch, getState) => {
     dispatch(onPlay())
-
     // Only start a new timer when timer is not ticking
     if (!getState().timer.get('ticking')) {
-      let seconds = getState().quiz.get('secondsPerWord')
+      const seconds = getState().quiz.get('secondsPerWord')
       dispatch(timerActions.timerStart(seconds))
     }
   }
@@ -75,7 +74,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-let initialState = fromJS({
+export const initialState = fromJS({
   isPlaying: false,
   isLoading: false,
   autoplay: true,

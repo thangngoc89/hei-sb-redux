@@ -24,7 +24,7 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = Map({
+export const initialState = Map({
   seconds: 0,
   startAt: 0,
   ticking: false
