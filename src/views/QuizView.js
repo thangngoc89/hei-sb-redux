@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   wordList: state.quiz.get('wordList'),
   currentWord: state.quiz.get('currentWord'),
   currentAnswer: state.quiz.get('currentAnswer'),
-  timeOut: state.quiz.get('timeOut'),
+  isTimeout: state.quiz.get('isTimeout'),
   error: state.quiz.get('error'),
   audioPlayedTimes: state.quiz.get('audioPlayedTimes')
 })
@@ -52,7 +52,7 @@ class QuizView extends React.Component {
         handleOnChange={this.props.answerOnChange}
         currentAnswer={this.props.currentAnswer}
         audioPlayedTimes={this.props.audioPlayedTimes}
-        isTimeOut={this.props.timeOut}
+        isTimeout={this.props.isTimeout}
         handleTimeout={this.props.handleTimeout}
       />
     }
@@ -71,7 +71,7 @@ QuizView.propTypes = {
   wordList: PropTypes.object.isRequired,
   currentWord: PropTypes.number.isRequired,
   currentAnswer: PropTypes.string.isRequired,
-  timeOut: PropTypes.bool.isRequired,
+  isTimeout: PropTypes.bool.isRequired,
   error: PropTypes.any.isRequired,
   audioPlayedTimes: PropTypes.number.isRequired,
   // Below props are actions

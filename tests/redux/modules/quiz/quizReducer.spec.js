@@ -13,7 +13,7 @@ const initialState = fromJS({
   isLoading: true,
   isStarted: false,
   isComplete: false,
-  timeOut: false,
+  isTimeout: false,
   audioPlayedTimes: 0
 })
 
@@ -87,7 +87,7 @@ describe('(redux) quiz --> reducer', () => {
         currentAnswer: '',
         wordList: fromJS(wordList),
         currentWord: 1,
-        timeOut: false
+        isTimeout: false
       })
       expect(reducer(currentState, action)).to.deep.equal(expectedState)
     })
@@ -101,7 +101,7 @@ describe('(redux) quiz --> reducer', () => {
         }),
         wordList: fromJS(wordList),
         currentWord: 1,
-        timeOut: false
+        isTimeout: false
       })
 
       const expectedState = initialState.merge({
@@ -113,7 +113,7 @@ describe('(redux) quiz --> reducer', () => {
         currentAnswer: '',
         wordList: fromJS(wordList),
         currentWord: 2,
-        timeOut: false
+        isTimeout: false
       })
       expect(reducer(currentState, action)).to.deep.equal(expectedState)
     })
@@ -128,7 +128,7 @@ describe('(redux) quiz --> reducer', () => {
         }),
         wordList: fromJS(wordList),
         currentWord: 2, // Last element in array
-        timeOut: false
+        isTimeout: false
       })
 
       const expectedState = initialState.merge({
@@ -141,7 +141,7 @@ describe('(redux) quiz --> reducer', () => {
         currentAnswer: '',
         wordList: fromJS(wordList),
         currentWord: 0,
-        timeOut: false
+        isTimeout: false
       })
       expect(reducer(currentState, action)).to.deep.equal(expectedState)
     })
@@ -163,7 +163,7 @@ describe('(redux) quiz --> reducer', () => {
         currentAnswer: '',
         wordList: fromJS(wordList),
         currentWord: 1,
-        timeOut: false
+        isTimeout: false
       })
       expect(reducer(currentState, action)).to.deep.equal(expectedState)
     })
@@ -177,7 +177,7 @@ describe('(redux) quiz --> reducer', () => {
   })
 
   it('should handle timeout event', () => {
-    const expectedState = initialState.set('timeOut', true)
+    const expectedState = initialState.set('isTimeout', true)
     const action = quiz.handleTimeout()
     expect(reducer(initialState, action)).to.deep.equal(expectedState)
   })
@@ -205,7 +205,7 @@ describe('(redux) quiz --> reducer', () => {
       },
       isLoading: false,
       isComplete: true,
-      timeOut: true
+      isTimeout: true
     })
     const action = quiz.actionQuizReset()
     expect(reducer(currentState, action)).to.deep.equal(initialState)

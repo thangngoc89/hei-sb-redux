@@ -59,7 +59,7 @@ class Word extends Component {
               name='answer'
               onChange={this.onInputChange.bind(this, 'answer')}
               value={this.props.currentAnswer}
-              disabled={this.props.isTimeOut}
+              disabled={this.props.isTimeout}
             />
           </div>
         </div>
@@ -83,10 +83,10 @@ class Word extends Component {
 }
 
 Word.propTypes = {
-  word: PropTypes.object.isRequired,
+  word: PropTypes.objyect.isRequired,
   wordTotal: PropTypes.number.isRequired,
   wordCurrent: PropTypes.number.isRequired,
-  isTimeOut: PropTypes.bool.isRequired,
+  isTimeout: PropTypes.bool.isRequired,
   currentAnswer: PropTypes.string.isRequired,
   audioPlayedTimes: PropTypes.number.isRequired,
   handleOnChange: PropTypes.func.isRequired,

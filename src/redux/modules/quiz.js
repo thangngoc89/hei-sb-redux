@@ -125,7 +125,7 @@ export const initialState = fromJS({
   isStarted: false,
   isComplete: false,
   // Show time out modal
-  timeOut: false,
+  isTimeout: false,
   audioPlayedTimes: 0
 })
 
@@ -158,11 +158,11 @@ export default handleActions({
       }),
       currentAnswer: '',
       currentWord: nextWord,
-      timeOut: false
+      isTimeout: false
     })
   },
   [QUIZ_ANSWER_ONCHANGE]: (state, { payload }) => state.set('currentAnswer', payload),
-  [QUIZ_TIMEOUT]: (state) => state.set('timeOut', true),
+  [QUIZ_TIMEOUT]: (state) => state.set('isTimeout', true),
   [QUIZ_RESET_AUDIO_PLAYED_TIMES]: (state) => state.set('audioPlayedTimes', 0),
   [QUIZ_INCREMENT_AUDIO_PLAYED_TIMES]: (state) =>
     state.set('audioPlayedTimes', state.get('audioPlayedTimes') + 1),
