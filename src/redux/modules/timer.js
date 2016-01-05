@@ -1,35 +1,23 @@
 import { createAction, handleActions } from 'redux-actions'
-import { onTimeout as quizOnTimeout } from './quiz'
+// import { onTimeout as quizOnTimeout } from './quiz'
 import { Map } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const TIMER_START = 'TIMER_START'
-export const TIMER_TICK = 'TIMER_TICK'
-export const TIMER_RESET = 'TIMER_RESET'
+export const TIMER_START = '@@timer/START'
+export const TIMER_PAUSE = '@@timer/PAUSE'
+export const TIMER_STOP = '@@timer/STOP'
+export const TIMER_RESET = '@timer/RESET'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const timerStart = createAction(TIMER_START, (seconds) => seconds)
-export const timerTick = createAction(TIMER_TICK)
+export const timerStart = createAction(TIMER_START)
+export const timerPause = createAction(TIMER_PAUSE)
 export const timerReset = createAction(TIMER_RESET)
-
-export const timerTickWithQuiz = () => {
-  return (dispatch, getState) => {
-    let remain = (getState().timer.get('remain'))
-    // Dispatch on timeout action from quiz
-    // on timeout (ofcourse)
-    if (remain === 1) {
-      dispatch(quizOnTimeout())
-    }
-
-    dispatch(timerTick())
-  }
-}
 
 export const actions = {
   timerStart,
-  timerTick: timerTickWithQuiz,
+  timerPause,
   timerReset
 }
 
@@ -38,24 +26,16 @@ export const actions = {
 // ------------------------------------
 const initialState = Map({
   seconds: 0,
-  remain: 0,
+  startAt: 0,
   ticking: false
 })
 
 export default handleActions({
   [TIMER_START]: (state, { payload }) => state.merge({
     seconds: payload,
-    remain: payload,
+    startAt: Date.now(),
     ticking: true
   }),
-  [TIMER_TICK]: (state) => {
-    let remain = ((state.get('remain') - 1) < 0) ? 0 : (state.get('remain') - 1)
-    let ticking = (remain !== 0)
-
-    return state.merge({
-      remain,
-      ticking
-    })
-  },
+  [TIMER_PAUSE]: (state) => state.set('ticking', false),
   [TIMER_RESET]: (state) => initialState
 }, initialState)

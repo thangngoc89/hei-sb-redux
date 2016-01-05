@@ -50,7 +50,7 @@ describe('(redux) quiz --> actions', () => {
   })
 
   it('should create an action to handle time out event', () => {
-    expect(quiz.onTimeout()).to.deep.equal({
+    expect(quiz.handleTimeout()).to.deep.equal({
       type: quiz.QUIZ_TIMEOUT,
       payload: undefined
     })

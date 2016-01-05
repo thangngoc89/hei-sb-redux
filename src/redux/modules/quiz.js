@@ -29,9 +29,9 @@ export const fetchFailed = createAction(QUIZ_FETCH_FAILED)
 export const nextWord = createAction(QUIZ_NEXT_WORD)
 export const actionQuizReset = createAction(QUIZ_RESET)
 export const answerOnChange = createAction(QUIZ_ANSWER_ONCHANGE)
-export const onTimeout = createAction(QUIZ_TIMEOUT)
 export const resetAudioPlayedTimes = createAction(QUIZ_RESET_AUDIO_PLAYED_TIMES)
 export const incrementAudioPlayedTimes = createAction(QUIZ_INCREMENT_AUDIO_PLAYED_TIMES)
+export const handleTimeout = createAction(QUIZ_TIMEOUT)
 
 export const fetchQuizData = () => {
   return (dispatch, getState) => {
@@ -106,7 +106,7 @@ export const actions = {
   nextWord: actionNextWordWithTimer,
   answerOnChange,
   hardReset,
-  onTimeout
+  handleTimeout
 }
 
 // ------------------------------------

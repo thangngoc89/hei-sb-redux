@@ -38,6 +38,8 @@ describe('(redux) quiz --> async actions', () => {
   //   const store = mockStore(initialState, expectedActions, done)
   //   store.dispatch(quiz.fetchQuizData())
   // })
+  it('creates QUIZ_FETCH_SUCCESS when fetching quiz has been done')
+  it('creates QUIZ_FETCH_FAILED when fetching quiz has been failed')
 
   it('should reset quiz, player, timer when dispatch hardReset', (done) => {
     const expectedActions = [

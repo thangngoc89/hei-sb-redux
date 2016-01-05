@@ -176,9 +176,9 @@ describe('(redux) quiz --> reducer', () => {
     expect(reducer(initialState, action)).to.deep.equal(expectedState)
   })
 
-  it('should handle timeOut event', () => {
+  it('should handle timeout event', () => {
     const expectedState = initialState.set('timeOut', true)
-    const action = quiz.onTimeout()
+    const action = quiz.handleTimeout()
     expect(reducer(initialState, action)).to.deep.equal(expectedState)
   })
 

@@ -18,22 +18,6 @@ const mapStateToProps = (state) => ({
 })
 
 class QuizView extends React.Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isComplete: PropTypes.bool.isRequired,
-    wordList: PropTypes.object.isRequired,
-    currentWord: PropTypes.number.isRequired,
-    currentAnswer: PropTypes.string.isRequired,
-    timeOut: PropTypes.bool.isRequired,
-    error: PropTypes.any.isRequired,
-    audioPlayedTimes: PropTypes.number.isRequired,
-    // Below props are actions
-    fetchQuizData: PropTypes.func.isRequired,
-    nextWord: PropTypes.func.isRequired,
-    answerOnChange: PropTypes.func.isRequired,
-    hardReset: PropTypes.func.isRequired
-  }
-
   componentDidMount () {
     this.props.hardReset()
     this.props.fetchQuizData()
@@ -69,6 +53,7 @@ class QuizView extends React.Component {
         currentAnswer={this.props.currentAnswer}
         audioPlayedTimes={this.props.audioPlayedTimes}
         isTimeOut={this.props.timeOut}
+        handleTimeout={this.props.handleTimeout}
       />
     }
 
@@ -78,6 +63,23 @@ class QuizView extends React.Component {
       </Container>
     )
   }
+}
+
+QuizView.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isComplete: PropTypes.bool.isRequired,
+  wordList: PropTypes.object.isRequired,
+  currentWord: PropTypes.number.isRequired,
+  currentAnswer: PropTypes.string.isRequired,
+  timeOut: PropTypes.bool.isRequired,
+  error: PropTypes.any.isRequired,
+  audioPlayedTimes: PropTypes.number.isRequired,
+  // Below props are actions
+  fetchQuizData: PropTypes.func.isRequired,
+  nextWord: PropTypes.func.isRequired,
+  answerOnChange: PropTypes.func.isRequired,
+  hardReset: PropTypes.func.isRequired,
+  handleTimeout: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, counterActions)(QuizView)
