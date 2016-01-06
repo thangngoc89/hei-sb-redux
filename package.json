@@ -90,7 +90,7 @@
     "html-loader": "^0.4.0",
     "html-webpack-plugin": "^1.6.1",
     "isparta-loader": "^2.0.0",
-    "karma": "0.13.18",
+    "karma": "0.13.19",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-immutable": "^1.0.1",
