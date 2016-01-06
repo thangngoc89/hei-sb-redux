@@ -1,0 +1,64 @@
+.div {
+	margin: 0 10px;
+	display: inline-flex;
+}
+
+.logo {
+	background: url('../../assets/img/ntt.png') no-repeat;
+}
+
+.doan {
+	@extend .logo;
+	background-position: -36px -23px;
+	width: 42px;
+	height: 46px;
+}
+
+.hsv {
+	@extend .logo;
+	background-position: -89px -26px;
+	width: 40px;
+	height: 40px;
+}
+
+.yds {
+	@extend .logo;
+	background-position: -140px -25px;
+	width: 41px;
+	height: 41px;
+}
+
+.hei {
+	@extend .logo;
+	background-position: -194px -27px;
+	width: 50px;
+	height: 37px;
+}
+
+.gln {
+	@extend .logo;
+	background-position: -257px -27px;
+	width: 86px;
+	height: 37px;
+}
+
+.jolo {
+	@extend .logo;
+	background-position: -343px -27px;
+	width: 70px;
+	height: 37px;
+}
+
+.cipps {
+	@extend .logo;
+	background-position: -423px -17px;
+	width: 37px;
+	height: 57px;
+}
+
+.yeah1 {
+	@extend .logo;
+	background-position: -475px -23px;
+	width: 113px;
+	height: 46px;
+}
