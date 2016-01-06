@@ -1,0 +1,5 @@
+@import 'shake';
+
+.shake {
+  @include do-shake('shake-hard', 20, 20, 7);
+}
