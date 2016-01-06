@@ -94,7 +94,11 @@ var calculateScore = function () {
     if (result.length > 0) {
       for (var i = 0; i < result.length; i++) {
         var temp = result[i]
-        words[temp.id] = temp.get('word')
+        if (typeof temp.get('alternative') === 'string') {
+          words[temp.id] = [temp.get('word'), temp.get('alternative')]
+        } else {
+          words[temp.id] = temp.get('word')
+        }
       }
     }
   })
@@ -103,7 +107,14 @@ var calculateScore = function () {
     for (var key in answers) {
       if (answers.hasOwnProperty(key)) {
         var answer = answers[key].trim().toLowerCase()
-        if (answer === words[key]) {
+        // Check if this word have multiple right answers
+        if (typeof words[key] === 'object') {
+          var rightAnswers = words[key]
+          // If this is a right answer then increase score
+          if (rightAnswers.indexOf(answer) > -1) {
+            score++
+          }
+        } else if (answer === words[key]) {
           score++
         }
       }
