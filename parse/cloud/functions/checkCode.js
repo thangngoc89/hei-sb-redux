@@ -9,7 +9,7 @@ const USED_CODE = 'USED_CODE'
 const CODE_SAVING_ERROR = 'CODE_SAVING_ERROR'
 const CONTESTANT_SAVING_ERROR = 'CONTESTANT_SAVING_ERROR'
 
-const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code']
+const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code', 'phone']
 
 module.exports = function (req, res) {
   var body = JSON.parse(req.body)
@@ -72,6 +72,7 @@ module.exports = function (req, res) {
     contestant.set('dateOfBirth', body.data.dateOfBirth)
     contestant.set('email', body.data.email)
     contestant.set('university', body.data.university)
+    contestant.set('phone', body.data.phone)
 
     contestant.set('code', { __type: 'Pointer', className: 'Code', objectId: codeObject.id })
     return contestant.save()

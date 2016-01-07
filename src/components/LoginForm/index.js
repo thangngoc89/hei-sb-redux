@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import { actions as userActions } from 'redux/modules/user'
 import { Button } from 'react-toolbox/lib/button'
-import LoginFormInput from './LoginFormInput'
+import Input from './Input'
 import validator from './LoginFormValidator'
 import styles from './shake.scss'
 import classnames from 'classnames'
 
-const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code']
+const fields = ['fullName', 'dateOfBirth', 'university', 'email', 'code', 'phone']
 
 const mapStateToProps = (state) => ({
   isSaving: state.user.get('isSaving')
@@ -34,14 +34,14 @@ export class LoginForm extends React.Component {
           shaking: false
         })
         this.refs[errorField].focus()
-        this.refs.getDOMNode().scrollIntoView()
+        ReactDOM.findDOMNode(this.refs[errorField]).scrollIntoView()
       }, 500)
     }
   };
 
   render () {
     const {
-      fields: {fullName, dateOfBirth, university, email, code},
+      fields: {fullName, dateOfBirth, university, email, code, phone},
       handleSubmit,
       isSaving
     } = this.props
@@ -54,11 +54,12 @@ export class LoginForm extends React.Component {
     return (
       <div className={divClass} style={{width: '100%'}}>
         <form onSubmit={handleSubmit(this.props.save)}>
-          <LoginFormInput displayName='Full name' icon='face' ref='fullName' object={fullName} />
-          <LoginFormInput displayName='Date of Birth' icon='cake' ref='dateOfBirth' object={dateOfBirth} />
-          <LoginFormInput displayName='University' icon='account_balance' ref='university' object={university} />
-          <LoginFormInput displayName='Email' icon='email' type='email' ref='email' object={email} />
-          <LoginFormInput displayName='Code' icon='code' ref='code' object={code} />
+          <Input label='Full name' icon='face' ref='fullName' {...fullName} />
+          <Input label='Date of Birth' icon='cake' ref='dateOfBirth' {...dateOfBirth} />
+          <Input label='University' icon='account_balance' ref='university' {...university} />
+          <Input label='Email' icon='email' type='email' ref='email' {...email} />
+          <Input label='Phone number' type='tel' icon='phone' ref='phone' {...phone} />
+          <Input label='Code' icon='code' ref='code' {...code} />
           <Button
             raised
             primary
@@ -74,7 +75,7 @@ export class LoginForm extends React.Component {
         </form>
       </div>
     )
-  };
+  }
 }
 
 LoginForm.propTypes = {

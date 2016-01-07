@@ -8,6 +8,7 @@ import complete from 'redux/modules/complete'
 import alert from 'redux/modules/alert'
 import leaderboard from 'redux/modules/leaderboard'
 import {reducer as formReducer} from 'redux-form'
+import { normalizePhone } from 'redux/utils/normalizeInput'
 
 export default combineReducers({
   complete,
@@ -18,5 +19,9 @@ export default combineReducers({
   alert,
   leaderboard,
   router: routeReducer,
-  form: formReducer
+  form: formReducer.normalize({
+    login: {
+      phone: normalizePhone
+    }
+  })
 })

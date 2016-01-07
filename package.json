@@ -54,6 +54,7 @@
     "redux-thunk": "^1.0.3",
     "superagent": "^1.6.1",
     "validator": "^4.4.0",
+    "vanilla-masker": "^1.0.9",
     "yargs": "^3.18.0"
   },
   "devDependencies": {

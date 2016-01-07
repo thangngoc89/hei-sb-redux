@@ -20,6 +20,8 @@ export const userReset = createAction(USER_RESET)
 
 export const save = (userInput) => {
   return (dispatch, getState) => {
+    // Remove spaces in phone number
+    userInput.phone = userInput.phone.replace(/\s/g, '')
     dispatch(saveStart())
     request('checkCode', userInput, (err, res) => {
       if (err) {

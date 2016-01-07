@@ -24,12 +24,23 @@ const validDate = value => {
   }
 }
 
+const vnPhoneNumber = value => {
+  if (!isEmpty(value)) {
+    const onlyNums = value.replace(/\s/g, '')
+    const re = /^0(\d{9,10})/
+    if (!re.test(onlyNums)) {
+      return 'Invalid phone number. Ex: 0912 345 678'
+    }
+  }
+}
+
 const LoginFormValidator = createValidator({
   fullName: [required, minLength(4)],
   dateOfBirth: [required, validDate],
   university: [required, minLength(6)],
   email: [required, email],
-  code: [required, fixedLength(10)]
+  code: [required, fixedLength(10)],
+  phone: [required, vnPhoneNumber]
 })
 
 export default memoize(10)(LoginFormValidator)
