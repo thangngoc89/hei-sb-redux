@@ -33,7 +33,6 @@
     "history": "1.17.0",
     "howler": "git+https://github.com/goldfire/howler.js.git#v2.0.0-beta5",
     "immutable": "^3.7.6",
-    "lodash.shuffle": "^3.1.0",
     "lru-memoize": "^1.0.0",
     "moment": "^2.11.0",
     "normalize.css": "^3.0.3",
@@ -54,8 +53,7 @@
     "redux-thunk": "^1.0.3",
     "superagent": "^1.6.1",
     "validator": "^4.4.0",
-    "vanilla-masker": "^1.0.9",
-    "yargs": "^3.18.0"
+    "vanilla-masker": "^1.0.9"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
@@ -107,7 +105,6 @@
     "lodash": "^3.10.1",
     "markdown-loader": "^0.1.7",
     "mocha": "^2.2.5",
-    "nock": "^3.6.0",
     "node-sass": "^3.3.3",
     "parse": "^1.6.13",
     "postcss-loader": "^0.8.0",
@@ -131,6 +128,7 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
     "webpack-md5-hash": "0.0.4",
-    "webpack-notifier": "^1.2.1"
+    "webpack-notifier": "^1.2.1",
+    "yargs": "^3.18.0"
   }
 }
