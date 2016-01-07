@@ -6,7 +6,6 @@ import data from 'redux/data/quiz'
 import createAction from 'redux-actions'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import nock from 'nock'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
