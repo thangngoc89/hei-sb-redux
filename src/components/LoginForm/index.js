@@ -20,7 +20,8 @@ export class LoginForm extends React.Component {
     this.state = {
       shaking: false
     }
-  }
+  };
+
   onButtonClick = () => {
     if (this.props.invalid) {
       this.setState({
@@ -36,7 +37,7 @@ export class LoginForm extends React.Component {
         this.refs.getDOMNode().scrollIntoView()
       }, 500)
     }
-  }
+  };
 
   render () {
     const {
@@ -73,7 +74,7 @@ export class LoginForm extends React.Component {
         </form>
       </div>
     )
-  }
+  };
 }
 
 LoginForm.propTypes = {

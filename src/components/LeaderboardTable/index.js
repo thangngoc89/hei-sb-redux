@@ -28,7 +28,7 @@ class LeaderboardTable extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
     lastUpdate: PropTypes.string.isRequired
-  }
+  };
 
   processData () {
     let data = this.props.data
@@ -39,7 +39,7 @@ class LeaderboardTable extends React.Component {
       }
     }
     return data
-  }
+  };
 
   render () {
     return (
@@ -60,7 +60,7 @@ class LeaderboardTable extends React.Component {
         </div>
       </section>
     )
-  }
+  };
 }
 
 export default LeaderboardTable

@@ -11,12 +11,12 @@ class ModalWrapper extends React.Component {
     body: PropTypes.string.isRequired,
     button: PropTypes.string.isRequired,
     buttonStyle: PropTypes.string
-  }
+  };
 
   static defaultProps = {
     buttonStyle: 'primary',
     size: 'normal'
-  }
+  };
 
   render () {
     const actions = [{
@@ -37,7 +37,7 @@ class ModalWrapper extends React.Component {
         {this.props.body}
       </Dialog>
     )
-  }
+  };
 }
 
 export default ModalWrapper

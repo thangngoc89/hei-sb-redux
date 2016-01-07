@@ -12,21 +12,14 @@ const mapStateToProps = (state) => ({
 })
 
 class CompleteView extends React.Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    score: PropTypes.number,
-    send: PropTypes.func.isRequired,
-    completeReset: PropTypes.func.isRequired
-  }
-
   componentDidMount () {
     this.props.send()
-  }
+  };
 
   componentWillUnmount () {
     // Reset CompleteView state when leave
     this.props.completeReset()
-  }
+  };
 
   render () {
     const { isLoading, score } = this.props
@@ -40,6 +33,13 @@ class CompleteView extends React.Component {
       </Container>
     )
   }
+}
+
+CompleteView.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  score: PropTypes.number,
+  send: PropTypes.func.isRequired,
+  completeReset: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, completeActions)(CompleteView)

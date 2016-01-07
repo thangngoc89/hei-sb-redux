@@ -5,7 +5,7 @@ import { actions as alertActions } from 'redux/modules/alert'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 class ModalContainer extends React.Component {
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   static propTypes = {
     show: PropTypes.bool,
@@ -14,7 +14,7 @@ class ModalContainer extends React.Component {
     title: PropTypes.string,
     button: PropTypes.string,
     buttonStyle: PropTypes.string
-  }
+  };
 
   render () {
     return (

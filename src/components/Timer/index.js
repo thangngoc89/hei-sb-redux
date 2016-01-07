@@ -12,13 +12,13 @@ class Timer extends React.Component {
 
   static defaultProps = {
     size: 300
-  }
+  };
 
   componentDidMount () {
     this.scaleSetup()
     this.canvasSetup()
     this.init()
-  }
+  };
 
   componentWillReceiveProps (nextProps) {
     this.init(nextProps)
@@ -26,11 +26,11 @@ class Timer extends React.Component {
     if (!nextProps.ticking) {
       this.clear()
     }
-  }
+  };
 
   componentWillUnmount () {
     this.clear()
-  }
+  };
 
   init (props = this.props) {
     this.clear()
@@ -45,17 +45,17 @@ class Timer extends React.Component {
     this._endAt = startAt + seconds * 1000
     this._total = this._endAt - startAt
     this.canvasDraw()
-  }
+  };
 
   clear () {
     raf.cancel(this._raf)
-  }
+  };
 
   handleTimeout () {
     if (this.props.handleTimeout) {
       this.props.handleTimeout()
     }
-  }
+  };
 
   scaleSetup () {
     const size = this.props.size
@@ -63,7 +63,7 @@ class Timer extends React.Component {
     this._center = size / 2
     this._radius = this._center - (this._lineWidth / 2)
     this._fontSize = this._center / 1.5
-  }
+  };
 
   canvasSetup () {
     this._canvas = ReactDOM.findDOMNode(this)
@@ -71,11 +71,11 @@ class Timer extends React.Component {
     this._context.textAlign = 'center'
     this._context.textBaseline = 'middle'
     this._context.font = 'bold ' + this._fontSize + 'px Roboto'
-  }
+  };
 
   canvasClear () {
     this._context.clearRect(0, 0, this.props.size, this.props.size)
-  }
+  };
 
   // Main draw function
   canvasDraw = () => {
@@ -88,7 +88,7 @@ class Timer extends React.Component {
     } else {
       this.handleTimeout()
     }
-  }
+  };
 
   canvasDrawTrack () {
     this._context.strokeStyle = 'hsla(2, 8%, 46%, 0.45)'
@@ -96,7 +96,7 @@ class Timer extends React.Component {
     this._context.beginPath()
     this._context.arc(this._center, this._center, this._radius, 0, Math.PI * 2)
     this._context.stroke()
-  }
+  };
 
   canvasDrawRemain (total, remain) {
     this._context.strokeStyle = 'hsl(2, 8%, 46%)'
@@ -112,7 +112,7 @@ class Timer extends React.Component {
       false
     )
     this._context.stroke()
-  }
+  };
 
   render () {
     return (

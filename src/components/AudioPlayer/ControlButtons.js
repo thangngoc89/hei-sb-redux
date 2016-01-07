@@ -6,7 +6,7 @@ import LoadingButton from './Buttons/LoadingButton'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 class ControlButtons extends React.Component {
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render () {
     const props = this.props

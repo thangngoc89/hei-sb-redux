@@ -15,11 +15,11 @@ class LeaderboardContainer extends React.Component {
     lastUpdate: PropTypes.string,
     fetchSuccess: PropTypes.bool,
     fetch: PropTypes.func.isRequired
-  }
+  };
 
   componentWillMount () {
     this.props.fetch()
-  }
+  };
 
   render () {
     const { isLoading, fetchSuccess } = this.props
@@ -35,7 +35,7 @@ class LeaderboardContainer extends React.Component {
         }
       </div>
     )
-  }
+  };
 }
 
 export default connect(mapStateToProps, actions)(LeaderboardContainer)

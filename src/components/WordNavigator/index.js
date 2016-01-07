@@ -1,7 +1,7 @@
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 class WordNavigator extends React.Component {
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render () {
     const { current, total } = this.props

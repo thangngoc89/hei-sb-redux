@@ -8,7 +8,7 @@ export default class Root extends React.Component {
     history: React.PropTypes.object.isRequired,
     routes: React.PropTypes.element.isRequired,
     store: React.PropTypes.object.isRequired
-  }
+  };
 
   get content () {
     return (
@@ -16,14 +16,14 @@ export default class Root extends React.Component {
         {this.props.routes}
       </Router>
     )
-  }
+  };
 
   get devTools () {
     if (__DEBUG__ && !__DEBUG_NEW_WINDOW__) {
       const DevTools = require('containers/DevTools')
       return <DevTools />
     }
-  }
+  };
 
   render () {
     return (

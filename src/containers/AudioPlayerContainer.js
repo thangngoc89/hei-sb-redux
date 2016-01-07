@@ -20,7 +20,7 @@ class WordAudioPlayerContainer extends React.Component {
         {...this.props}
       />
     )
-  }
+  };
 }
 
 export default connect(mapStateToProps, playerActions)(WordAudioPlayerContainer)

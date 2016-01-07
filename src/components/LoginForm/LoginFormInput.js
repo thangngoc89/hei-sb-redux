@@ -3,16 +3,11 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 import Input from 'react-toolbox/lib/input'
 
 class LoginFormInput extends React.Component {
-  // componentWillReceiveProps (nextProps) {
-  //   if (nextProps.focus) {
-  //
-  //   }
-  // }
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   focus () {
     this.input.focus()
-  }
+  };
 
   render () {
     const type = this.props.type || 'text'
@@ -28,7 +23,7 @@ class LoginFormInput extends React.Component {
         {...object}
       />
     )
-  }
+  };
 }
 
 LoginFormInput.propTypes = {

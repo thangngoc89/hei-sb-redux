@@ -12,22 +12,22 @@ class AudioPlayer extends React.Component {
     this.state = {
       seek: 0
     }
-  }
+  };
 
   componentDidMount () {
     this.initSoundObject()
-  }
+  };
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.song !== this.props.song) {
       this.initSoundObject(nextProps)
       this.setSeekBar(0)
     }
-  }
+  };
 
   componentWillUnmount () {
     raf.cancel(this._rAF)
-  }
+  };
 
   initSoundObject (props = this.props) {
     this.clearSoundObject()
@@ -41,7 +41,7 @@ class AudioPlayer extends React.Component {
       onload: props.onLoad,
       onloaderror: props.onLoadError
     })
-  }
+  };
 
   clearSoundObject () {
     if (this._audio) {
@@ -49,17 +49,17 @@ class AudioPlayer extends React.Component {
       this._audio.unload()
       this._audio = null
     }
-  }
+  };
 
   onPlay = (id) => {
     this.props.onPlay(id)
     this.updateSeek()
-  }
+  };
 
   onEnd = (id) => {
     this.props.onEnd(id)
     this.updateSeek()
-  }
+  };
 
   updateSeek () {
     if (!this._audio) {
@@ -75,12 +75,12 @@ class AudioPlayer extends React.Component {
     if (this._audio.playing()) {
       this._rAF = raf(this.updateSeek.bind(this))
     }
-  }
+  };
 
   setSeekBar (seek) {
     seek = (seek > 100) ? 100 : seek
     this.setState({ seek })
-  }
+  };
 
   // setProgress = (e) => {
   //   let target = e.target.nodeName === 'SPAN' ? e.target.parentNode : e.target
@@ -108,17 +108,17 @@ class AudioPlayer extends React.Component {
     }
 
     this.props.actionToggle()
-  }
+  };
 
   actionToggleMute = () => {
     this.props.actionToggleMute()
     this._audio.mute(!this.props.mute)
-  }
+  };
 
   actionToggleLoop = () => {
     this.props.actionToggleLoop()
     this._audio.loop(!this.props.loop)
-  }
+  };
 
   render () {
     return (
@@ -141,7 +141,7 @@ class AudioPlayer extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 }
 
 AudioPlayer.propTypes = {
