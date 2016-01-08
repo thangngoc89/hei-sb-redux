@@ -15,7 +15,7 @@ class WordTimerContainer extends React.Component {
         {...this.props}
       />
     )
-  };
+  }
 }
 
 export default connect(mapStateToProps, timerActions)(WordTimerContainer)

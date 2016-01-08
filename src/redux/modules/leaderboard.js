@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import request from 'redux/utils/request'
 import sortByOrder from 'lodash/collection/sortByOrder'
 import moment from 'moment'
+import { fromJS, List } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -17,7 +18,7 @@ export const fetchFailed = createAction(FETCH_FAILED)
 
 export const fetch = () => {
   return (dispatch, getState) => {
-    const lastUpdate = getState().leaderboard.lastUpdate
+    const lastUpdate = getState().leaderboard.get('lastUpdate')
 
     // Don't reload before 10 mins
     if (lastUpdate !== undefined) {
@@ -48,33 +49,25 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export const defaultState = {
+export const initialState = fromJS({
   isLoading: true,
   fetchErrorInfo: [],
   fetchSuccess: undefined,
   lastUpdate: undefined
-}
+})
 
 export default handleActions({
-  [FETCH_START]: (state) => ({
-    ...state,
-    isLoading: true
-  }),
-  [FETCH_SUCCESS]: (state, { payload }) => ({
-    ...state,
+  [FETCH_START]: (state) => state.set('isLoading', true),
+  [FETCH_SUCCESS]: (state, { payload }) => state.merge({
     fetchSuccess: true,
     isLoading: false,
-    fetchErrorInfo: [],
+    fetchErrorInfo: List(),
     data: sortByOrder(payload.data, ['rank'], ['asc']),
     lastUpdate: payload.lastUpdate.iso
   }),
-  [FETCH_FAILED]: (state, { payload }) => ({
-    ...state,
+  [FETCH_FAILED]: (state, { payload }) => state.merge({
     fetchSuccess: false,
-    fetchErrorInfo: [
-      ...state.fetchErrorInfo,
-      payload
-    ],
+    fetchErrorInfo: state.get('fetchErrorInfo').push(payload),
     isLoading: false
   })
-}, defaultState)
+}, initialState)

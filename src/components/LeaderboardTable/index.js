@@ -2,6 +2,7 @@ import { PropTypes } from 'react'
 import styles from './style.scss'
 import Table from 'react-toolbox/lib/table'
 import LastUpdate from './LastUpdate'
+import map from 'lodash/collection/map'
 
 const ResultModel = {
   rank: {type: String},
@@ -26,13 +27,13 @@ const convertMS = (ms) => {
 
 class LeaderboardTable extends React.Component {
   processData () {
-    let data = this.props.data
-    for (let i = 0; i < data.length; i++) {
-      let currentTime = data[i]['time']
-      if (typeof currentTime === 'number') {
-        data[i]['time'] = convertMS(currentTime)
+    const data = map(this.props.data.toJS(), (row) => {
+      return {
+        ...row,
+        time: convertMS(row['time'])
       }
-    }
+    })
+
     return data
   }
 

@@ -4,10 +4,6 @@ import { actions } from 'redux/modules/leaderboard'
 import LoadingScreen from 'components/LoadingScreen'
 import LeaderboardTable from 'components/LeaderboardTable'
 
-const mapStateToProps = (state) => ({
-  ...state.leaderboard
-})
-
 class LeaderboardContainer extends React.Component {
   componentDidMount () {
     this.props.fetch()
@@ -25,7 +21,7 @@ class LeaderboardContainer extends React.Component {
             lastUpdate={this.props.lastUpdate}
           />
         }
-        {!fetchSuccess &&
+        {(fetchSuccess === false) &&
           <h3 style={{textAlign: 'center'}}>Nothing to show yet</h3>
         }
       </div>
@@ -41,4 +37,10 @@ LeaderboardContainer.propTypes = {
   fetch: PropTypes.func.isRequired
 }
 
+const mapStateToProps = (state) => ({
+  isLoading: state.leaderboard.get('isLoading'),
+  data: state.leaderboard.get('data'),
+  lastUpdate: state.leaderboard.get('lastUpdate'),
+  fetchSuccess: state.leaderboard.get('fetchSuccess')
+})
 export default connect(mapStateToProps, actions)(LeaderboardContainer)
