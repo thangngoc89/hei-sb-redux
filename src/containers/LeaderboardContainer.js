@@ -9,17 +9,9 @@ const mapStateToProps = (state) => ({
 })
 
 class LeaderboardContainer extends React.Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    data: PropTypes.array,
-    lastUpdate: PropTypes.string,
-    fetchSuccess: PropTypes.bool,
-    fetch: PropTypes.func.isRequired
-  };
-
-  componentWillMount () {
+  componentDidMount () {
     this.props.fetch()
-  };
+  }
 
   render () {
     const { isLoading, fetchSuccess } = this.props
@@ -33,9 +25,20 @@ class LeaderboardContainer extends React.Component {
             lastUpdate={this.props.lastUpdate}
           />
         }
+        {!fetchSuccess &&
+          <h3 style={{textAlign: 'center'}}>Nothing to show yet</h3>
+        }
       </div>
     )
-  };
+  }
+}
+
+LeaderboardContainer.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  data: PropTypes.array,
+  lastUpdate: PropTypes.string,
+  fetchSuccess: PropTypes.bool,
+  fetch: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, actions)(LeaderboardContainer)

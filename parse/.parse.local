@@ -5,6 +5,9 @@
     },
     "hei-sb": {
       "applicationId": "wUyaZGM0qPNvr2DvKOgGTJSPXa1GWcHV3v3otEiX"
+    },
+    "hei-sb-prod": {
+      "applicationId": "zjl0RECGT3BGwLKv3ToDFkZNGjXUgvdT5GBE2vWc"
     }
   }
 }

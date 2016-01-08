@@ -32,7 +32,7 @@ export const fetch = () => {
     dispatch(fetchStart())
     request('getLeaderboard', null, (err, res) => {
       if (err) {
-        const error = (res) ? JSON.parse(res.body.error) : null
+        const error = (res) ? res.body : null
         dispatch(fetchFailed(error))
         return
       }
@@ -51,7 +51,7 @@ export const actions = {
 export const defaultState = {
   isLoading: true,
   fetchErrorInfo: [],
-  fetchSuccess: false,
+  fetchSuccess: undefined,
   lastUpdate: undefined
 }
 

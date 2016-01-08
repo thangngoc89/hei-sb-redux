@@ -5,7 +5,7 @@ import LastUpdate from './LastUpdate'
 
 const ResultModel = {
   rank: {type: String},
-  fullName: {type: String, field: 'Full name'},
+  fullName: {type: String},
   university: {type: String},
   score: {type: Number},
   time: {type: String}
@@ -25,11 +25,6 @@ const convertMS = (ms) => {
 }
 
 class LeaderboardTable extends React.Component {
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-    lastUpdate: PropTypes.string.isRequired
-  };
-
   processData () {
     let data = this.props.data
     for (let i = 0; i < data.length; i++) {
@@ -39,7 +34,7 @@ class LeaderboardTable extends React.Component {
       }
     }
     return data
-  };
+  }
 
   render () {
     return (
@@ -60,7 +55,12 @@ class LeaderboardTable extends React.Component {
         </div>
       </section>
     )
-  };
+  }
+}
+
+LeaderboardTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  lastUpdate: PropTypes.string.isRequired
 }
 
 export default LeaderboardTable

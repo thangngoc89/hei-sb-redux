@@ -1,5 +1,5 @@
 import superagent from 'superagent'
-import { ParseConfig } from 'redux/config'
+import ParseConfig from 'redux/config'
 
 const request = (functionName, data = null, cb) => {
   superagent.post('https://api.parse.com/1/functions/' + functionName)
