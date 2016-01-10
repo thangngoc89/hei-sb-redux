@@ -9,39 +9,35 @@ class LastUpdate extends React.Component {
     this.state = {
       timeString: moment(this.props.time).fromNow()
     }
-  };
-
-  static propTypes = {
-    time: PropTypes.string.isRequired,
-    interval: PropTypes.number.isRequired
-  };
+  }
 
   componentDidMount () {
     this.tick()
-  };
+  }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.time !== this.props.time) {
+      this.updateTime()
+      this.stop()
       this.tick()
     }
-  };
+  }
 
   componentWillUnmount () {
     this.stop()
-  };
+  }
 
   tick () {
-    this.stop()
     this._interval = setInterval(() => {
       this.updateTime()
     }, this.props.interval * 1000)
-  };
+  }
 
   stop () {
     if (this._interval) {
       clearInterval(this._interval)
     }
-  };
+  }
 
   updateTime () {
     const timeString = moment(this.props.time).fromNow()
@@ -50,13 +46,18 @@ class LastUpdate extends React.Component {
         timeString
       })
     }
-  };
+  }
 
   render () {
     return (
       <p>Last update: {this.state.timeString}</p>
     )
-  };
+  }
+}
+
+LastUpdate.propTypes = {
+  time: PropTypes.string.isRequired,
+  interval: PropTypes.number.isRequired
 }
 
 export default LastUpdate
