@@ -24,8 +24,8 @@ class Word extends Component {
     this.input.focus()
   }
 
-  getCurrentWordUrl () {
-    return this.props.word.get('soundFile')
+  soundFileFromId (word, format) {
+    return `/sound/${word.get('id')}.${format}`
   }
 
   audioPlayedTimes () {
@@ -49,6 +49,13 @@ class Word extends Component {
   }
 
   render () {
+    const word = this.props.word
+    const files = [
+      this.soundFileFromId(word, 'ogg'),
+      this.soundFileFromId(word, 'mp3'),
+      word.get('soundFile')
+    ]
+
     return (
       <div>
         <div className='row'>
@@ -64,7 +71,7 @@ class Word extends Component {
           </div>
         </div>
 
-        <AudioPlayer song={this.getCurrentWordUrl()} />
+        <AudioPlayer song={files} />
         {this.audioPlayedTimes()}
 
         <form onSubmit={this.handleSubmit.bind(this)}>

@@ -17,6 +17,10 @@ if (config.compiler_enable_hmr) {
   const compiler = webpack(webpackConfig)
 
   app.use(express.static(paths.client('static')))
+
+  // TODO: Find a more proper way to serve sound files
+  app.use('/sound', express.static(paths.dist('sound')))
+
   app.use(require('./middleware/webpack-dev')({
     compiler,
     publicPath: webpackConfig.output.publicPath
@@ -33,7 +37,7 @@ if (config.compiler_enable_hmr) {
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.
-  app.use(express.static(paths.base(config.dir_dist)))
+  app.use(express.static(paths.dist()))
 }
 
 export default app

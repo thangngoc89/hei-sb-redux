@@ -1,9 +1,21 @@
 require('babel-register')
 
+const fs = require('fs-extra')
 const config = require('../config')
 const debug = require('debug')('app:bin:compile')
-const fs = require('fs-extra')
 const paths = config.utils_paths
+
+debug('Empty dist folder')
+fs.emptyDirSync(paths.dist())
+
+require(paths.base('bin/renameSoundFiles'))
+
+// debug('Copy index.html to 200.html')
+// fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
+
+debug('Copy static files to dist')
+fs.copySync(paths.client('static'), paths.dist())
+
 
 debug('Create webpack compiler.')
 
@@ -39,10 +51,4 @@ compiler.run(function (err, stats) {
   } else {
     debug('No errors / warnings encountered.')
   }
-
-  // debug('Copy index.html to 200.html')
-  // fs.copySync(paths.dist('index.html'), paths.dist('200.html'))
-
-  debug('Copy static files to dist')
-  fs.copySync(paths.client('static'), paths.dist())
 })

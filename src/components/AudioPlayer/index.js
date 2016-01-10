@@ -2,6 +2,7 @@ import { PropTypes } from 'react'
 import { Howl } from 'howler'
 import ControlButtons from './ControlButtons'
 import raf from 'raf'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 class AudioPlayer extends React.Component {
   constructor (props) {
@@ -12,22 +13,28 @@ class AudioPlayer extends React.Component {
     this.state = {
       seek: 0
     }
-  };
+
+    this.onPlay = this.onPlay.bind(this)
+    this.onEnd = this.onEnd.bind(this)
+    this.actionToggle = this.actionToggle.bind(this)
+    this.actionToggleMute = this.actionToggleMute.bind(this)
+    this.actionToggleLoop = this.actionToggleLoop.bind(this)
+  }
 
   componentDidMount () {
     this.initSoundObject()
-  };
+  }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.song !== this.props.song) {
+    if (!shallowEqual(nextProps.song, this.props.song)) {
       this.initSoundObject(nextProps)
       this.setSeekBar(0)
     }
-  };
+  }
 
   componentWillUnmount () {
     raf.cancel(this._rAF)
-  };
+  }
 
   initSoundObject (props = this.props) {
     this.clearSoundObject()
@@ -41,7 +48,7 @@ class AudioPlayer extends React.Component {
       onload: props.onLoad,
       onloaderror: props.onLoadError
     })
-  };
+  }
 
   clearSoundObject () {
     if (this._audio) {
@@ -49,17 +56,17 @@ class AudioPlayer extends React.Component {
       this._audio.unload()
       this._audio = null
     }
-  };
+  }
 
-  onPlay = (id) => {
+  onPlay (id) {
     this.props.onPlay(id)
     this.updateSeek()
-  };
+  }
 
-  onEnd = (id) => {
+  onEnd (id) {
     this.props.onEnd(id)
     this.updateSeek()
-  };
+  }
 
   updateSeek () {
     if (!this._audio) {
@@ -75,12 +82,12 @@ class AudioPlayer extends React.Component {
     if (this._audio.playing()) {
       this._rAF = raf(this.updateSeek.bind(this))
     }
-  };
+  }
 
   setSeekBar (seek) {
     seek = (seek > 100) ? 100 : seek
     this.setState({ seek })
-  };
+  }
 
   // setProgress = (e) => {
   //   let target = e.target.nodeName === 'SPAN' ? e.target.parentNode : e.target
@@ -100,7 +107,7 @@ class AudioPlayer extends React.Component {
   //   this.play()
   // }
 
-  actionToggle = () => {
+  actionToggle () {
     if (!this._audio.playing()) {
       this._audio.play()
     } else {
@@ -108,17 +115,17 @@ class AudioPlayer extends React.Component {
     }
 
     this.props.actionToggle()
-  };
+  }
 
-  actionToggleMute = () => {
+  actionToggleMute () {
     this.props.actionToggleMute()
     this._audio.mute(!this.props.mute)
-  };
+  }
 
-  actionToggleLoop = () => {
+  actionToggleLoop () {
     this.props.actionToggleLoop()
     this._audio.loop(!this.props.loop)
-  };
+  }
 
   render () {
     return (
@@ -141,12 +148,15 @@ class AudioPlayer extends React.Component {
         </div>
       </div>
     )
-  };
+  }
 }
 
 AudioPlayer.propTypes = {
   // props
-  song: PropTypes.string.isRequired,
+  song: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
   autoplay: PropTypes.bool.isRequired,
   mute: PropTypes.bool.isRequired,
   loop: PropTypes.bool.isRequired,
