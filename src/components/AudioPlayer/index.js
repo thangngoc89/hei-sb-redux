@@ -16,6 +16,7 @@ class AudioPlayer extends React.Component {
 
     this.onPlay = this.onPlay.bind(this)
     this.onEnd = this.onEnd.bind(this)
+    this.onLoadError = this.onLoadError.bind(this)
     this.actionToggle = this.actionToggle.bind(this)
     this.actionToggleMute = this.actionToggleMute.bind(this)
     this.actionToggleLoop = this.actionToggleLoop.bind(this)
@@ -46,7 +47,7 @@ class AudioPlayer extends React.Component {
       onend: this.onEnd,
       onplay: this.onPlay,
       onload: props.onLoad,
-      onloaderror: props.onLoadError
+      onloaderror: this.onLoadError
     })
   }
 
@@ -66,6 +67,11 @@ class AudioPlayer extends React.Component {
   onEnd (id) {
     this.props.onEnd(id)
     this.updateSeek()
+  }
+
+  onLoadError (err) {
+    console.error(err)
+    this.props.onLoadError(err)
   }
 
   updateSeek () {
