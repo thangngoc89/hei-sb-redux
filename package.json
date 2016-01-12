@@ -45,7 +45,7 @@
     "react-redux": "^4.0.6",
     "react-router": "1.0.3",
     "react-toolbox": "git+https://github.com/thangngoc89/react-toolbox#dev",
-    "react-tooltip": "^0.9.8",
+    "react-tooltip": "^1.0.0",
     "redux": "^3.0.0",
     "redux-actions": "^0.9.0",
     "redux-form": "^4.1.0",
