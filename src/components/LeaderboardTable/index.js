@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import styles from './style.scss'
 import Table from 'react-toolbox/lib/table'
 import LastUpdate from './LastUpdate'
-import map from 'lodash/collection/map'
+import map from 'lodash/map'
 
 const ResultModel = {
   rank: {type: String},

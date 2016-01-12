@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import request from 'redux/utils/request'
-import sortByOrder from 'lodash/collection/sortByOrder'
+import sortBy from 'lodash/sortBy'
 import moment from 'moment'
 import { fromJS, List } from 'immutable'
 // ------------------------------------
@@ -62,7 +62,7 @@ export default handleActions({
     fetchSuccess: true,
     isLoading: false,
     fetchErrorInfo: List(),
-    data: sortByOrder(payload.data, ['rank'], ['asc']),
+    data: sortBy(payload.data, ['rank']),
     lastUpdate: payload.lastUpdate.iso
   }),
   [FETCH_FAILED]: (state, { payload }) => state.merge({

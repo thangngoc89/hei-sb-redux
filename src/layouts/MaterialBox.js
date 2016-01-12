@@ -1,5 +1,5 @@
 import { PropTypes } from 'react'
-import has from 'lodash/object/has'
+import has from 'lodash/has'
 
 const MaterialBox = (props) => {
   // Calculating proper col size
