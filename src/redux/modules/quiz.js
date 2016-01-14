@@ -5,7 +5,7 @@ import { pushPath } from 'redux-simple-router'
 import { notify } from 'redux/modules/alert'
 import { fromJS } from 'immutable'
 import request from 'redux/utils/request'
-import shuffle from 'lodash/collection/shuffle'
+import shuffle from 'lodash/shuffle'
 // ------------------------------------
 // Constants
 // ------------------------------------
