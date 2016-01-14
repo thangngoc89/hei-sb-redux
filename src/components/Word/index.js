@@ -51,8 +51,8 @@ class Word extends Component {
   render () {
     const word = this.props.word
     const files = [
-      this.soundFileFromId(word, 'ogg'),
       this.soundFileFromId(word, 'mp3'),
+      this.soundFileFromId(word, 'ogg'),
       word.get('soundFile')
     ]
 
